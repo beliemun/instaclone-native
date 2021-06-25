@@ -1,11 +1,28 @@
 import React from "react";
-import { Container, Text } from "./styles";
+import Shared from "../../Components";
+import {
+  HomeScreenNavigationProp,
+  HomeScreenRouteProp,
+} from "../../@types/navigation/unAuth";
 
-const Home: React.FC = () => {
+interface Props {
+  navigation: HomeScreenNavigationProp;
+  route: HomeScreenRouteProp;
+}
+
+const Home: React.FC<Props> = ({ navigation, route }) => {
+  const goToCreateAccount = () => navigation.navigate("CreateAccount");
+  const goToLogin = () => navigation.navigate("Login");
   return (
-    <Container>
-      <Text>Home</Text>
-    </Container>
+    <Shared.CenterView>
+      <Shared.Logo maxWidth={"50%"} />
+      <Shared.ButtonWithText
+        disabled={false}
+        onPress={goToCreateAccount}
+        text={"Create New Account"}
+      />
+      <Shared.LinkWithText onPress={goToLogin} text={"Login"} />
+    </Shared.CenterView>
   );
 };
 

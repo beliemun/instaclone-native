@@ -1,11 +1,23 @@
 import React from "react";
-import { Container, Text } from "./styles";
+import { View, Text, TouchableOpacity } from "react-native";
+import {
+  LoginScreenNavigationProp,
+  LoginScreenRouteProp,
+} from "../../@types/navigation/unAuth";
 
-const Login: React.FC = () => {
+interface Props {
+  navigation: LoginScreenNavigationProp;
+  route: LoginScreenRouteProp;
+}
+
+const Login: React.FC<Props> = ({ navigation, route }) => {
   return (
-    <Container>
-      <Text>Login</Text>
-    </Container>
+    <View>
+      <Text>Home</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("CreateAccount")}>
+        <Text>Go to Create Account</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
