@@ -8,7 +8,7 @@ import UnAuth from "./navigators/UnAuth";
 import { AppearanceProvider } from "react-native-appearance";
 import { useColorScheme } from "react-native";
 import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "./common/globalStyles";
+import { darkTheme, lightTheme } from "./common/theme";
 
 export default function App() {
   const [loading, setLoading] = useState(true);

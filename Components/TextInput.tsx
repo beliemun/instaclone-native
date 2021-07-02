@@ -1,58 +1,41 @@
 import React from "react";
-import {
-  KeyboardTypeOptions,
-  NativeSyntheticEvent,
-  ReturnKeyTypeOptions,
-  TextInputSubmitEditingEventData,
-} from "react-native";
+import { TextInputProps } from "react-native";
 import styled from "styled-components/native";
 
-const StyledTextInput = styled.TextInput<{ marginBottom: number }>`
+const StyledInput = styled.TextInput<{
+  marginBottom: number;
+  hasError: boolean;
+}>`
   width: 100%;
   background-color: ${(props) => props.theme.windowColor};
   padding: 10px 12px;
-  border: 1px solid ${(props) => props.theme.borderColorLight};
+  border: 1px solid
+    ${(props) =>
+      props.hasError ? props.theme.error : props.theme.borderColorLight};
   border-radius: 10px;
   margin-bottom: ${(props) => props.marginBottom}px;
 `;
 
-interface TextInputProps {
-  ref?: any | undefined;
-  autoFocus?: boolean | undefined;
-  placeholder?: string | undefined;
-  keyboardType?: KeyboardTypeOptions | undefined;
-  returnKeyType?: ReturnKeyTypeOptions | undefined;
-  secureTextEntry?: boolean | undefined;
-  onSubmitEditing?:
-    | ((e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void)
-    | undefined;
+interface IProps extends TextInputProps {
+  inputRef: any;
   marginBottom?: number;
+  hasError: boolean;
 }
 
-// 함수형 컴포넌트에서는 ref 전달이 불가하여 React.forwardRef()를 사용해야 한다.
-export const TextInput: React.FC<TextInputProps> = React.forwardRef(
-  (props, ref) => {
-    const {
-      autoFocus,
-      placeholder,
-      keyboardType,
-      returnKeyType,
-      secureTextEntry,
-      onSubmitEditing,
-      marginBottom,
-    } = props;
-    return (
-      <StyledTextInput
-        ref={ref as any}
-        autoFocus={autoFocus}
-        placeholder={placeholder}
-        placeholderTextColor={"gray"}
-        keyboardType={keyboardType}
-        returnKeyType={returnKeyType}
-        secureTextEntry={secureTextEntry}
-        onSubmitEditing={onSubmitEditing}
-        marginBottom={marginBottom ?? 0}
-      />
-    );
-  }
+export const Input: React.FC<IProps> = (props) => (
+  <StyledInput
+    {...props}
+    ref={props.inputRef}
+    placeholder={props.placeholder}
+    placeholderTextColor={"gray"}
+    keyboardType={props.keyboardType}
+    returnKeyType={props.returnKeyType}
+    secureTextEntry={props.secureTextEntry}
+    onSubmitEditing={props.onSubmitEditing}
+    autoCapitalize={props.autoCapitalize}
+    onChangeText={props.onChangeText}
+    onKeyPress={props.onKeyPress}
+    marginBottom={props.marginBottom ?? 0}
+    hasError={props.hasError}
+  />
 );

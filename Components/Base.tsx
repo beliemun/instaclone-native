@@ -1,4 +1,3 @@
-import { baseProps } from "react-native-gesture-handler/lib/typescript/handlers/gestureHandlers";
 import styled from "styled-components/native";
 
 export const CenterView = styled.View`

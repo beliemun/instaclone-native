@@ -1,5 +1,6 @@
 import React from "react";
 import Shared from "../../Components";
+import { InputContainer } from "./styles";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
@@ -16,11 +17,14 @@ const Home: React.FC<Props> = ({ navigation, route }) => {
   return (
     <Shared.CenterView>
       <Shared.Logo maxWidth={"50%"} />
-      <Shared.ButtonWithText
-        disabled={false}
-        onPress={goToCreateAccount}
-        text={"Create New Account"}
-      />
+      <InputContainer>
+        <Shared.ButtonWithText
+          text={"Create New Account"}
+          disabled={false}
+          loading={false}
+          onPress={goToCreateAccount}
+        />
+      </InputContainer>
       <Shared.LinkWithText onPress={goToLogin} text={"Login"} />
     </Shared.CenterView>
   );

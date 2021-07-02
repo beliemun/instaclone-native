@@ -4,6 +4,7 @@ import * as Link from "./Link";
 import * as Logo from "./Logo";
 import * as TextInput from "./TextInput";
 import * as AvoidingKeyboardView from "./AvoidingKeyboardView";
+import * as AccentMessage from "./AccentMessage";
 
 export default {
   ...Base,
@@ -12,4 +13,5 @@ export default {
   ...Logo,
   ...TextInput,
   ...AvoidingKeyboardView,
+  ...AccentMessage,
 };
