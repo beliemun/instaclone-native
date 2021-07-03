@@ -8,11 +8,18 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
 import RegEx from "../../common/rules";
+import { gql, useMutation } from "@apollo/client";
+import { logUserIn } from "../../apollo";
 
-interface Props {
-  navigation: LoginScreenNavigationProp;
-  route: LoginScreenRouteProp;
-}
+const LOGIN_MUTATION = gql`
+  mutation login($userName: String!, $password: String!) {
+    login(userName: $userName, password: $password) {
+      ok
+      token
+      error
+    }
+  }
+`;
 
 interface IFormInput {
   userName: string;
@@ -20,13 +27,38 @@ interface IFormInput {
   error: string;
 }
 
-const Login: React.FC<Props> = ({ navigation, route }) => {
+interface INavigationProp {
+  navigation: LoginScreenNavigationProp;
+  route: LoginScreenRouteProp;
+}
+
+const Login: React.FC<INavigationProp> = ({ navigation, route }) => {
   const {
     control,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { isValid, errors },
   } = useForm<IFormInput>({
     mode: "onChange",
+    defaultValues: {
+      userName: route.params?.userName,
+      password: route.params?.password,
+    },
+  });
+
+  const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted: async (data) => {
+      const {
+        login: { ok, token, error },
+      } = data;
+      if (!ok) {
+        setError("error", { message: error });
+      }
+      if (token) {
+        await logUserIn(token);
+      }
+    },
   });
 
   const userNameRef = useRef<HTMLInputElement>(null);
@@ -34,7 +66,13 @@ const Login: React.FC<Props> = ({ navigation, route }) => {
 
   const onFocus = (ref: any) => ref?.current?.focus();
   const onValid = (data: object) => {
-    console.log(data);
+    if (!loading) {
+      logInMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -64,6 +102,7 @@ const Login: React.FC<Props> = ({ navigation, route }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={() => onFocus(passwordRef)}
                 hasError={Boolean(errors?.userName?.message)}
               />
@@ -91,21 +130,25 @@ const Login: React.FC<Props> = ({ navigation, route }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={handleSubmit(onValid)}
                 hasError={Boolean(errors?.password?.message)}
               />
             )}
           />
-
           <Shared.AccentMessage
             type={"error"}
             message={errors?.password?.message}
+          />
+          <Shared.AccentMessage
+            type={"error"}
+            message={errors?.error?.message}
           />
           <Shared.Container marginTop={30}>
             <Shared.ButtonWithText
               text={"Login"}
               disabled={!isValid}
-              loading={false}
+              loading={loading}
               onPress={handleSubmit(onValid)}
             />
           </Shared.Container>

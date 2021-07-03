@@ -3,6 +3,32 @@ import { InputContainer } from "./styles";
 import Shared from "../../Components";
 import { useForm, Controller } from "react-hook-form";
 import RegEx from "../../common/rules";
+import { gql, useMutation } from "@apollo/client";
+import {
+  CreateAccountScreenRouteProp,
+  CreateScreenNavationProp,
+} from "../../@types/navigation/unAuth";
+
+const CREATE_ACCOUNT_MUTATION = gql`
+  mutation createAccount(
+    $firstName: String!
+    $lastName: String!
+    $userName: String!
+    $email: String!
+    $password: String!
+  ) {
+    createAccount(
+      firstName: $firstName
+      lastName: $lastName
+      userName: $userName
+      email: $email
+      password: $password
+    ) {
+      ok
+      error
+    }
+  }
+`;
 
 interface IFormInput {
   firstName: string;
@@ -13,12 +39,40 @@ interface IFormInput {
   error: string;
 }
 
-const CreateAccount: React.FC = () => {
+interface INavigationProp {
+  navigation: CreateScreenNavationProp;
+  route: CreateAccountScreenRouteProp;
+}
+
+const CreateAccount: React.FC<INavigationProp> = ({ navigation, route }) => {
   const {
     control,
     handleSubmit,
+    setError,
+    clearErrors,
+    getValues,
     formState: { isValid, errors },
   } = useForm<IFormInput>({ mode: "onChange" });
+
+  const [createAccountMutation, { loading }] = useMutation(
+    CREATE_ACCOUNT_MUTATION,
+    {
+      onCompleted: (data) => {
+        const {
+          createAccount: { ok, error },
+        } = data;
+        const { userName, password } = getValues();
+        if (ok) {
+          navigation.navigate("Login", {
+            userName,
+            password,
+          });
+        } else {
+          setError("error", { message: error });
+        }
+      },
+    }
+  );
 
   const fisrtNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -28,7 +82,13 @@ const CreateAccount: React.FC = () => {
 
   const onFocus = (ref: any) => ref?.current?.focus();
   const onValid = (data: object) => {
-    console.log(data);
+    if (!loading) {
+      createAccountMutation({
+        variables: {
+          ...data,
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -57,6 +117,7 @@ const CreateAccount: React.FC = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={() => onFocus(lastNameRef)}
                 hasError={Boolean(errors?.firstName?.message)}
               />
@@ -81,6 +142,7 @@ const CreateAccount: React.FC = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={() => onFocus(userNameRef)}
                 hasError={Boolean(errors?.lastName?.message)}
               />
@@ -109,6 +171,7 @@ const CreateAccount: React.FC = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={() => onFocus(emailRef)}
                 hasError={Boolean(errors?.userName?.message)}
               />
@@ -137,6 +200,7 @@ const CreateAccount: React.FC = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={() => onFocus(passwordRef)}
                 hasError={Boolean(errors?.email?.message)}
               />
@@ -163,6 +227,7 @@ const CreateAccount: React.FC = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                onKeyPress={() => clearErrors("error")}
                 onSubmitEditing={handleSubmit(onValid)}
                 hasError={Boolean(errors?.password?.message)}
               />
@@ -173,11 +238,15 @@ const CreateAccount: React.FC = () => {
             message={errors?.password?.message}
           />
 
+          <Shared.AccentMessage
+            type={"error"}
+            message={errors?.error?.message}
+          />
           <Shared.Container marginTop={30}>
             <Shared.ButtonWithText
               text={"Create Account"}
               disabled={!isValid}
-              loading={false}
+              loading={loading}
               onPress={handleSubmit(onValid)}
             />
           </Shared.Container>

@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 export type UnAuthStackParamList = {
   Home: undefined;
-  Login: undefined;
+  Login: { userName: string; password: string } | undefined;
   CreateAccount: undefined;
 };
 

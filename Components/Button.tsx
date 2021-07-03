@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components/native";
-import { ActivityIndicator, GestureResponderEvent } from "react-native";
+import {
+  ActivityIndicator,
+  GestureResponderEvent,
+  useColorScheme,
+} from "react-native";
+import { darkTheme, lightTheme } from "../common/theme";
 
 export const Button = styled.TouchableOpacity`
   width: 100%;
@@ -30,8 +35,17 @@ export const ButtonWithText: React.FC<ButtonWithTextProps> = ({
   disabled,
   loading,
   onPress,
-}) => (
-  <Button disabled={disabled} onPress={onPress}>
-    {loading ? <ActivityIndicator /> : <ButtonText>{text}</ButtonText>}
-  </Button>
-);
+}) => {
+  const colorScheme = useColorScheme();
+  return (
+    <Button disabled={disabled} onPress={onPress}>
+      {loading ? (
+        <ActivityIndicator
+          color={colorScheme === "light" ? lightTheme.color : darkTheme.color}
+        />
+      ) : (
+        <ButtonText>{text}</ButtonText>
+      )}
+    </Button>
+  );
+};
