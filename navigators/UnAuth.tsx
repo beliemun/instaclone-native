@@ -6,33 +6,33 @@ import Login from "../screens/unAuth/Login";
 import CreateAccount from "../screens/unAuth/CreateAccount";
 import { UnAuthStackParamList } from "../@types/navigation/unAuth";
 import { darkTheme, lightTheme } from "../common/theme";
-
-interface IProps {
-  colorScheme: "light" | "dark" | null | undefined;
-}
+import { useColorScheme } from "react-native";
 
 const Stack = createStackNavigator<UnAuthStackParamList>();
 
-const UnAuth: React.FC<IProps> = ({ colorScheme }) => (
-  <NavigationContainer>
-    <Stack.Navigator
-      screenOptions={{
-        headerBackTitleVisible: false,
-        headerTitle: "",
-        headerTransparent: true,
-        headerTintColor:
-          colorScheme === "light" ? lightTheme.color : darkTheme.color,
-      }}
-    >
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="CreateAccount" component={CreateAccount} />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
+const UnAuth: React.FC = () => {
+  const colorScheme = useColorScheme();
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerBackTitleVisible: false,
+          headerTitle: "",
+          headerTransparent: true,
+          headerTintColor:
+            colorScheme === "light" ? lightTheme.color : darkTheme.color,
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="CreateAccount" component={CreateAccount} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default UnAuth;

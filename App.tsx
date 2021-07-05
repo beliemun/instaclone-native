@@ -1,13 +1,12 @@
 import AppLoading from "expo-app-loading";
 import React, { useState } from "react";
-import { Platform, StatusBar } from "react-native";
+import { Platform, StatusBar, useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import Auth from "./navigators/AuthTab";
 import UnAuth from "./navigators/UnAuth";
 import { AppearanceProvider } from "react-native-appearance";
-import { useColorScheme } from "react-native";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./common/theme";
 import { ApolloProvider, useReactiveVar } from "@apollo/client";
@@ -39,8 +38,8 @@ export default function App() {
   };
   const onFinish = () => setLoading(false);
   const onError = () => console.warn;
-
   const colorScheme = useColorScheme();
+
   const getThemeStyle = () => {
     if (Platform.OS === "ios") {
       return colorScheme === "light" ? "dark-content" : "light-content";
@@ -58,11 +57,7 @@ export default function App() {
       <AppearanceProvider>
         <ThemeProvider theme={colorScheme === "light" ? lightTheme : darkTheme}>
           <StatusBar barStyle={getThemeStyle()} />
-          {isLoggedIn ? (
-            <Auth colorScheme={colorScheme} />
-          ) : (
-            <UnAuth colorScheme={colorScheme} />
-          )}
+          {isLoggedIn ? <Auth /> : <UnAuth />}
         </ThemeProvider>
       </AppearanceProvider>
     </ApolloProvider>

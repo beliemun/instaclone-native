@@ -8,6 +8,9 @@ import Photo from "../screens/auth/Photo";
 import Profile from "../screens/auth/Profile";
 import { AuthStackParamList } from "../@types/navigation/auth";
 import { darkTheme, lightTheme } from "../common/theme";
+import { Image } from "react-native";
+import { View } from "react-native";
+import Shared from "../Components";
 
 interface IProps {
   colorScheme: "light" | "dark" | null | undefined;
@@ -19,7 +22,23 @@ const Stacks = createStackNavigator<AuthStackParamList>();
 const renderScreen = (screenName: string) => {
   switch (screenName) {
     case "Feed":
-      return <Stacks.Screen name="Feed" component={Feed} />;
+      return (
+        <Stacks.Screen
+          name="Feed"
+          component={Feed}
+          options={{
+            headerTitle: () => (
+              <Shared.CenterView>
+                <Image
+                  style={{ maxHeight: 30 }}
+                  resizeMode="contain"
+                  source={require("../assets/logo.png")}
+                />
+              </Shared.CenterView>
+            ),
+          }}
+        />
+      );
     case "Search":
       return <Stacks.Screen name="Search" component={Search} />;
     case "Notification":
@@ -34,6 +53,7 @@ const renderScreen = (screenName: string) => {
 const SharedStack: React.FC<IProps> = ({ colorScheme, screenName }) => {
   return (
     <Stacks.Navigator
+      headerMode="screen"
       screenOptions={{
         headerTintColor:
           colorScheme === "light" ? lightTheme.color : darkTheme.color,
@@ -45,7 +65,7 @@ const SharedStack: React.FC<IProps> = ({ colorScheme, screenName }) => {
           shadowColor: "transparent", // for iOS
           elevation: 0, // for Android
         },
-        headerBackTitleVisible: true,
+        headerBackTitleVisible: false, // 안드로디는 기본으로 꺼짐
       }}
     >
       {renderScreen(screenName)}
