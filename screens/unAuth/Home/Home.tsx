@@ -1,17 +1,17 @@
 import React from "react";
-import Shared from "../../Components";
+import Shared from "../../../Components";
 import { InputContainer } from "./styles";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
-} from "../../@types/navigation/unAuth";
+} from "../../../@types/navigation/unAuth";
 
-interface Props {
+interface IProps {
   navigation: HomeScreenNavigationProp;
   route: HomeScreenRouteProp;
 }
 
-const Home: React.FC<Props> = ({ navigation, route }) => {
+const Home: React.FC<IProps> = ({ navigation, route }) => {
   const goToCreateAccount = () => navigation.navigate("CreateAccount");
   const goToLogin = () => navigation.navigate("Login");
   return (

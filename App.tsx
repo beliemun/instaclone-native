@@ -4,7 +4,7 @@ import { Platform, StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import Auth from "./navigators/Auth";
+import Auth from "./navigators/AuthTab";
 import UnAuth from "./navigators/UnAuth";
 import { AppearanceProvider } from "react-native-appearance";
 import { useColorScheme } from "react-native";

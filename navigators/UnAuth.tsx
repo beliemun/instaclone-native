@@ -1,9 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "../screens/Home";
-import Login from "../screens/Login";
-import CreateAccount from "../screens/CreateAccount";
+import Home from "../screens/unAuth/Home";
+import Login from "../screens/unAuth/Login";
+import CreateAccount from "../screens/unAuth/CreateAccount";
 import { UnAuthStackParamList } from "../@types/navigation/unAuth";
 import { darkTheme, lightTheme } from "../common/theme";
 

@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from "react";
 import { InputContainer } from "./styles";
-import Shared from "../../Components";
+import Shared from "../../../Components";
 import { useForm, Controller } from "react-hook-form";
-import RegEx from "../../common/rules";
+import RegEx from "../../../common/rules";
 import { gql, useMutation } from "@apollo/client";
 import {
   CreateAccountScreenRouteProp,
   CreateScreenNavationProp,
-} from "../../@types/navigation/unAuth";
+} from "../../../@types/navigation/unAuth";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(
@@ -39,12 +39,12 @@ interface IFormInput {
   error: string;
 }
 
-interface INavigationProp {
+interface IProps {
   navigation: CreateScreenNavationProp;
   route: CreateAccountScreenRouteProp;
 }
 
-const CreateAccount: React.FC<INavigationProp> = ({ navigation, route }) => {
+const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
   const {
     control,
     handleSubmit,

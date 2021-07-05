@@ -1,11 +1,12 @@
 import React from "react";
 import { Container } from "./styles";
-import Shared from "../../Components";
-import { logUserOut } from "../../apollo";
+import Shared from "../../../Components";
+import { logUserOut } from "../../../apollo";
 
-const Feed: React.FC = () => {
+const Photo: React.FC = () => {
   return (
     <Container>
+      <Shared.AccentMessage type="info" message="Photo Screen" />
       <Shared.ButtonWithText
         text="Logout"
         onPress={() => logUserOut()}
@@ -16,4 +17,4 @@ const Feed: React.FC = () => {
   );
 };
 
-export default Feed;
+export default Photo;

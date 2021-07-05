@@ -1,15 +1,15 @@
 import React, { useRef } from "react";
 import { InputContainer } from "./styles";
-import Shared from "../../Components";
+import Shared from "../../../Components";
 import {
   LoginScreenNavigationProp,
   LoginScreenRouteProp,
-} from "../../@types/navigation/unAuth";
+} from "../../../@types/navigation/unAuth";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
-import RegEx from "../../common/rules";
+import RegEx from "../../../common/rules";
 import { gql, useMutation } from "@apollo/client";
-import { logUserIn } from "../../apollo";
+import { logUserIn } from "../../../apollo";
 
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -27,12 +27,12 @@ interface IFormInput {
   error: string;
 }
 
-interface INavigationProp {
+interface IProps {
   navigation: LoginScreenNavigationProp;
   route: LoginScreenRouteProp;
 }
 
-const Login: React.FC<INavigationProp> = ({ navigation, route }) => {
+const Login: React.FC<IProps> = ({ navigation, route }) => {
   const {
     control,
     handleSubmit,
