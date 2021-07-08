@@ -11,7 +11,7 @@ export const Button = styled.TouchableOpacity`
   width: 100%;
   color: ${(props) => props.theme.buttonTextColor};
   background-color: ${(props) => props.theme.windowColor};
-  border: 1px solid ${(props) => props.theme.borderColorLight};
+  border: 1px solid ${(props) => props.theme.borderColorMedium};
   border-radius: 10px;
   padding: 10px 12px;
   opacity: ${(props) => (props.disabled ? "0.5" : "1")};

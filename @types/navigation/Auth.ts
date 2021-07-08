@@ -17,6 +17,8 @@ export type AuthStackParamList = {
   MyProfile: undefined;
   Profile: undefined;
   Photo: undefined;
+  Likes: undefined;
+  Comments: undefined;
 };
 
 export type FeedScreenNavigationProp = CompositeNavigationProp<

@@ -11,7 +11,7 @@ const StyledInput = styled.TextInput<{
   padding: 10px 12px;
   border: 1px solid
     ${(props) =>
-      props.hasError ? props.theme.error : props.theme.borderColorLight};
+      props.hasError ? props.theme.error : props.theme.borderColorMedium};
   border-radius: 10px;
   margin-bottom: ${(props) => props.marginBottom}px;
 `;

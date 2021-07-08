@@ -7,6 +7,7 @@ declare module "styled-components" {
     backgroundColor: string;
     windowColor: string;
     borderColorLight: string;
+    borderColorMedium: string;
     borderColorDark: string;
     accent: string;
     hover: string;

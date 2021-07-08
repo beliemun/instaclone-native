@@ -1,16 +1,17 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import Shared from "../Components";
 import Feed from "../screens/auth/Feed";
 import Search from "../screens/auth/Search";
 import Notification from "../screens/auth/Notification";
 import MyProfile from "../screens/auth/MyPofile";
-import Photo from "../screens/auth/Photo";
 import Profile from "../screens/auth/Profile";
+import Photo from "../screens/auth/Photo";
+import Likes from "../screens/auth/Likes";
+import Comments from "../screens/auth/Comments";
+import { createStackNavigator } from "@react-navigation/stack";
 import { AuthStackParamList } from "../@types/navigation/auth";
 import { darkTheme, lightTheme } from "../common/theme";
 import { Image } from "react-native";
-import { View } from "react-native";
-import Shared from "../Components";
 
 interface IProps {
   colorScheme: "light" | "dark" | null | undefined;
@@ -71,6 +72,8 @@ const SharedStack: React.FC<IProps> = ({ colorScheme, screenName }) => {
       {renderScreen(screenName)}
       <Stacks.Screen name="Profile" component={Profile} />
       <Stacks.Screen name="Photo" component={Photo} />
+      <Stacks.Screen name="Likes" component={Likes} />
+      <Stacks.Screen name="Comments" component={Comments} />
     </Stacks.Navigator>
   );
 };

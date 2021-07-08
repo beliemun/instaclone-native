@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 import { GestureResponderEvent } from "react-native";
+import { Text } from "react-native";
 
-export const Link = styled.TouchableOpacity`
-  padding: 10px 12px;
-`;
+export const Link = styled.TouchableOpacity``;
 export const LinkText = styled.Text`
   color: ${(props) => props.theme.accent};
   font-weight: bold;

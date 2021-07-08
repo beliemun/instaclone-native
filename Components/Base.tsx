@@ -6,6 +6,11 @@ export const CenterView = styled.View`
   align-items: center;
 `;
 
+export const WrapView = styled.View`
+  flex-direction: row;
+  flex-wrap: warp;
+`;
+
 interface ContainerProps {
   margin?: number;
   marginTop?: number;
@@ -31,4 +36,13 @@ export const Container = styled.View<ContainerProps>`
   padding-right: ${(props) => props.paddingRight ?? 0}px;
   padding-bottom: ${(props) => props.paddingBottom ?? 0}px;
   padding-left: ${(props) => props.paddingLeft ?? 0}px;
+`;
+
+export const BoldText = styled.Text`
+  font-weight: bold;
+`;
+
+export const ItemSeparator = styled.View`
+  height: 30px;
+  background-color: ${(props) => props.theme.backgroundColor};
 `;
