@@ -22,8 +22,8 @@ import {
 } from "../../../@types/__generated__/seeFeed";
 
 const FEED_QUERY = gql`
-  query seeFeed {
-    seeFeed {
+  query seeFeed($offset: Int!) {
+    seeFeed(offset: $offset) {
       ...PhotoFragment
       user {
         ...UserFragment
@@ -44,7 +44,11 @@ interface IProps {
 }
 
 const Feed: React.FC<IProps> = ({ navigation, route }) => {
-  const { data, loading, refetch } = useQuery<seeFeed>(FEED_QUERY);
+  const { data, loading, refetch, fetchMore } = useQuery<seeFeed>(FEED_QUERY, {
+    variables: {
+      offset: 0,
+    },
+  });
   const [refreshing, setRefreshing] = useState(false);
 
   const refresh = async () => {
@@ -64,6 +68,14 @@ const Feed: React.FC<IProps> = ({ navigation, route }) => {
           ItemSeparatorComponent={() => <Shared.ItemSeparator />}
           refreshing={refreshing}
           onRefresh={refresh}
+          onEndReached={() =>
+            fetchMore({
+              variables: {
+                offset: data?.seeFeed?.length,
+              },
+            })
+          }
+          // onEndReachedThreshold={0.5}
         />
       </Shared.LoadingLayout>
       <Shared.ButtonWithText
