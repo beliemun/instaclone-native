@@ -11,12 +11,16 @@ export interface seeFeed_seeFeed_user {
   __typename: "User";
   userName: string;
   avatar: string | null;
+  isFollowing: boolean;
+  isMe: boolean;
 }
 
 export interface seeFeed_seeFeed_comments_user {
   __typename: "User";
   userName: string;
   avatar: string | null;
+  isFollowing: boolean;
+  isMe: boolean;
 }
 
 export interface seeFeed_seeFeed_comments {
@@ -44,4 +48,8 @@ export interface seeFeed_seeFeed {
 
 export interface seeFeed {
   seeFeed: seeFeed_seeFeed[] | null;
+}
+
+export interface seeFeedVariables {
+  offset: number;
 }

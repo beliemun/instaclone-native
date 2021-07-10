@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL fragment: CommentFragment
+// GraphQL query operation: seePhotoLikes
 // ====================================================
 
-export interface CommentFragment_user {
+export interface seePhotoLikes_seePhotoLikes {
   __typename: "User";
   userName: string;
   avatar: string | null;
@@ -15,11 +15,10 @@ export interface CommentFragment_user {
   isMe: boolean;
 }
 
-export interface CommentFragment {
-  __typename: "Comment";
+export interface seePhotoLikes {
+  seePhotoLikes: (seePhotoLikes_seePhotoLikes | null)[] | null;
+}
+
+export interface seePhotoLikesVariables {
   id: number;
-  user: CommentFragment_user;
-  text: string;
-  isMine: boolean;
-  createdAt: string;
 }

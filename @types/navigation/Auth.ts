@@ -17,7 +17,7 @@ export type AuthStackParamList = {
   MyProfile: undefined;
   Profile: undefined;
   Photo: undefined;
-  Likes: undefined;
+  Likes: { photoId: number };
   Comments: undefined;
 };
 
@@ -41,6 +41,12 @@ export type MyProfileScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<AuthTabParamList, "MyProfile">,
   StackNavigationProp<AuthStackParamList>
 >;
+export type ProfileScreenNavigationProp =
+  StackNavigationProp<AuthStackParamList>;
+export type PhotoScreenNavigationProp = StackNavigationProp<AuthStackParamList>;
+export type LikesScreenNavigationProp = StackNavigationProp<AuthStackParamList>;
+export type CommentsScreenNavigationProp =
+  StackNavigationProp<AuthStackParamList>;
 
 export type FeedScreenRouteProp = RouteProp<AuthTabParamList, "Feed">;
 export type SearchScreenRouteProp = RouteProp<AuthTabParamList, "Search">;
@@ -50,3 +56,7 @@ export type NotificationScreenRouteProp = RouteProp<
   "Notification"
 >;
 export type MyProfileScreenRouteProp = RouteProp<AuthTabParamList, "MyProfile">;
+export type ProfileScreenRouteProp = RouteProp<AuthStackParamList, "Profile">;
+export type PhotoScreenRouteProp = RouteProp<AuthStackParamList, "Photo">;
+export type LikesScreenRouteProp = RouteProp<AuthStackParamList, "Likes">;
+export type CommentsScreenRouteProp = RouteProp<AuthStackParamList, "Comments">;
