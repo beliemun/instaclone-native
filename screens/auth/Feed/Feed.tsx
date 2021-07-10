@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FlatList } from "react-native";
 import { Container } from "./styles";
 import Shared from "../../../Components";
 import { logUserOut } from "../../../apollo";
@@ -12,14 +13,8 @@ import {
   USER_FRAGMENT,
 } from "../../../common/fragments";
 import { gql, useQuery } from "@apollo/client";
-import { FlatList } from "react-native";
-import { Text } from "react-native";
 import FeedItem from "./FeedItem";
-import Photo from "../Photo";
-import {
-  seeFeed,
-  seeFeed_seeFeed,
-} from "../../../@types/__generated__/seeFeed";
+import { seeFeed } from "../../../@types/__generated__/seeFeed";
 
 const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {

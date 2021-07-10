@@ -21,7 +21,16 @@ import { useColorScheme } from "react-native";
 import { lightTheme, darkTheme } from "../../common/theme";
 import { useNavigation } from "@react-navigation/native";
 import { FeedScreenNavigationProp } from "../../@types/navigation/auth";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { gql, useMutation } from "@apollo/client";
+
+const TOGGLE_LIKE_MUTATION = gql`
+  mutation toggleLike($id: Int!) {
+    toggleLike(id: $id) {
+      ok
+      error
+    }
+  }
+`;
 
 const renderFilterdCaption = (text: string) => {
   let origin = text.replace(/#/gi, " #").replace(/  /gi, " ").trim();
@@ -60,6 +69,31 @@ const Photo: React.FC<seeFeed_seeFeed> = ({
   const { width } = useWindowDimensions();
   const colorScheme = useColorScheme();
   const navigation = useNavigation<FeedScreenNavigationProp>();
+  const [toggleLikeMutation, { loading }] = useMutation(TOGGLE_LIKE_MUTATION, {
+    variables: {
+      id,
+    },
+    update: (cache, result) => {
+      const {
+        data: {
+          toggleLike: { ok },
+        },
+      } = result;
+      if (ok) {
+        cache.modify({
+          id: `Photo:${id}`,
+          fields: {
+            isLiked(prev) {
+              return !prev;
+            },
+            likeCount(prev) {
+              return isLiked ? prev - 1 : prev + 1;
+            },
+          },
+        });
+      }
+    },
+  });
 
   return (
     <Container width={width}>
@@ -70,7 +104,7 @@ const Photo: React.FC<seeFeed_seeFeed> = ({
       <File source={{ uri: file }} width={width} height={width} />
       <Footer>
         <Actions>
-          <Action>
+          <Action disabled={loading} onPress={() => toggleLikeMutation()}>
             <Ionicons
               name={isLiked ? "heart" : "heart-outline"}
               color={

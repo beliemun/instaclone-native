@@ -9,9 +9,15 @@ import UnAuth from "./navigators/UnAuth";
 import { AppearanceProvider } from "react-native-appearance";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./common/theme";
-import { ApolloProvider, useReactiveVar } from "@apollo/client";
-import client, { isLoggedInVar, tokenVar } from "./apollo";
+import {
+  ApolloProvider,
+  NormalizedCacheObject,
+  useReactiveVar,
+} from "@apollo/client";
+import client, { isLoggedInVar, tokenVar, cache } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { persistCache, AsyncStorageWrapper } from "apollo3-cache-persist";
+import { PersistentStorage, PersistedData } from "apollo3-cache-persist/types";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -34,6 +40,14 @@ export default function App() {
   };
   const preload = async () => {
     await preloadToken();
+    // persistCache는 AppLoading이 되기전 세팅해줘야 한다.
+    await persistCache({
+      cache,
+      storage: new AsyncStorageWrapper(AsyncStorage) as PersistentStorage<
+        PersistedData<NormalizedCacheObject>
+      >,
+    });
+
     return preloadAssets();
   };
   const onFinish = () => setLoading(false);
