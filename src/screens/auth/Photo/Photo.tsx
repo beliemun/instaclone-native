@@ -7,12 +7,6 @@ const Photo: React.FC = () => {
   return (
     <Container>
       <Shared.AccentMessage type="info" message="Photo Screen" />
-      <Shared.ButtonWithText
-        text="Logout"
-        onPress={() => logUserOut()}
-        loading={false}
-        disabled={false}
-      />
     </Container>
   );
 };

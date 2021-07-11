@@ -5,6 +5,7 @@ import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
 } from "~/../@types/navigation/unAuth";
+import { View } from "react-native";
 
 interface IProps {
   navigation: HomeScreenNavigationProp;
@@ -20,12 +21,13 @@ const Home: React.FC<IProps> = ({ navigation, route }) => {
       <InputContainer>
         <Shared.ButtonWithText
           text={"Create New Account"}
-          disabled={false}
-          loading={false}
+          isFullWidth={true}
           onPress={goToCreateAccount}
         />
       </InputContainer>
-      <Shared.LinkWithText onPress={goToLogin} text={"Login"} />
+      <View style={{ margin: 10 }}>
+        <Shared.LinkWithText onPress={goToLogin} text={"Login"} />
+      </View>
     </Shared.CenterView>
   );
 };

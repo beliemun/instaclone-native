@@ -9,6 +9,7 @@
 
 export interface UserFragment {
   __typename: "User";
+  id: number;
   userName: string;
   avatar: string | null;
   isFollowing: boolean;

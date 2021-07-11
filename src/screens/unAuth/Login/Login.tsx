@@ -10,6 +10,7 @@ import {
   LoginScreenNavigationProp,
   LoginScreenRouteProp,
 } from "~/../@types/navigation/unAuth";
+import { View } from "react-native";
 
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -137,21 +138,19 @@ const Login: React.FC<IProps> = ({ navigation, route }) => {
             )}
           />
           <Shared.AccentMessage
-            type={"error"}
+            type="error"
             message={errors?.password?.message}
           />
-          <Shared.AccentMessage
-            type={"error"}
-            message={errors?.error?.message}
-          />
-          <Shared.Container marginTop={30}>
+          <Shared.AccentMessage type="error" message={errors?.error?.message} />
+          <View style={{ marginTop: 30 }}>
             <Shared.ButtonWithText
-              text={"Login"}
+              text="Login"
               disabled={!isValid}
               loading={loading}
+              isFullWidth={true}
               onPress={handleSubmit(onValid)}
             />
-          </Shared.Container>
+          </View>
         </InputContainer>
       </Shared.CenterView>
     </Shared.KeyboardAvoidingView>

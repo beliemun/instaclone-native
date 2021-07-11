@@ -12,11 +12,16 @@ export const Header = styled.TouchableOpacity`
   align-items: center;
   padding: 10px;
 `;
-export const Avatar = styled.Image`
+export const AvatarContainer = styled.View`
   width: 40px;
   height: 40px;
   border-radius: 20px;
   margin-right: 10px;
+  overflow: hidden;
+`;
+export const Avatar = styled.Image`
+  width: 100%;
+  height: 100%;
 `;
 export const Username = styled(BoldText)`
   color: ${(props) => props.theme.color};

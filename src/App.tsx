@@ -42,13 +42,14 @@ const App = () => {
   const preload = async () => {
     await preloadToken();
     // persistCache는 AppLoading이 되기전 세팅해줘야 한다.
-    await persistCache({
-      cache,
-      storage: new AsyncStorageWrapper(AsyncStorage) as PersistentStorage<
-        PersistedData<NormalizedCacheObject>
-      >,
-      maxSize: 20000000,
-    });
+    // Query, Mutation을 할때 Schema가 변경되면 충돌이 되어 아무것도 표시가 안되는 현상 방지하기 위해서 serialize:false 사용해야 함.
+    // await persistCache({
+    //   cache,
+    //   storage: new AsyncStorageWrapper(AsyncStorage) as PersistentStorage<
+    //     PersistedData<NormalizedCacheObject>
+    //   >,
+    //   serialize: false,
+    // });
     return preloadAssets();
   };
   const onFinish = () => setLoading(false);

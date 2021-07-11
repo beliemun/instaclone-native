@@ -8,6 +8,7 @@ import {
   CreateAccountScreenRouteProp,
   CreateScreenNavationProp,
 } from "~/../@types/navigation/unAuth";
+import { View } from "react-native";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(
@@ -242,14 +243,15 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
             type={"error"}
             message={errors?.error?.message}
           />
-          <Shared.Container marginTop={30}>
+          <View style={{ marginTop: 30 }}>
             <Shared.ButtonWithText
               text={"Create Account"}
               disabled={!isValid}
               loading={loading}
+              isFullWidth={true}
               onPress={handleSubmit(onValid)}
             />
-          </Shared.Container>
+          </View>
         </InputContainer>
       </Shared.CenterView>
     </Shared.KeyboardAvoidingView>

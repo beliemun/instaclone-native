@@ -21,6 +21,7 @@ export const logUserOut = async () => {
   await AsyncStorage.clear();
   isLoggedInVar(false);
   tokenVar("");
+  client.resetStore();
 };
 
 const httpLink = createHttpLink({
@@ -43,6 +44,7 @@ export const cache = new InMemoryCache({
     Query: {
       fields: {
         seeFeed: offsetLimitPagination(),
+        seePhotoLikes: offsetLimitPagination(),
         // 위 함수는 아래 코드를 간편하게 사용할 수 있도록 구현된 함수
         // seeFeed: {
         //   keyArgs: false,
@@ -53,7 +55,7 @@ export const cache = new InMemoryCache({
         // [중요]
         // Apollo는 같은 query문을 실행시켜도 Args가 다르면, 독립적으로 분리해서 처리하기 때문에,
         // Component의 state를 변화시키지 않아 rerendering 하지 않는다.
-        // 따라서 args에 따라 구별시키는 거을 방지하기 위해 위 옵션을 사용한다.
+        // 따라서 args에 따라 구별시키는 거을 방지하기 위해 keyArgs: false 옵션을 사용한다.
       },
     },
   },

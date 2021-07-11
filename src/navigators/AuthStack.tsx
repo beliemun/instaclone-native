@@ -10,9 +10,10 @@ import Likes from "@screens/auth/Likes";
 import Comments from "@screens/auth/Comments";
 import { createStackNavigator } from "@react-navigation/stack";
 import { darkTheme, lightTheme } from "@common/theme";
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import { AuthStackParamList } from "~/../@types/navigation/auth";
 import { useColorScheme } from "react-native";
+import { logUserOut } from "~/apollo";
 
 const Stacks = createStackNavigator<AuthStackParamList>();
 
@@ -42,18 +43,17 @@ const renderScreen = (screenName: string) => {
       return <Stacks.Screen name="Notification" component={Notification} />;
     case "MyProfile":
       return <Stacks.Screen name="MyProfile" component={MyProfile} />;
-    // case "Profile":
-    //   return
-    // case "Photo":
-    //   return
-    // case "Likes":
-    //   return
-    // case "Comments":
-    //   return
     default:
       return null;
   }
 };
+
+const renderHeaderRight = (screenName: string) =>
+  screenName === "MyProfile" ? (
+    <View style={{ marginRight: 10 }}>
+      <Shared.LinkWithText text="Logout" onPress={() => logUserOut()} />
+    </View>
+  ) : null;
 
 interface IProps {
   screenName: string;
@@ -76,6 +76,7 @@ const SharedStack: React.FC<IProps> = ({ screenName }) => {
           elevation: 0, // for Android
         },
         headerBackTitleVisible: false, // 안드로디는 기본으로 꺼짐
+        headerRight: () => renderHeaderRight(screenName),
       }}
     >
       {renderScreen(screenName)}

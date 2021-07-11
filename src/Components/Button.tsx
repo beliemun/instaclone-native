@@ -4,11 +4,12 @@ import {
   ActivityIndicator,
   GestureResponderEvent,
   useColorScheme,
+  View,
 } from "react-native";
 import { darkTheme, lightTheme } from "@common/theme";
 
-export const Button = styled.TouchableOpacity`
-  width: 100%;
+export const Button = styled.TouchableOpacity<{ isFullWidth: boolean }>`
+  width: ${(props) => (props.isFullWidth ? "100%" : "null")};
   color: ${(props) => props.theme.buttonTextColor};
   background-color: ${(props) => props.theme.windowColor};
   border: 1px solid ${(props) => props.theme.borderColorMedium};
@@ -25,24 +26,28 @@ export const ButtonText = styled.Text`
 
 interface ButtonWithTextProps {
   text?: string;
-  disabled: boolean;
-  loading: boolean;
+  disabled?: boolean;
+  loading?: boolean;
+  isFullWidth?: boolean;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
 export const ButtonWithText: React.FC<ButtonWithTextProps> = ({
   text,
-  disabled,
-  loading,
+  disabled = false,
+  loading = false,
+  isFullWidth = false,
   onPress,
 }) => {
   const colorScheme = useColorScheme();
   return (
-    <Button disabled={disabled} onPress={onPress}>
+    <Button disabled={disabled} onPress={onPress} isFullWidth={isFullWidth}>
       {loading ? (
-        <ActivityIndicator
-          color={colorScheme === "light" ? lightTheme.color : darkTheme.color}
-        />
+        <View style={{ flexDirection: "row" }}>
+          <ActivityIndicator
+            color={colorScheme === "light" ? lightTheme.color : darkTheme.color}
+          />
+        </View>
       ) : (
         <ButtonText>{text}</ButtonText>
       )}

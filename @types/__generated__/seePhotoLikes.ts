@@ -9,6 +9,7 @@
 
 export interface seePhotoLikes_seePhotoLikes {
   __typename: "User";
+  id: number;
   userName: string;
   avatar: string | null;
   isFollowing: boolean;
@@ -16,9 +17,10 @@ export interface seePhotoLikes_seePhotoLikes {
 }
 
 export interface seePhotoLikes {
-  seePhotoLikes: (seePhotoLikes_seePhotoLikes | null)[] | null;
+  seePhotoLikes: seePhotoLikes_seePhotoLikes[] | null;
 }
 
 export interface seePhotoLikesVariables {
   id: number;
+  offset: number;
 }

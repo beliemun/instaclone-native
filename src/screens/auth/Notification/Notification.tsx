@@ -16,12 +16,6 @@ const Notification: React.FC<IProps> = ({ navigation, route }) => {
   return (
     <Container>
       <Shared.AccentMessage type="info" message="Notification Screen" />
-      <Shared.ButtonWithText
-        text="Logout"
-        onPress={() => logUserOut()}
-        loading={false}
-        disabled={false}
-      />
     </Container>
   );
 };

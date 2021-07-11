@@ -16,12 +16,6 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
   return (
     <Container>
       <Shared.AccentMessage type="info" message="Serach Screen" />
-      <Shared.ButtonWithText
-        text="Logout"
-        onPress={() => logUserOut()}
-        loading={false}
-        disabled={false}
-      />
     </Container>
   );
 };

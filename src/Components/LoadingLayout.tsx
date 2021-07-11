@@ -1,5 +1,7 @@
 import React from "react";
+import { useColorScheme } from "react-native";
 import styled from "styled-components/native";
+import { darkTheme, lightTheme } from "~/common/theme";
 
 const Container = styled.View`
   flex: 1;
@@ -17,5 +19,14 @@ interface IProps {
 }
 
 export const LoadingLayout: React.FC<IProps> = ({ loading, children }) => {
-  return loading ? <Indicator /> : <Container>{children}</Container>;
+  const colorScheme = useColorScheme();
+  return loading ? (
+    <Container>
+      <Indicator
+        color={colorScheme === "light" ? lightTheme.accent : darkTheme.accent}
+      />
+    </Container>
+  ) : (
+    <Container>{children}</Container>
+  );
 };

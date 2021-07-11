@@ -9,6 +9,7 @@
 
 export interface seeFeed_seeFeed_user {
   __typename: "User";
+  id: number;
   userName: string;
   avatar: string | null;
   isFollowing: boolean;
@@ -17,6 +18,7 @@ export interface seeFeed_seeFeed_user {
 
 export interface seeFeed_seeFeed_comments_user {
   __typename: "User";
+  id: number;
   userName: string;
   avatar: string | null;
   isFollowing: boolean;

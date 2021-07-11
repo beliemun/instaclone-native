@@ -21,6 +21,7 @@ module.exports = function (api) {
             '@common': './src/common',
             '@navigators': './src/navigators',
             '@screens': './src/screens',
+            '@hooks': './src/hooks',
             'types': './@types',
           },
         },

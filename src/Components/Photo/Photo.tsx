@@ -4,6 +4,7 @@ import { seeFeed_seeFeed } from "~/../@types/__generated__/seeFeed";
 import {
   Container,
   Header,
+  AvatarContainer,
   Avatar,
   Username,
   File,
@@ -97,8 +98,17 @@ const Photo: React.FC<seeFeed_seeFeed> = ({
 
   return (
     <Container width={width}>
-      <Header onPress={() => navigation.navigate("Profile")}>
-        <Avatar source={{ uri: user.avatar ?? undefined }} />
+      <Header
+        onPress={() =>
+          navigation.navigate("Profile", {
+            id: user.id,
+            userName: user.userName,
+          })
+        }
+      >
+        <AvatarContainer>
+          <Avatar source={{ uri: user.avatar ?? undefined }} />
+        </AvatarContainer>
         <Username>{user.userName}</Username>
       </Header>
       <File source={{ uri: file }} width={width} height={width} />
@@ -148,7 +158,14 @@ const Photo: React.FC<seeFeed_seeFeed> = ({
         )}
         {caption && (
           <Caption>
-            <Shared.Link onPress={() => navigation.navigate("Profile")}>
+            <Shared.Link
+              onPress={() =>
+                navigation.navigate("Profile", {
+                  id: user.id,
+                  userName: user.userName,
+                })
+              }
+            >
               <Username>{user.userName}</Username>
             </Shared.Link>
             {renderFilterdCaption(caption)}

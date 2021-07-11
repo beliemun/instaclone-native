@@ -3,18 +3,17 @@ import { FlatList, Text } from "react-native";
 import { Container } from "./styles";
 import Shared from "@Components";
 import { gql, useQuery } from "@apollo/client";
-import FeedItem from "./FeedItem";
 import {
   COMMENT_FRAGMENT,
   PHOTO_FRAGMENT,
   USER_FRAGMENT,
 } from "@common/fragments";
-import { logUserOut } from "~/apollo";
 import {
   FeedScreenNavigationProp,
   FeedScreenRouteProp,
 } from "types/navigation/auth";
 import { seeFeed } from "types/__generated__/seeFeed";
+import Photo from "~/Components/Photo";
 
 const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {
@@ -60,10 +59,10 @@ const Feed: React.FC<IProps> = ({ navigation, route }) => {
       <Shared.LoadingLayout loading={loading}>
         <FlatList
           data={data?.seeFeed}
-          renderItem={(item) => <FeedItem {...item} />}
+          renderItem={(item) => <Photo {...item.item} />}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <Shared.ItemSeparator />}
+          ItemSeparatorComponent={() => <Shared.ItemSeparator height={30} />}
           refreshing={refreshing}
           onRefresh={refresh}
           onEndReached={() =>
@@ -76,12 +75,6 @@ const Feed: React.FC<IProps> = ({ navigation, route }) => {
           // onEndReachedThreshold={0.5}
         />
       </Shared.LoadingLayout>
-      <Shared.ButtonWithText
-        text="Logout"
-        onPress={() => logUserOut()}
-        loading={false}
-        disabled={false}
-      />
     </Container>
   );
 };
