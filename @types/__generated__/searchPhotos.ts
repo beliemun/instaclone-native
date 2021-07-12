@@ -14,7 +14,7 @@ export interface searchPhotos_searchPhotos {
 }
 
 export interface searchPhotos {
-  searchPhotos: (searchPhotos_searchPhotos | null)[] | null;
+  searchPhotos: searchPhotos_searchPhotos[] | null;
 }
 
 export interface searchPhotosVariables {
