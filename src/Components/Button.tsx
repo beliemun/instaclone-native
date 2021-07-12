@@ -43,7 +43,7 @@ export const ButtonWithText: React.FC<ButtonWithTextProps> = ({
   return (
     <Button disabled={disabled} onPress={onPress} isFullWidth={isFullWidth}>
       {loading ? (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <ActivityIndicator
             color={colorScheme === "light" ? lightTheme.color : darkTheme.color}
           />

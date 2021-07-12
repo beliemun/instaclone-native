@@ -26,15 +26,7 @@ export const Input: React.FC<IProps> = (props) => (
   <StyledInput
     {...props}
     ref={props.inputRef}
-    placeholder={props.placeholder}
     placeholderTextColor={"gray"}
-    keyboardType={props.keyboardType}
-    returnKeyType={props.returnKeyType}
-    secureTextEntry={props.secureTextEntry}
-    onSubmitEditing={props.onSubmitEditing}
-    autoCapitalize={props.autoCapitalize}
-    onChangeText={props.onChangeText}
-    onKeyPress={props.onKeyPress}
     marginBottom={props.marginBottom ?? 0}
     hasError={props.hasError}
   />

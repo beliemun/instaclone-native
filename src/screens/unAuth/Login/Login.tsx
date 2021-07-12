@@ -99,6 +99,7 @@ const Login: React.FC<IProps> = ({ navigation, route }) => {
                 placeholder="Username"
                 returnKeyType="next"
                 autoCapitalize="none"
+                autoCorrect={false}
                 marginBottom={5}
                 onBlur={onBlur}
                 onChangeText={onChange}
