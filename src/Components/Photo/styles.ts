@@ -48,7 +48,7 @@ export const Likes = styled(BoldText)`
 export const Caption = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 `;
 export const CommentCount = styled.Text`
   margin-bottom: 10px;

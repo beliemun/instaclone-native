@@ -23,6 +23,8 @@ import { lightTheme, darkTheme } from "src/common/theme";
 import { useNavigation } from "@react-navigation/native";
 import { gql, useMutation } from "@apollo/client";
 import { FeedScreenNavigationProp } from "~/../@types/navigation/auth";
+import captionRender from "~/common/captionRender";
+import { seePhoto_seePhoto } from "types/__generated__/seePhoto";
 
 const TOGGLE_LIKE_MUTATION = gql`
   mutation toggleLike($id: Int!) {
@@ -33,40 +35,12 @@ const TOGGLE_LIKE_MUTATION = gql`
   }
 `;
 
-const renderFilterdCaption = (text: string) => {
-  let origin = text.replace(/#/gi, " #").replace(/  /gi, " ").trim();
-  const regEx = /#[a-zA-Z가-힣\u0E00-\u0E7Fぁ-んァ-ヾ一-龯a-záéíóúüñç]+/;
-  const result = origin.split(" ").map((word, index) => {
-    if (regEx.test(word)) {
-      const obj = word.match(regEx) ?? [];
-      if (obj[0] === word) {
-        // 해시태그가 정규표현식에 완전히 일치할 경우.
-        // 예) #天気 #ビスを展開
-        return <Shared.LinkWithText key={index} text={`${word} `} />;
-      } else {
-        // 정규표현식에 일치하지 않는 문자 포함 시
-        // 예) #天気、 #スポーツ?? #ビスを展開。
-        const rest = word.replace(obj[0], "");
-        return <Shared.LinkWithText key={index} text={obj[0]} />;
-      }
-    } else {
-      return <Text key={index}>{`${word} `}</Text>;
-    }
-  });
-  return result;
-};
+interface IProps {
+  photo: seeFeed_seeFeed | seePhoto_seePhoto;
+}
 
-const Photo: React.FC<seeFeed_seeFeed> = ({
-  id,
-  user,
-  file,
-  caption,
-  likeCount,
-  comments,
-  commentCount,
-  isMine,
-  isLiked,
-}) => {
+const Photo: React.FC<IProps> = ({ photo }) => {
+  const { id, user, file, caption, likeCount, commentCount, isLiked } = photo;
   const { width } = useWindowDimensions();
   const colorScheme = useColorScheme();
   const navigation = useNavigation<FeedScreenNavigationProp>();
@@ -127,7 +101,11 @@ const Photo: React.FC<seeFeed_seeFeed> = ({
               size={26}
             />
           </Action>
-          <Action onPress={() => navigation.navigate("Comments")}>
+          <Action
+            onPress={() =>
+              navigation.navigate("Comments", { photoId: id, user, caption })
+            }
+          >
             <Ionicons
               name="chatbubble-outline"
               color={
@@ -168,14 +146,20 @@ const Photo: React.FC<seeFeed_seeFeed> = ({
             >
               <Username>{user.userName}</Username>
             </Shared.Link>
-            {renderFilterdCaption(caption)}
+            {captionRender(caption)}
           </Caption>
         )}
         {commentCount !== 0 && (
-          <CommentCount>
-            {commentCount}
-            {commentCount === 1 ? " comment" : " comments"}
-          </CommentCount>
+          <Shared.Link
+            onPress={() =>
+              navigation.navigate("Comments", { photoId: id, user, caption })
+            }
+          >
+            <CommentCount>
+              {commentCount}
+              {commentCount === 1 ? " comment" : " comments"}
+            </CommentCount>
+          </Shared.Link>
         )}
       </Footer>
     </Container>

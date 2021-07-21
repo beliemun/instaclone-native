@@ -21,6 +21,7 @@ import {
   TouchableOpacity,
   useColorScheme,
   useWindowDimensions,
+  View,
 } from "react-native";
 import { darkTheme, lightTheme } from "~/common/theme";
 import { useState } from "react";
@@ -115,7 +116,7 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
   );
 
   const SearchItem: React.FC<searchPhotos_searchPhotos> = ({ id, file }) => (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Photo", { id })}>
       <Image source={{ uri: file }} style={{ width: size, height: size }} />
     </TouchableOpacity>
   );
@@ -123,24 +124,34 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
   const renderResult = () => {
     if (errors.keyword?.message) {
       return (
-        <Shared.AccentMessage type="error" message={errors.keyword.message} />
+        <View style={{ marginTop: 10 }}>
+          <Shared.AccentMessage type="error" message={errors.keyword.message} />
+        </View>
       );
     }
     if (!called) {
       return (
-        <Shared.AccentMessage type="info" message={"Search by keyword."} />
+        <View style={{ marginTop: 10 }}>
+          <Shared.AccentMessage type="info" message={"Search by keyword."} />
+        </View>
       );
     }
     if (loading) {
       return (
-        <ActivityIndicator
-          color={colorScheme === "light" ? lightTheme.accent : darkTheme.accent}
-        />
+        <View style={{ marginTop: 10 }}>
+          <ActivityIndicator
+            color={
+              colorScheme === "light" ? lightTheme.accent : darkTheme.accent
+            }
+          />
+        </View>
       );
     }
     if (data?.searchPhotos?.length === 0) {
       return (
-        <Shared.AccentMessage type="info" message={errors.error?.message} />
+        <View style={{ marginTop: 10 }}>
+          <Shared.AccentMessage type="info" message={errors.error?.message} />
+        </View>
       );
     }
     // 검색 중에 결과물 숨기기

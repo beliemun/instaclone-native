@@ -21,18 +21,6 @@ const FOLLOWUSER_MUTATION = gql`
     }
   }
 `;
-
-const renderButton = (isFollowing: boolean, isMe: boolean) => {
-  if (isMe) {
-    return null;
-  }
-  if (isFollowing) {
-    return;
-  } else {
-    return;
-  }
-};
-
 const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
   id,
   userName,
@@ -60,7 +48,6 @@ const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
       }
     },
   });
-
   const follow = (userName: string) =>
     followUser({
       variables: {
@@ -76,7 +63,6 @@ const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
         </AvatarContainer>
         <Username>{userName}</Username>
       </Link>
-      {renderButton(isFollowing, isMe)}
       {!isMe ? (
         isFollowing ? (
           <Following>Following</Following>

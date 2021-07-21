@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList } from "react-native";
 import { Container } from "./styles";
 import Shared from "@Components";
 import { gql, useQuery } from "@apollo/client";
@@ -8,10 +8,6 @@ import {
   PHOTO_FRAGMENT,
   USER_FRAGMENT,
 } from "@common/fragments";
-import {
-  FeedScreenNavigationProp,
-  FeedScreenRouteProp,
-} from "types/navigation/auth";
 import { seeFeed } from "types/__generated__/seeFeed";
 import Photo from "~/Components/Photo";
 
@@ -25,6 +21,14 @@ const FEED_QUERY = gql`
       comments {
         ...CommentFragment
       }
+      hashtags {
+        id
+        hashtag
+        createdAt
+        photos {
+          id
+        }
+      }
     }
   }
   ${USER_FRAGMENT}
@@ -32,19 +36,13 @@ const FEED_QUERY = gql`
   ${PHOTO_FRAGMENT}
 `;
 
-interface IProps {
-  navigation: FeedScreenNavigationProp;
-  route: FeedScreenRouteProp;
-}
-
-const Feed: React.FC<IProps> = ({ navigation, route }) => {
+const Feed: React.FC = () => {
   const { data, loading, refetch, fetchMore } = useQuery<seeFeed>(FEED_QUERY, {
     variables: {
       offset: 0,
     },
   });
   const [refreshing, setRefreshing] = useState(false);
-
   const refresh = async () => {
     if (loading) {
       return;
@@ -59,7 +57,7 @@ const Feed: React.FC<IProps> = ({ navigation, route }) => {
       <Shared.LoadingLayout loading={loading}>
         <FlatList
           data={data?.seeFeed}
-          renderItem={(item) => <Photo {...item.item} />}
+          renderItem={(item) => <Photo photo={item.item} />}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <Shared.ItemSeparator height={30} />}
@@ -72,7 +70,6 @@ const Feed: React.FC<IProps> = ({ navigation, route }) => {
               },
             })
           }
-          // onEndReachedThreshold={0.5}
         />
       </Shared.LoadingLayout>
     </Container>

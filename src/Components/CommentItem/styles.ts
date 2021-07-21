@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { BoldText } from "~/Components/Base";
+import { BoldText } from "../Base";
 
 export const Container = styled.View`
   flex: 1;

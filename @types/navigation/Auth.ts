@@ -1,6 +1,7 @@
 import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp, CompositeNavigationProp } from "@react-navigation/native";
+import { seeFeed_seeFeed_user } from "types/__generated__/seeFeed";
 
 export type AuthTabParamList = {
   Feed: undefined;
@@ -16,9 +17,13 @@ export type AuthStackParamList = {
   Notification: undefined;
   MyProfile: undefined;
   Profile: { id: number; userName: string };
-  Photo: undefined;
+  Photo: { id: number };
   Likes: { photoId: number };
-  Comments: undefined;
+  Comments: {
+    photoId: number;
+    user: seeFeed_seeFeed_user;
+    caption: string | null;
+  };
 };
 
 export type FeedScreenNavigationProp = CompositeNavigationProp<

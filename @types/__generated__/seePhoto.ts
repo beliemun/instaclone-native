@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: seeFeed
+// GraphQL query operation: seePhoto
 // ====================================================
 
-export interface seeFeed_seeFeed_user {
+export interface seePhoto_seePhoto_user {
   __typename: "User";
   id: number;
   userName: string;
@@ -16,7 +16,7 @@ export interface seeFeed_seeFeed_user {
   isMe: boolean;
 }
 
-export interface seeFeed_seeFeed_comments_user {
+export interface seePhoto_seePhoto_comments_user {
   __typename: "User";
   id: number;
   userName: string;
@@ -25,29 +25,29 @@ export interface seeFeed_seeFeed_comments_user {
   isMe: boolean;
 }
 
-export interface seeFeed_seeFeed_comments {
+export interface seePhoto_seePhoto_comments {
   __typename: "Comment";
   id: number;
-  user: seeFeed_seeFeed_comments_user;
+  user: seePhoto_seePhoto_comments_user;
   text: string;
   isMine: boolean;
   createdAt: string;
 }
 
-export interface seeFeed_seeFeed_hashtags_photos {
+export interface seePhoto_seePhoto_hashtags_photos {
   __typename: "Photo";
   id: number;
 }
 
-export interface seeFeed_seeFeed_hashtags {
+export interface seePhoto_seePhoto_hashtags {
   __typename: "Hashtag";
   id: number;
   hashtag: string;
   createdAt: string;
-  photos: (seeFeed_seeFeed_hashtags_photos | null)[] | null;
+  photos: (seePhoto_seePhoto_hashtags_photos | null)[] | null;
 }
 
-export interface seeFeed_seeFeed {
+export interface seePhoto_seePhoto {
   __typename: "Photo";
   id: number;
   file: string;
@@ -57,15 +57,15 @@ export interface seeFeed_seeFeed {
   isLiked: boolean;
   createdAt: string;
   isMine: boolean;
-  user: seeFeed_seeFeed_user;
-  comments: (seeFeed_seeFeed_comments | null)[] | null;
-  hashtags: (seeFeed_seeFeed_hashtags | null)[] | null;
+  user: seePhoto_seePhoto_user;
+  comments: (seePhoto_seePhoto_comments | null)[] | null;
+  hashtags: (seePhoto_seePhoto_hashtags | null)[] | null;
 }
 
-export interface seeFeed {
-  seeFeed: seeFeed_seeFeed[] | null;
+export interface seePhoto {
+  seePhoto: seePhoto_seePhoto | null;
 }
 
-export interface seeFeedVariables {
-  offset: number;
+export interface seePhotoVariables {
+  id: number;
 }
