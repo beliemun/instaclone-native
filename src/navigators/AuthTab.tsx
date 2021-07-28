@@ -7,13 +7,13 @@ import { darkTheme, lightTheme } from "@common/theme";
 import { Ionicons } from "@expo/vector-icons";
 import AuthStack from "./AuthStack";
 import { useColorScheme } from "react-native";
-import useLoggedInUser from "~/hooks/useLoggedInUser";
+import useUser from "~/hooks/useUser";
 
 const Tabs = createBottomTabNavigator<AuthTabParamList>();
 
 const Auth: React.FC = () => {
   const colorScheme = useColorScheme();
-  const { data } = useLoggedInUser();
+  const { data } = useUser();
 
   interface IProps {
     uri: string;
@@ -48,6 +48,7 @@ const Auth: React.FC = () => {
                 : darkTheme.backgroundColor,
           },
           showLabel: false,
+          keyboardHidesTabBar: true, //안드로이드에서 AvoidingView에 의해 키보드가 올라왔을 때 하단탭이 따라올라오는 것을 방지.
         }}
       >
         <Tabs.Screen

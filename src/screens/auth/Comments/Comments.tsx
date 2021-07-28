@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { FlatList, RefreshControl, View } from "react-native";
+import { FlatList, KeyboardAvoidingView, Platform, View } from "react-native";
 import Shared from "@Components";
+import { Container } from "./styles";
 import { gql, useQuery } from "@apollo/client";
 import { useRoute } from "@react-navigation/native";
 import { CommentsScreenRouteProp } from "types/navigation/auth";
 import { seePhotoComments } from "types/__generated__/seePhotoComments";
 import CommentItem from "~/Components/CommentItem";
+import CommentInput from "~/Components/CommentInput";
 
 const SEE_PHOTO_COMMENTS_QUERY = gql`
   query seePhotoComments($id: Int!, $offset: Int!) {
@@ -46,39 +48,46 @@ const Comments: React.FC = () => {
     setRefreshing(false);
   };
 
-  console.log("Comments:", route?.params?.photoId);
-  console.log(data);
+  // console.log("Comments:", route?.params?.photoId);
+  // console.log(data);
 
   return (
-    // <Shared.KeyboardAvoidingView>
-    <Shared.LoadingLayout loading={loading}>
-      <FlatList
-        style={{ width: "100%" }}
-        data={data?.seePhotoComments}
-        renderItem={(item) => <CommentItem {...item.item} />}
-        keyExtractor={(item, index) => index.toString()}
-        ListHeaderComponent={
-          <CommentItem
-            __typename="Comment"
-            id={0}
-            user={user}
-            text={caption ?? ""}
+    <KeyboardAvoidingView
+      behavior={"height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : -250}
+      style={{ flex: 1 }}
+    >
+      <Shared.LoadingLayout loading={loading}>
+        <Container>
+          <FlatList
+            style={{ width: "100%" }}
+            data={data?.seePhotoComments}
+            renderItem={(item) => <CommentItem {...item.item} />}
+            keyExtractor={(item, index) => index.toString()}
+            ListHeaderComponent={
+              <CommentItem
+                __typename="Comment"
+                id={0}
+                user={user}
+                text={caption ?? ""}
+              />
+            }
+            ItemSeparatorComponent={() => <Shared.ItemSeparator height={0} />}
+            refreshing={refreshing}
+            onRefresh={refresh}
+            onEndReached={() =>
+              fetchMore({
+                variables: {
+                  id: route?.params?.photoId,
+                  offset: data?.seePhotoComments?.length,
+                },
+              })
+            }
           />
-        }
-        ItemSeparatorComponent={() => <Shared.ItemSeparator height={0} />}
-        refreshing={refreshing}
-        onRefresh={refresh}
-        onEndReached={() =>
-          fetchMore({
-            variables: {
-              id: route?.params?.photoId,
-              offset: data?.seePhotoComments?.length,
-            },
-          })
-        }
-      />
-    </Shared.LoadingLayout>
-    // </Shared.KeyboardAvoidingView>
+          <CommentInput photoId={route?.params?.photoId} />
+        </Container>
+      </Shared.LoadingLayout>
+    </KeyboardAvoidingView>
   );
 };
 

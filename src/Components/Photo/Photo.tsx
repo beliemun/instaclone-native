@@ -1,5 +1,5 @@
 import React from "react";
-import { useWindowDimensions, Text } from "react-native";
+import { useWindowDimensions } from "react-native";
 import { seeFeed_seeFeed } from "~/../@types/__generated__/seeFeed";
 import {
   Container,
@@ -21,10 +21,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "react-native";
 import { lightTheme, darkTheme } from "src/common/theme";
 import { useNavigation } from "@react-navigation/native";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { FeedScreenNavigationProp } from "~/../@types/navigation/auth";
 import captionRender from "~/common/captionRender";
 import { seePhoto_seePhoto } from "types/__generated__/seePhoto";
+import CommentInput from "~/Components/CommentInput";
 
 const TOGGLE_LIKE_MUTATION = gql`
   mutation toggleLike($id: Int!) {
@@ -40,7 +41,16 @@ interface IProps {
 }
 
 const Photo: React.FC<IProps> = ({ photo }) => {
-  const { id, user, file, caption, likeCount, commentCount, isLiked } = photo;
+  const {
+    id,
+    user,
+    file,
+    caption,
+    likeCount,
+    commentCount,
+    isLiked,
+    latestComments,
+  } = photo;
   const { width } = useWindowDimensions();
   const colorScheme = useColorScheme();
   const navigation = useNavigation<FeedScreenNavigationProp>();
@@ -149,7 +159,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
             {captionRender(caption)}
           </Caption>
         )}
-        {commentCount !== 0 && (
+        {(commentCount == 1 || commentCount == 2) && (
           <Shared.Link
             onPress={() =>
               navigation.navigate("Comments", { photoId: id, user, caption })
@@ -161,7 +171,33 @@ const Photo: React.FC<IProps> = ({ photo }) => {
             </CommentCount>
           </Shared.Link>
         )}
+        {commentCount > 2 && (
+          <Shared.Link
+            onPress={() =>
+              navigation.navigate("Comments", { photoId: id, user, caption })
+            }
+          >
+            <CommentCount>{`View all ${commentCount} comments`}</CommentCount>
+          </Shared.Link>
+        )}
+        {latestComments?.length != 0 &&
+          latestComments?.map((comment) => (
+            <Comment key={comment.id}>
+              <Shared.Link
+                onPress={() =>
+                  navigation.navigate("Profile", {
+                    id: comment.user.id,
+                    userName: comment.user.userName,
+                  })
+                }
+              >
+                <Username>{comment.user.userName}</Username>
+              </Shared.Link>
+              {captionRender(comment.text)}
+            </Comment>
+          ))}
       </Footer>
+      <CommentInput photoId={id} />
     </Container>
   );
 };

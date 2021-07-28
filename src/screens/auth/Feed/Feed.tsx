@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Platform, KeyboardAvoidingView } from "react-native";
 import { Container } from "./styles";
 import Shared from "@Components";
 import { gql, useQuery } from "@apollo/client";
@@ -18,22 +18,14 @@ const FEED_QUERY = gql`
       user {
         ...UserFragment
       }
-      comments {
+      latestComments {
         ...CommentFragment
-      }
-      hashtags {
-        id
-        hashtag
-        createdAt
-        photos {
-          id
-        }
       }
     }
   }
   ${USER_FRAGMENT}
-  ${COMMENT_FRAGMENT}
   ${PHOTO_FRAGMENT}
+  ${COMMENT_FRAGMENT}
 `;
 
 const Feed: React.FC = () => {
@@ -53,26 +45,38 @@ const Feed: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Shared.LoadingLayout loading={loading}>
-        <FlatList
-          data={data?.seeFeed}
-          renderItem={(item) => <Photo photo={item.item} />}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <Shared.ItemSeparator height={30} />}
-          refreshing={refreshing}
-          onRefresh={refresh}
-          onEndReached={() =>
-            fetchMore({
-              variables: {
-                offset: data?.seeFeed?.length,
-              },
-            })
-          }
-        />
-      </Shared.LoadingLayout>
-    </Container>
+    <KeyboardAvoidingView
+      behavior={"height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 92 : -200}
+      style={{ flex: 1 }}
+    >
+      <Container>
+        <Shared.LoadingLayout loading={loading}>
+          <>
+            {data?.seeFeed && (
+              <FlatList
+                data={data?.seeFeed}
+                renderItem={(item) => <Photo photo={item.item} />}
+                keyExtractor={(item) => item.id.toString()}
+                showsVerticalScrollIndicator={false}
+                ItemSeparatorComponent={() => (
+                  <Shared.ItemSeparator height={30} />
+                )}
+                refreshing={refreshing}
+                onRefresh={refresh}
+                onEndReached={() =>
+                  fetchMore({
+                    variables: {
+                      offset: data?.seeFeed?.length,
+                    },
+                  })
+                }
+              />
+            )}
+          </>
+        </Shared.LoadingLayout>
+      </Container>
+    </KeyboardAvoidingView>
   );
 };
 

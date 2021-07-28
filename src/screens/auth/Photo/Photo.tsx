@@ -20,7 +20,7 @@ const SEE_PHOTO = gql`
       user {
         ...UserFragment
       }
-      comments {
+      latestComments {
         ...CommentFragment
       }
       hashtags {

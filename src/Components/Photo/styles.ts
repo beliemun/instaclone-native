@@ -41,6 +41,7 @@ export const Action = styled.TouchableOpacity`
 `;
 export const Footer = styled.View`
   padding: 10px;
+  padding-bottom: 5px;
 `;
 export const Likes = styled(BoldText)`
   margin-bottom: 10px;
@@ -51,7 +52,11 @@ export const Caption = styled.View`
   margin-bottom: 10px;
 `;
 export const CommentCount = styled.Text`
+  color: ${(props) => props.theme.borderColorDark};
   margin-bottom: 10px;
 `;
-export const Text = styled.Text``;
-export const Comment = styled.Text``;
+export const Comment = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 3px;
+`;

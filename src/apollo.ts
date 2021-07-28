@@ -41,16 +41,24 @@ const authLink = setContext((_, { headers }) => {
 // persistCache는 오프라인 상태에서도 cache로 읽어올 수 있는 데이터로 화면을 미리 구성할 수 있게 해준다.
 export const cache = new InMemoryCache({
   typePolicies: {
+    User: {
+      keyFields: (obj) => `User:${obj.userName}`,
+    },
     Query: {
       fields: {
         seeFeed: offsetLimitPagination(),
-        seePhotoLikes: offsetLimitPagination(),
+        // seePhotoLikes: {
+        //   keyArgs: false,
+        //   merge(existing = [], incomming = []) {
+        //     return [...existing, ...incomming];
+        //   },
+        // },
         seePhotoComments: offsetLimitPagination(),
         // 위 함수는 아래 코드를 간편하게 사용할 수 있도록 구현된 함수
         // seeFeed: {
         //   keyArgs: false,
         //   merge(existing = [], incoming = []) {
-        //     return [...existing, ...incoming];
+        //
         //   },
         // },
         // [중요]

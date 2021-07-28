@@ -70,8 +70,8 @@ const SharedStack: React.FC<IProps> = ({ screenName }) => {
         headerStyle: {
           backgroundColor:
             colorScheme === "light"
-              ? lightTheme.backgroundColor
-              : darkTheme.backgroundColor,
+              ? lightTheme.windowColor
+              : darkTheme.windowColor,
           shadowColor: "transparent", // for iOS
           elevation: 0, // for Android
         },

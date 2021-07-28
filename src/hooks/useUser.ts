@@ -12,7 +12,7 @@ const ME_QUERY = gql`
   }
 `;
 
-const useLoggedInUser = () => {
+const useUser = () => {
   const hasToken = useReactiveVar(isLoggedInVar);
   const { data } = useQuery<me>(ME_QUERY, {
     skip: !hasToken,
@@ -25,4 +25,4 @@ const useLoggedInUser = () => {
   return { data };
 };
 
-export default useLoggedInUser;
+export default useUser;

@@ -6,7 +6,7 @@ import {
   MyProfileScreenNavigationProp,
   MyProfileScreenRouteProp,
 } from "~/../@types/navigation/auth";
-import useLoggedInUser from "~/hooks/useLoggedInUser";
+import useUser from "~/hooks/useUser";
 
 interface IProps {
   navigation: MyProfileScreenNavigationProp;
@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const MyProfile: React.FC<IProps> = ({ navigation, route }) => {
-  const { data } = useLoggedInUser();
+  const { data } = useUser();
   useEffect(() => {
     if (data?.me?.userName)
       navigation.setOptions({

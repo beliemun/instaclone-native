@@ -16,7 +16,7 @@ export interface seePhoto_seePhoto_user {
   isMe: boolean;
 }
 
-export interface seePhoto_seePhoto_comments_user {
+export interface seePhoto_seePhoto_latestComments_user {
   __typename: "User";
   id: number;
   userName: string;
@@ -25,10 +25,10 @@ export interface seePhoto_seePhoto_comments_user {
   isMe: boolean;
 }
 
-export interface seePhoto_seePhoto_comments {
+export interface seePhoto_seePhoto_latestComments {
   __typename: "Comment";
   id: number;
-  user: seePhoto_seePhoto_comments_user;
+  user: seePhoto_seePhoto_latestComments_user;
   text: string;
   isMine: boolean;
   createdAt: string;
@@ -58,8 +58,8 @@ export interface seePhoto_seePhoto {
   createdAt: string;
   isMine: boolean;
   user: seePhoto_seePhoto_user;
-  comments: (seePhoto_seePhoto_comments | null)[] | null;
-  hashtags: (seePhoto_seePhoto_hashtags | null)[] | null;
+  latestComments: seePhoto_seePhoto_latestComments[] | null;
+  hashtags: seePhoto_seePhoto_hashtags[] | null;
 }
 
 export interface seePhoto {
