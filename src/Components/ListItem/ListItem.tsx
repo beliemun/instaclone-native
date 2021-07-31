@@ -11,16 +11,9 @@ import Shared from "@Components";
 import { seePhotoLikes_seePhotoLikes } from "types/__generated__/seePhotoLikes";
 import { LikesScreenNavigationProp } from "types/navigation/auth";
 import { useNavigation } from "@react-navigation/native";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { FOLLOWUSER_MUTATION } from "~/common/mutations";
 
-const FOLLOWUSER_MUTATION = gql`
-  mutation followUser($userName: String!) {
-    followUser(userName: $userName) {
-      ok
-      error
-    }
-  }
-`;
 const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
   id,
   userName,

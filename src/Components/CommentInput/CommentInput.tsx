@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { Container, Input, AvatarContainer, Avatar } from "./styles";
 import useUser from "~/hooks/useUser";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { COMMENT_FRAGMENT } from "~/common/fragments";
-
-const CREATE_COMMENT_MUTATION = gql`
-  mutation createComment($photoId: Int!, $text: String!) {
-    createComment(photoId: $photoId, text: $text) {
-      ok
-      error
-      id
-    }
-  }
-`;
+import { useRoute } from "@react-navigation/native";
+import { CommentsScreenRouteProp } from "types/navigation/auth";
+import { CREATE_COMMENT_MUTATION } from "~/common/mutations";
 
 interface IProp {
   photoId: number;
@@ -20,7 +13,10 @@ interface IProp {
 
 const CommentInput: React.FC<IProp> = ({ photoId }) => {
   const user = useUser();
+  const route = useRoute<CommentsScreenRouteProp>();
   const [text, setText] = useState("");
+  const { name } = useRoute();
+
   const [createComment, { loading }] = useMutation(CREATE_COMMENT_MUTATION, {
     variables: {
       photoId,
@@ -47,14 +43,28 @@ const CommentInput: React.FC<IProp> = ({ photoId }) => {
           fragmentName: "CommentFragment",
           data: newComment,
         });
-        cache.modify({
-          id: `Photo:${photoId}`,
-          fields: {
-            latestComments: () => newCache,
-          },
-        });
+        if (name == "Feed") {
+          cache.modify({
+            id: `Photo:${photoId}`,
+            fields: {
+              comments: () => newCache,
+            },
+          });
+        } else if (name == "Comments") {
+          console.log("Comments Test");
+          // TODO: Comment 화면에서 입력 가능해야 함
+        }
       }
     },
+    // refetchQueries: () => [
+    //   {
+    //     query: SEE_PHOTO_COMMENTS_QUERY,
+    //     variables: {
+    //       id: route?.params?.photoId,
+    //       offset: 0,
+    //     },
+    //   },
+    // ],
   });
 
   const onSubmit = () => {

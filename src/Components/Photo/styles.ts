@@ -44,6 +44,7 @@ export const Footer = styled.View`
   padding-bottom: 5px;
 `;
 export const Likes = styled(BoldText)`
+  color:${(props) => props.theme.color}
   margin-bottom: 10px;
 `;
 export const Caption = styled.View`
@@ -57,6 +58,5 @@ export const CommentCount = styled.Text`
 `;
 export const Comment = styled.View`
   flex-direction: row;
-  flex-wrap: wrap;
   margin-bottom: 3px;
 `;

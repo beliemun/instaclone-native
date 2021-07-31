@@ -5,7 +5,6 @@ import {
   Avatar,
   CaptionContainer,
   Username,
-  Link,
 } from "./styles";
 import Shared from "@Components";
 import { seePhotoComments_seePhotoComments } from "types/__generated__/seePhotoComments";
@@ -21,11 +20,13 @@ const CommentItem: React.FC<seePhotoComments_seePhotoComments> = ({
 
   return (
     <Container>
-      <Link onPress={() => navigation.navigate("Profile", { id, userName })}>
+      <Shared.Link
+        onPress={() => navigation.navigate("Profile", { id, userName })}
+      >
         <AvatarContainer>
           <Avatar source={{ uri: avatar ?? undefined }} />
         </AvatarContainer>
-      </Link>
+      </Shared.Link>
       <CaptionContainer>
         <Shared.Link
           onPress={() =>

@@ -10,19 +10,6 @@ export const USER_FRAGMENT = gql`
   }
 `;
 
-export const PHOTO_FRAGMENT = gql`
-  fragment PhotoFragment on Photo {
-    id
-    file
-    caption
-    likeCount
-    commentCount
-    isLiked
-    createdAt
-    isMine
-  }
-`;
-
 export const COMMENT_FRAGMENT = gql`
   fragment CommentFragment on Comment {
     id
@@ -34,4 +21,37 @@ export const COMMENT_FRAGMENT = gql`
     createdAt
   }
   ${USER_FRAGMENT}
+`;
+
+export const HASHTAG_FRAGMENT = gql`
+  fragment HashtagFragment on Hashtag {
+    id
+    hashtag
+    createdAt
+    photos {
+      id
+    }
+  }
+`;
+
+export const PHOTO_FRAGMENT = gql`
+  fragment PhotoFragment on Photo {
+    id
+    file
+    caption
+    likeCount
+    commentCount
+    comments {
+      ...CommentFragment
+    }
+    isLiked
+    createdAt
+    isMine
+    hashtags {
+      ...HashtagFragment
+    }
+  }
+  ${USER_FRAGMENT}
+  ${COMMENT_FRAGMENT}
+  ${HASHTAG_FRAGMENT}
 `;

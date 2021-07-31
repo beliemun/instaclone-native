@@ -2,9 +2,7 @@ import styled from "styled-components/native";
 import { BoldText } from "../Base";
 
 export const Container = styled.View`
-  flex: 1;
   flex-direction: row;
-  align-items: flex-start;
   background-color: ${(props) => props.theme.windowColor};
   border: 1px solid ${(props) => props.theme.borderColorLight};
   border-left-width: 0px;
@@ -36,9 +34,4 @@ export const CaptionContainer = styled.View`
 export const Username = styled(BoldText)`
   color: ${(props) => props.theme.color};
   margin-right: 5px;
-`;
-
-export const Link = styled.TouchableOpacity`
-  flex-direction: row;
-  align-items: center;
 `;

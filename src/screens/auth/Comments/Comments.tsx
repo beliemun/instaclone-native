@@ -2,29 +2,18 @@ import React, { useState } from "react";
 import { FlatList, KeyboardAvoidingView, Platform, View } from "react-native";
 import Shared from "@Components";
 import { Container } from "./styles";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRoute } from "@react-navigation/native";
 import { CommentsScreenRouteProp } from "types/navigation/auth";
 import { seePhotoComments } from "types/__generated__/seePhotoComments";
 import CommentItem from "~/Components/CommentItem";
 import CommentInput from "~/Components/CommentInput";
-
-const SEE_PHOTO_COMMENTS_QUERY = gql`
-  query seePhotoComments($id: Int!, $offset: Int!) {
-    seePhotoComments(id: $id, offset: $offset) {
-      id
-      user {
-        id
-        userName
-        avatar
-      }
-      text
-    }
-  }
-`;
+import useUser from "~/hooks/useUser";
+import { SEE_PHOTO_COMMENTS_QUERY } from "~/common/queries";
 
 const Comments: React.FC = () => {
   const route = useRoute<CommentsScreenRouteProp>();
+  const loggedInUser = useUser();
   const {
     params: { user, caption },
   } = route;
@@ -48,9 +37,6 @@ const Comments: React.FC = () => {
     setRefreshing(false);
   };
 
-  // console.log("Comments:", route?.params?.photoId);
-  // console.log(data);
-
   return (
     <KeyboardAvoidingView
       behavior={"height"}
@@ -70,6 +56,8 @@ const Comments: React.FC = () => {
                 id={0}
                 user={user}
                 text={caption ?? ""}
+                isMine={loggedInUser.data?.me?.userName == user.userName}
+                createdAt=""
               />
             }
             ItemSeparatorComponent={() => <Shared.ItemSeparator height={0} />}

@@ -1,6 +1,5 @@
 import React from "react";
 import { useWindowDimensions } from "react-native";
-import { seeFeed_seeFeed } from "~/../@types/__generated__/seeFeed";
 import {
   Container,
   Header,
@@ -21,20 +20,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "react-native";
 import { lightTheme, darkTheme } from "src/common/theme";
 import { useNavigation } from "@react-navigation/native";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { FeedScreenNavigationProp } from "~/../@types/navigation/auth";
 import captionRender from "~/common/captionRender";
-import { seePhoto_seePhoto } from "types/__generated__/seePhoto";
 import CommentInput from "~/Components/CommentInput";
-
-const TOGGLE_LIKE_MUTATION = gql`
-  mutation toggleLike($id: Int!) {
-    toggleLike(id: $id) {
-      ok
-      error
-    }
-  }
-`;
+import { TOGGLE_LIKE_MUTATION } from "~/common/mutations";
+import { seeFeed_seeFeed } from "~/../@types/__generated__/seeFeed";
+import { seePhoto_seePhoto } from "types/__generated__/seePhoto";
 
 interface IProps {
   photo: seeFeed_seeFeed | seePhoto_seePhoto;
@@ -49,8 +41,9 @@ const Photo: React.FC<IProps> = ({ photo }) => {
     likeCount,
     commentCount,
     isLiked,
-    latestComments,
+    comments,
   } = photo;
+
   const { width } = useWindowDimensions();
   const colorScheme = useColorScheme();
   const navigation = useNavigation<FeedScreenNavigationProp>();
@@ -91,9 +84,9 @@ const Photo: React.FC<IProps> = ({ photo }) => {
         }
       >
         <AvatarContainer>
-          <Avatar source={{ uri: user.avatar ?? undefined }} />
+          <Avatar source={{ uri: user?.avatar ?? undefined }} />
         </AvatarContainer>
-        <Username>{user.userName}</Username>
+        <Username>{user?.userName}</Username>
       </Header>
       <File source={{ uri: file }} width={width} height={width} />
       <Footer>
@@ -180,21 +173,25 @@ const Photo: React.FC<IProps> = ({ photo }) => {
             <CommentCount>{`View all ${commentCount} comments`}</CommentCount>
           </Shared.Link>
         )}
-        {latestComments?.length != 0 &&
-          latestComments?.map((comment) => (
-            <Comment key={comment.id}>
-              <Shared.Link
-                onPress={() =>
-                  navigation.navigate("Profile", {
-                    id: comment.user.id,
-                    userName: comment.user.userName,
-                  })
-                }
-              >
-                <Username>{comment.user.userName}</Username>
-              </Shared.Link>
-              {captionRender(comment.text)}
-            </Comment>
+        {comments?.length != 0 &&
+          comments?.map((comment, index) => (
+            <React.Fragment key={comment.id}>
+              {index < 2 && (
+                <Comment key={comment.id}>
+                  <Shared.Link
+                    onPress={() =>
+                      navigation.navigate("Profile", {
+                        id: comment.user.id,
+                        userName: comment.user.userName,
+                      })
+                    }
+                  >
+                    <Username>{comment.user.userName}</Username>
+                  </Shared.Link>
+                  {captionRender(comment.text)}
+                </Comment>
+              )}
+            </React.Fragment>
           ))}
       </Footer>
       <CommentInput photoId={id} />

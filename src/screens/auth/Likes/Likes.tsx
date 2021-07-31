@@ -3,19 +3,10 @@ import Shared from "@Components";
 import { FlatList } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { LikesScreenRouteProp } from "types/navigation/auth";
-import { gql, useQuery } from "@apollo/client";
-import { USER_FRAGMENT } from "@common/fragments";
+import { useQuery } from "@apollo/client";
 import { seePhotoLikes } from "types/__generated__/seePhotoLikes";
 import ListItem from "~/Components/ListItem";
-
-const LIKES_QUERY = gql`
-  query seePhotoLikes($id: Int!, $offset: Int!) {
-    seePhotoLikes(id: $id, offset: $offset) {
-      ...UserFragment
-    }
-  }
-  ${USER_FRAGMENT}
-`;
+import { LIKES_QUERY } from "~/common/queries";
 
 const Likes: React.FC = () => {
   const route = useRoute<LikesScreenRouteProp>();
@@ -27,10 +18,6 @@ const Likes: React.FC = () => {
         offset: 0,
       },
       skip: !route?.params?.photoId,
-      onCompleted: (data) => {
-        console.log("onCompleted:", route?.params?.photoId);
-        console.log(data.seePhotoLikes);
-      },
     }
   );
   const [refreshing, setRefreshing] = useState(false);
@@ -40,8 +27,6 @@ const Likes: React.FC = () => {
     }
     setRefreshing(true);
     await refetch();
-    console.log("Refetch:", route?.params?.photoId);
-    console.log(data?.seePhotoLikes);
     setRefreshing(false);
   };
   return (
