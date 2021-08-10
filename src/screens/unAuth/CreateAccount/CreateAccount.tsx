@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { InputContainer } from "./styles";
+import * as CS from "./styles";
 import Shared from "@Components";
 import RegEx from "@common/rules";
 import { gql, useMutation } from "@apollo/client";
@@ -100,7 +100,7 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
     <Shared.KeyboardAvoidingView>
       <Shared.CenterView>
         <Shared.Logo maxWidth={"50%"} />
-        <InputContainer>
+        <CS.Container>
           <Controller
             control={control}
             name="firstName"
@@ -109,7 +109,7 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
               pattern: RegEx.onlyAlphabet("First Name"),
             }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 inputRef={fisrtNameRef}
                 placeholder="First Name"
                 returnKeyType="next"
@@ -135,7 +135,7 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
             name="lastName"
             rules={{ pattern: RegEx.onlyAlphabet("Last Name") }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 inputRef={lastNameRef}
                 placeholder="Last Name"
                 returnKeyType="next"
@@ -165,7 +165,7 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
               minLength: RegEx.minLength("User Name", 4),
             }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 inputRef={userNameRef}
                 placeholder="Username"
                 returnKeyType="next"
@@ -194,7 +194,7 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
               pattern: RegEx.foremail(),
             }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 inputRef={emailRef}
                 placeholder="Email"
                 returnKeyType="next"
@@ -223,7 +223,7 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
               minLength: RegEx.minLength("Password", 4),
             }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 inputRef={passwordRef}
                 placeholder="Password"
                 returnKeyType="done"
@@ -246,16 +246,15 @@ const CreateAccount: React.FC<IProps> = ({ navigation, route }) => {
             type={"error"}
             message={errors?.error?.message}
           />
-          <View style={{ marginTop: 30 }}>
+          <CS.ButtonContainer>
             <Shared.ButtonWithText
               text={"Create Account"}
               disabled={!isValid}
               loading={loading}
-              isFullWidth={true}
               onPress={handleSubmit(onValid)}
             />
-          </View>
-        </InputContainer>
+          </CS.ButtonContainer>
+        </CS.Container>
       </Shared.CenterView>
     </Shared.KeyboardAvoidingView>
   );

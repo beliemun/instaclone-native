@@ -78,8 +78,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
       <Header
         onPress={() =>
           navigation.navigate("Profile", {
-            id: user.id,
-            userName: user.userName,
+            user,
           })
         }
       >
@@ -142,8 +141,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
             <Shared.Link
               onPress={() =>
                 navigation.navigate("Profile", {
-                  id: user.id,
-                  userName: user.userName,
+                  user,
                 })
               }
             >
@@ -181,8 +179,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
                   <Shared.Link
                     onPress={() =>
                       navigation.navigate("Profile", {
-                        id: comment.user.id,
-                        userName: comment.user.userName,
+                        user: comment.user,
                       })
                     }
                   >
@@ -194,7 +191,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
             </React.Fragment>
           ))}
       </Footer>
-      <CommentInput photoId={id} />
+      <CommentInput photoId={id} refresh={() => null} type={"Photo"} />
     </Container>
   );
 };

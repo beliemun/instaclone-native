@@ -18,7 +18,7 @@ interface IProps {
   children: React.ReactChild;
 }
 
-export const LoadingLayout: React.FC<IProps> = ({ loading, children }) => {
+const LoadingLayout: React.FC<IProps> = ({ loading, children }) => {
   const colorScheme = useColorScheme();
   return loading ? (
     <Container>
@@ -30,3 +30,5 @@ export const LoadingLayout: React.FC<IProps> = ({ loading, children }) => {
     <Container>{children}</Container>
   );
 };
+
+export default LoadingLayout;

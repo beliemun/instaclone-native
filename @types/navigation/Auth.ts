@@ -16,7 +16,7 @@ export type AuthStackParamList = {
   Search: undefined;
   Notification: undefined;
   MyProfile: undefined;
-  Profile: { id: number; userName: string };
+  Profile: { user: seeFeed_seeFeed_user };
   Photo: { id: number };
   Likes: { photoId: number };
   Comments: {

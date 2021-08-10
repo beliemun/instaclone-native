@@ -6,16 +6,17 @@ import { COMMENT_FRAGMENT } from "~/common/fragments";
 import { useRoute } from "@react-navigation/native";
 import { CommentsScreenRouteProp } from "types/navigation/auth";
 import { CREATE_COMMENT_MUTATION } from "~/common/mutations";
+import { CommentInputType } from "types/common";
 
 interface IProp {
   photoId: number;
+  refresh: () => Promise<void> | null;
+  type: CommentInputType;
 }
 
-const CommentInput: React.FC<IProp> = ({ photoId }) => {
+const CommentInput: React.FC<IProp> = ({ photoId, refresh, type }) => {
   const user = useUser();
-  const route = useRoute<CommentsScreenRouteProp>();
   const [text, setText] = useState("");
-  const { name } = useRoute();
 
   const [createComment, { loading }] = useMutation(CREATE_COMMENT_MUTATION, {
     variables: {
@@ -43,28 +44,19 @@ const CommentInput: React.FC<IProp> = ({ photoId }) => {
           fragmentName: "CommentFragment",
           data: newComment,
         });
-        if (name == "Feed") {
-          cache.modify({
-            id: `Photo:${photoId}`,
-            fields: {
-              comments: () => newCache,
+        cache.modify({
+          id: `Photo:${photoId}`,
+          fields: {
+            comments: (prev) => {
+              return [newCache, ...prev].slice(0, 2);
             },
-          });
-        } else if (name == "Comments") {
-          console.log("Comments Test");
-          // TODO: Comment 화면에서 입력 가능해야 함
+          },
+        });
+        if (type === "Comments") {
+          refresh();
         }
       }
     },
-    // refetchQueries: () => [
-    //   {
-    //     query: SEE_PHOTO_COMMENTS_QUERY,
-    //     variables: {
-    //       id: route?.params?.photoId,
-    //       offset: 0,
-    //     },
-    //   },
-    // ],
   });
 
   const onSubmit = () => {

@@ -13,12 +13,12 @@ export const USER_FRAGMENT = gql`
 export const COMMENT_FRAGMENT = gql`
   fragment CommentFragment on Comment {
     id
-    user {
-      ...UserFragment
-    }
     text
     isMine
     createdAt
+    user {
+      ...UserFragment
+    }
   }
   ${USER_FRAGMENT}
 `;
@@ -41,17 +41,12 @@ export const PHOTO_FRAGMENT = gql`
     caption
     likeCount
     commentCount
-    comments {
-      ...CommentFragment
-    }
     isLiked
     createdAt
     isMine
-    hashtags {
-      ...HashtagFragment
+    user {
+      ...UserFragment
     }
   }
   ${USER_FRAGMENT}
-  ${COMMENT_FRAGMENT}
-  ${HASHTAG_FRAGMENT}
 `;

@@ -21,7 +21,7 @@ export const logUserOut = async () => {
   await AsyncStorage.clear();
   isLoggedInVar(false);
   tokenVar("");
-  client.resetStore();
+  await client.resetStore();
 };
 
 const httpLink = createHttpLink({
@@ -56,6 +56,18 @@ export const cache = new InMemoryCache({
         // },
         seePhotoLikes: offsetLimitPagination(["id"]),
         seePhotoComments: offsetLimitPagination(["id"]),
+        // seePhotoComments: {
+        //   keyArgs: ["id"],
+        //   merge(existing, incoming, { args: { offset } }) {
+        //     console.log("offset:", offset);
+        //     // Slicing is necessary because the existing data is immutable, and frozen in development.
+        //     const merged = existing ? existing.slice(0) : [];
+        //     for (let i = 0; i < incoming.length; i++) {
+        //       merged[offset + i] = incoming[i];
+        //     }
+        //     return merged;
+        //   },
+        // },
         // [중요]
         // keyArgs를 false로 하면 해당쿼리는 어떤 Args(id)를 넣어 보내던지 하나로 합쳐버린다. Web Chache에서만 확인 가능.
         // 따라서 포스트마다 캐시를 하고 싶다면 KeyArgs는 id를 넣어서 어떤 기준으로 포스트를 나누어 캐시할 것인지 명시해줘야 한다.

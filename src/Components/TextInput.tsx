@@ -22,7 +22,7 @@ interface IProps extends TextInputProps {
   hasError: boolean;
 }
 
-export const Input: React.FC<IProps> = (props) => (
+const TextInput: React.FC<IProps> = (props) => (
   <StyledInput
     {...props}
     ref={props.inputRef}
@@ -31,3 +31,5 @@ export const Input: React.FC<IProps> = (props) => (
     hasError={props.hasError}
   />
 );
+
+export default TextInput;

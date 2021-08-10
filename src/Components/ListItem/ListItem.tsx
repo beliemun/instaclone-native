@@ -13,14 +13,10 @@ import { LikesScreenNavigationProp } from "types/navigation/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import { FOLLOWUSER_MUTATION } from "~/common/mutations";
-
-const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
-  id,
-  userName,
-  avatar,
-  isFollowing,
-  isMe,
-}) => {
+interface IProps {
+  user: seePhotoLikes_seePhotoLikes;
+}
+const ListItem: React.FC<IProps> = ({ user }) => {
   const navigation = useNavigation<LikesScreenNavigationProp>();
   const [followUser, { loading }] = useMutation(FOLLOWUSER_MUTATION, {
     update: (cache, result) => {
@@ -31,7 +27,7 @@ const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
       } = result;
       if (ok) {
         cache.modify({
-          id: `User:${id}`,
+          id: `User:${user.id}`,
           fields: {
             isFollowing(prev) {
               return !prev;
@@ -50,18 +46,18 @@ const ListItem: React.FC<seePhotoLikes_seePhotoLikes> = ({
 
   return (
     <Container>
-      <Link onPress={() => navigation.navigate("Profile", { id, userName })}>
+      <Link onPress={() => navigation.navigate("Profile", { user })}>
         <AvatarContainer>
-          <Avatar source={{ uri: avatar ?? undefined }} />
+          <Avatar source={{ uri: user.avatar ?? undefined }} />
         </AvatarContainer>
-        <Username>{userName}</Username>
+        <Username>{user.userName}</Username>
       </Link>
-      {!isMe ? (
-        isFollowing ? (
+      {!user.isMe ? (
+        user.isFollowing ? (
           <Following>Following</Following>
         ) : (
           <Shared.ButtonWithText
-            onPress={() => follow(userName)}
+            onPress={() => follow(user.userName)}
             text="Follow"
             loading={loading}
           />

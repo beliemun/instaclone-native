@@ -13,16 +13,14 @@ import { CommentsScreenNavigationProp } from "types/navigation/auth";
 import captionRender from "~/common/captionRender";
 
 const CommentItem: React.FC<seePhotoComments_seePhotoComments> = ({
-  user: { id, userName, avatar },
+  user,
   text,
 }) => {
   const navigation = useNavigation<CommentsScreenNavigationProp>();
-
+  const { userName, avatar } = user;
   return (
     <Container>
-      <Shared.Link
-        onPress={() => navigation.navigate("Profile", { id, userName })}
-      >
+      <Shared.Link onPress={() => navigation.navigate("Profile", { user })}>
         <AvatarContainer>
           <Avatar source={{ uri: avatar ?? undefined }} />
         </AvatarContainer>
@@ -31,8 +29,7 @@ const CommentItem: React.FC<seePhotoComments_seePhotoComments> = ({
         <Shared.Link
           onPress={() =>
             navigation.navigate("Profile", {
-              id,
-              userName,
+              user,
             })
           }
         >

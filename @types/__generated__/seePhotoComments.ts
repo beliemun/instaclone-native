@@ -19,10 +19,10 @@ export interface seePhotoComments_seePhotoComments_user {
 export interface seePhotoComments_seePhotoComments {
   __typename: "Comment";
   id: number;
-  user: seePhotoComments_seePhotoComments_user;
   text: string;
   isMine: boolean;
   createdAt: string;
+  user: seePhotoComments_seePhotoComments_user;
 }
 
 export interface seePhotoComments {
@@ -32,4 +32,5 @@ export interface seePhotoComments {
 export interface seePhotoCommentsVariables {
   id: number;
   offset: number;
+  take?: number | null;
 }

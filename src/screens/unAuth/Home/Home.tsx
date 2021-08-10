@@ -1,11 +1,10 @@
 import React from "react";
 import Shared from "@Components";
-import { InputContainer } from "./styles";
+import * as CS from "./styles";
 import {
   HomeScreenNavigationProp,
   HomeScreenRouteProp,
 } from "~/../@types/navigation/unAuth";
-import { View } from "react-native";
 
 interface IProps {
   navigation: HomeScreenNavigationProp;
@@ -18,16 +17,17 @@ const Home: React.FC<IProps> = ({ navigation, route }) => {
   return (
     <Shared.CenterView>
       <Shared.Logo maxWidth={"50%"} />
-      <InputContainer>
-        <Shared.ButtonWithText
-          text={"Create New Account"}
-          isFullWidth={true}
-          onPress={goToCreateAccount}
-        />
-      </InputContainer>
-      <View style={{ margin: 10 }}>
-        <Shared.LinkWithText onPress={goToLogin} text={"Login"} />
-      </View>
+      <CS.Container>
+        <CS.ButtonContainer>
+          <Shared.ButtonWithText
+            text={"Create New Account"}
+            onPress={goToCreateAccount}
+          />
+        </CS.ButtonContainer>
+        <CS.ButtonContainer>
+          <Shared.LinkWithText onPress={goToLogin} text={"Login"} />
+        </CS.ButtonContainer>
+      </CS.Container>
     </Shared.CenterView>
   );
 };

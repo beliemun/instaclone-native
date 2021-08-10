@@ -1,2 +1,2 @@
-import Serach from "./Serach";
+import Serach from "./Search";
 export default Serach;

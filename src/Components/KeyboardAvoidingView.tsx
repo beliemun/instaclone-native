@@ -6,7 +6,7 @@ import {
   Keyboard,
 } from "react-native";
 
-export const KeyboardAvoidingView: React.FC = ({ children }) => (
+const KeyboardAvoidingView: React.FC = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     <View
       behavior={"padding"}
@@ -17,3 +17,5 @@ export const KeyboardAvoidingView: React.FC = ({ children }) => (
     </View>
   </TouchableWithoutFeedback>
 );
+
+export default KeyboardAvoidingView;

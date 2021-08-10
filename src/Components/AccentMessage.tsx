@@ -15,5 +15,7 @@ const Container = styled.Text<IStlyedProps>`
   text-align: center;
   margin-bottom: 10px;
 `;
-export const AccentMessage: React.FC<IProps> = ({ type, message }) =>
+const AccentMessage: React.FC<IProps> = ({ type, message }) =>
   message ? <Container type={type}>{message}</Container> : null;
+
+export default AccentMessage;

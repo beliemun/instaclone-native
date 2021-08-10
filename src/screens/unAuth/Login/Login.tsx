@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { InputContainer } from "./styles";
+import * as CS from "./styles";
 import Shared from "@Components";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect } from "react";
@@ -10,7 +10,6 @@ import {
   LoginScreenNavigationProp,
   LoginScreenRouteProp,
 } from "~/../@types/navigation/unAuth";
-import { View } from "react-native";
 
 const LOGIN_MUTATION = gql`
   mutation login($userName: String!, $password: String!) {
@@ -84,7 +83,7 @@ const Login: React.FC<IProps> = ({ navigation, route }) => {
     <Shared.KeyboardAvoidingView>
       <Shared.CenterView>
         <Shared.Logo maxWidth={"50%"} />
-        <InputContainer>
+        <CS.Container>
           <Controller
             control={control}
             name="userName"
@@ -94,7 +93,7 @@ const Login: React.FC<IProps> = ({ navigation, route }) => {
               minLength: RegEx.minLength("User Name", 4),
             }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 inputRef={userNameRef}
                 placeholder="Username"
                 returnKeyType="next"
@@ -123,7 +122,7 @@ const Login: React.FC<IProps> = ({ navigation, route }) => {
               minLength: RegEx.minLength("Password", 4),
             }}
             render={({ field: { onBlur, onChange, value } }) => (
-              <Shared.Input
+              <Shared.TextInput
                 secureTextEntry
                 inputRef={passwordRef}
                 placeholder="Password"
@@ -143,16 +142,16 @@ const Login: React.FC<IProps> = ({ navigation, route }) => {
             message={errors?.password?.message}
           />
           <Shared.AccentMessage type="error" message={errors?.error?.message} />
-          <View style={{ marginTop: 30 }}>
+
+          <CS.ButtonContainer>
             <Shared.ButtonWithText
               text="Login"
               disabled={!isValid}
               loading={loading}
-              isFullWidth={true}
               onPress={handleSubmit(onValid)}
             />
-          </View>
-        </InputContainer>
+          </CS.ButtonContainer>
+        </CS.Container>
       </Shared.CenterView>
     </Shared.KeyboardAvoidingView>
   );

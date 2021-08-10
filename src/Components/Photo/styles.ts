@@ -44,7 +44,7 @@ export const Footer = styled.View`
   padding-bottom: 5px;
 `;
 export const Likes = styled(BoldText)`
-  color:${(props) => props.theme.color}
+  color: ${(props) => props.theme.color};
   margin-bottom: 10px;
 `;
 export const Caption = styled.View`

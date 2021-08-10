@@ -18,6 +18,15 @@ export const FOLLOWUSER_MUTATION = gql`
   }
 `;
 
+export const UNFOLLOWUSER_MUTATION = gql`
+  mutation unfollowUser($userName: String!) {
+    unfollowUser(userName: $userName) {
+      ok
+      error
+    }
+  }
+`;
+
 export const CREATE_COMMENT_MUTATION = gql`
   mutation createComment($photoId: Int!, $text: String!) {
     createComment(photoId: $photoId, text: $text) {

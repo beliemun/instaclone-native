@@ -7,6 +7,15 @@
 // GraphQL query operation: seePhoto
 // ====================================================
 
+export interface seePhoto_seePhoto_user {
+  __typename: "User";
+  id: number;
+  userName: string;
+  avatar: string | null;
+  isFollowing: boolean;
+  isMe: boolean;
+}
+
 export interface seePhoto_seePhoto_comments_user {
   __typename: "User";
   id: number;
@@ -19,32 +28,10 @@ export interface seePhoto_seePhoto_comments_user {
 export interface seePhoto_seePhoto_comments {
   __typename: "Comment";
   id: number;
-  user: seePhoto_seePhoto_comments_user;
   text: string;
   isMine: boolean;
   createdAt: string;
-}
-
-export interface seePhoto_seePhoto_hashtags_photos {
-  __typename: "Photo";
-  id: number;
-}
-
-export interface seePhoto_seePhoto_hashtags {
-  __typename: "Hashtag";
-  id: number;
-  hashtag: string;
-  createdAt: string;
-  photos: (seePhoto_seePhoto_hashtags_photos | null)[] | null;
-}
-
-export interface seePhoto_seePhoto_user {
-  __typename: "User";
-  id: number;
-  userName: string;
-  avatar: string | null;
-  isFollowing: boolean;
-  isMe: boolean;
+  user: seePhoto_seePhoto_comments_user;
 }
 
 export interface seePhoto_seePhoto {
@@ -54,12 +41,11 @@ export interface seePhoto_seePhoto {
   caption: string | null;
   likeCount: number;
   commentCount: number;
-  comments: seePhoto_seePhoto_comments[] | null;
   isLiked: boolean;
   createdAt: string;
   isMine: boolean;
-  hashtags: seePhoto_seePhoto_hashtags[] | null;
   user: seePhoto_seePhoto_user;
+  comments: seePhoto_seePhoto_comments[] | null;
 }
 
 export interface seePhoto {

@@ -34,7 +34,7 @@ const Likes: React.FC = () => {
       <FlatList
         style={{ width: "100%" }}
         data={data?.seePhotoLikes}
-        renderItem={(item) => <ListItem {...item.item} />}
+        renderItem={(item) => <ListItem user={item.item} />}
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => <Shared.ItemSeparator height={0} />}
         refreshing={refreshing}

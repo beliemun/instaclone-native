@@ -42,7 +42,7 @@ const renderScreen = (screenName: string) => {
     case "Notification":
       return <Stacks.Screen name="Notification" component={Notification} />;
     case "MyProfile":
-      return <Stacks.Screen name="MyProfile" component={MyProfile} />;
+      return <Stacks.Screen name="MyProfile" component={Profile} />;
     default:
       return null;
   }

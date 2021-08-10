@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
-import { Container } from "./styles";
+import * as CS from "./styles";
 import Shared from "@Components";
 import {
   ProfileScreenNavigationProp,
   ProfileScreenRouteProp,
 } from "types/navigation/auth";
+import useUser from "~/hooks/useUser";
+import { useQuery } from "@apollo/client";
+import { SEE_PROFILE_QUERY } from "~/common/queries";
+import { seeProfile } from "types/__generated__/seeProfile";
 
 interface IProps {
   navigation: ProfileScreenNavigationProp;
@@ -12,16 +16,42 @@ interface IProps {
 }
 
 const Profile: React.FC<IProps> = ({ navigation, route }) => {
+  const { name } = route;
+  const userName =
+    name === "Profile"
+      ? route.params.user.userName
+      : useUser().data?.me?.userName;
+  const { data, loading } = useQuery<seeProfile>(SEE_PROFILE_QUERY, {
+    variables: { userName },
+  });
+
   useEffect(() => {
-    if (route?.params?.userName)
-      navigation.setOptions({
-        title: `${route?.params?.userName}'s Profile`,
-      });
+    navigation.setOptions({ title: `${userName}'s Profile` });
   }, []);
+
   return (
-    <Container>
-      <Shared.AccentMessage type="info" message="Profile Screen" />
-    </Container>
+    <Shared.LoadingLayout loading={loading}>
+      <>
+        {data?.seeProfile && data?.seePhotos ? (
+          <Shared.Gallery
+            navigation={navigation}
+            data={data.seePhotos}
+            headerComponent={() =>
+              data.seeProfile ? (
+                <CS.Container>
+                  <Shared.ProfileHeader user={data.seeProfile} />
+                  <Shared.ProfileActions
+                    userName={data.seeProfile.userName}
+                    isMe={data.seeProfile.isMe}
+                    isFollowing={data.seeProfile.isFollowing}
+                  />
+                </CS.Container>
+              ) : null
+            }
+          />
+        ) : null}
+      </>
+    </Shared.LoadingLayout>
   );
 };
 

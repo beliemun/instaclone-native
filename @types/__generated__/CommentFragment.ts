@@ -19,8 +19,8 @@ export interface CommentFragment_user {
 export interface CommentFragment {
   __typename: "Comment";
   id: number;
-  user: CommentFragment_user;
   text: string;
   isMine: boolean;
   createdAt: string;
+  user: CommentFragment_user;
 }

@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { darkTheme, lightTheme } from "@common/theme";
 
-export const Button = styled.TouchableOpacity<{ isFullWidth: boolean }>`
-  width: ${(props) => (props.isFullWidth ? "100%" : "null")};
+export const Button = styled.TouchableOpacity`
+  flex: 1;
   color: ${(props) => props.theme.buttonTextColor};
   background-color: ${(props) => props.theme.windowColor};
   border: 1px solid ${(props) => props.theme.borderColorMedium};
@@ -28,7 +28,6 @@ interface ButtonWithTextProps {
   text?: string;
   disabled?: boolean;
   loading?: boolean;
-  isFullWidth?: boolean;
   onPress?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
@@ -36,12 +35,11 @@ export const ButtonWithText: React.FC<ButtonWithTextProps> = ({
   text,
   disabled = false,
   loading = false,
-  isFullWidth = false,
   onPress,
 }) => {
   const colorScheme = useColorScheme();
   return (
-    <Button disabled={disabled} onPress={onPress} isFullWidth={isFullWidth}>
+    <Button disabled={disabled} onPress={onPress}>
       {loading ? (
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <ActivityIndicator

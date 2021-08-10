@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Shared from "@Components";
 import { Container } from "./styles";
 import {
-  SearchScreenNavigationProp,
+  AuthStackParamList,
   SearchScreenRouteProp,
 } from "types/navigation/auth";
 import styled from "styled-components/native";
@@ -16,7 +16,6 @@ import {
 } from "types/__generated__/searchPhotos";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   TouchableOpacity,
   useColorScheme,
@@ -25,15 +24,8 @@ import {
 } from "react-native";
 import { darkTheme, lightTheme } from "~/common/theme";
 import { useState } from "react";
-
-const SEARCH_PHOTOS = gql`
-  query searchPhotos($keyword: String!) {
-    searchPhotos(keyword: $keyword) {
-      id
-      file
-    }
-  }
-`;
+import { SEARCH_PHOTOS } from "~/common/queries";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 const TextInput = styled.TextInput``;
 
@@ -43,7 +35,7 @@ interface IFormInput {
 }
 
 interface IProps {
-  navigation: SearchScreenNavigationProp;
+  navigation: StackNavigationProp<AuthStackParamList>;
   route: SearchScreenRouteProp;
 }
 
@@ -78,9 +70,7 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
   const size = width / NUMCOLUMNS;
 
   useEffect(() => {
-    navigation.setOptions({
-      headerTitle: SearchBox,
-    });
+    navigation.setOptions({ headerTitle: SearchBox });
   }, []);
 
   const onValid = (data: searchPhotosVariables) => {
@@ -158,15 +148,9 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
     if (watch("keyword") !== keyword) {
       return <></>;
     }
-    return (
-      <FlatList
-        style={{ width: width }}
-        numColumns={NUMCOLUMNS}
-        data={data?.searchPhotos}
-        renderItem={(item) => <SearchItem {...item.item} />}
-        keyExtractor={(item) => item.id.toString()}
-      />
-    );
+    return data?.searchPhotos ? (
+      <Shared.Gallery navigation={navigation} data={data.searchPhotos} />
+    ) : null;
   };
 
   return (
