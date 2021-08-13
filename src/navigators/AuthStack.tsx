@@ -3,11 +3,12 @@ import Shared from "@Components";
 import Feed from "@screens/auth/Feed";
 import Search from "@screens/auth/Search";
 import Notification from "@screens/auth/Notification";
-import MyProfile from "@screens/auth/MyPofile";
 import Profile from "@screens/auth/Profile";
 import Photo from "@screens/auth/Photo";
 import Likes from "@screens/auth/Likes";
 import Comments from "@screens/auth/Comments";
+import Followers from "@screens/auth/Followers";
+import Following from "@screens/auth/Following";
 import { createStackNavigator } from "@react-navigation/stack";
 import { darkTheme, lightTheme } from "@common/theme";
 import { Image, View } from "react-native";
@@ -84,6 +85,8 @@ const SharedStack: React.FC<IProps> = ({ screenName }) => {
       <Stacks.Screen name="Photo" component={Photo} />
       <Stacks.Screen name="Likes" component={Likes} />
       <Stacks.Screen name="Comments" component={Comments} />
+      <Stacks.Screen name="Followers" component={Followers} />
+      <Stacks.Screen name="Following" component={Following} />
     </Stacks.Navigator>
   );
 };

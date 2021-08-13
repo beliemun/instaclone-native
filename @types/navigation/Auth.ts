@@ -24,6 +24,8 @@ export type AuthStackParamList = {
     user: seeFeed_seeFeed_user;
     caption: string | null;
   };
+  Followers: { userName: string };
+  Following: { userName: string };
 };
 
 export type FeedScreenNavigationProp = CompositeNavigationProp<
@@ -65,3 +67,11 @@ export type ProfileScreenRouteProp = RouteProp<AuthStackParamList, "Profile">;
 export type PhotoScreenRouteProp = RouteProp<AuthStackParamList, "Photo">;
 export type LikesScreenRouteProp = RouteProp<AuthStackParamList, "Likes">;
 export type CommentsScreenRouteProp = RouteProp<AuthStackParamList, "Comments">;
+export type FollowersScreenRouteProp = RouteProp<
+  AuthStackParamList,
+  "Followers"
+>;
+export type FollowingScreenRouteProp = RouteProp<
+  AuthStackParamList,
+  "Following"
+>;

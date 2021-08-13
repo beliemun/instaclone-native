@@ -10,6 +10,8 @@ import { offsetLimitPagination } from "@apollo/client/utilities";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
+export const isChangedFollowVar = makeVar(false);
+export const takeVar = makeVar(2);
 
 export const logUserIn = async (token: string) => {
   await AsyncStorage.setItem("token", token);
@@ -56,6 +58,8 @@ export const cache = new InMemoryCache({
         // },
         seePhotoLikes: offsetLimitPagination(["id"]),
         seePhotoComments: offsetLimitPagination(["id"]),
+        seeFollowers: offsetLimitPagination(["userName"]),
+        seeFollowing: offsetLimitPagination(["userName"]),
         // seePhotoComments: {
         //   keyArgs: ["id"],
         //   merge(existing, incoming, { args: { offset } }) {

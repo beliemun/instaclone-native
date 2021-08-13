@@ -28,8 +28,8 @@ export const SEE_PHOTO_QUERY = gql`
 `;
 
 export const LIKES_QUERY = gql`
-  query seePhotoLikes($id: Int!, $offset: Int!) {
-    seePhotoLikes(id: $id, offset: $offset) {
+  query seePhotoLikes($id: Int!, $offset: Int!, $take: Int!) {
+    seePhotoLikes(id: $id, offset: $offset, take: $take) {
       ...UserFragment
     }
   }
@@ -46,7 +46,7 @@ export const ME_QUERY = gql`
 `;
 
 export const SEE_PHOTO_COMMENTS_QUERY = gql`
-  query seePhotoComments($id: Int!, $offset: Int!, $take: Int) {
+  query seePhotoComments($id: Int!, $offset: Int!, $take: Int!) {
     seePhotoComments(id: $id, offset: $offset, take: $take) {
       ...CommentFragment
     }
@@ -84,4 +84,22 @@ export const SEARCH_PHOTOS = gql`
       file
     }
   }
+`;
+
+export const SEE_FOLLOWERS = gql`
+  query seeFollowers($userName: String!, $offset: Int!, $take: Int!) {
+    seeFollowers(userName: $userName, offset: $offset, take: $take) {
+      ...UserFragment
+    }
+  }
+  ${USER_FRAGMENT}
+`;
+
+export const SEE_FOLLOWING = gql`
+  query seeFollowing($userName: String!, $offset: Int!, $take: Int!) {
+    seeFollowing(userName: $userName, offset: $offset, take: $take) {
+      ...UserFragment
+    }
+  }
+  ${USER_FRAGMENT}
 `;

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Shared from "@Components";
 import { Container } from "./styles";
-import { useApolloClient, useQuery } from "@apollo/client";
+import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
 import { useRoute } from "@react-navigation/native";
 import { CommentsScreenRouteProp } from "types/navigation/auth";
 import { seePhotoComments } from "types/__generated__/seePhotoComments";
@@ -17,9 +17,11 @@ import CommentInput from "~/Components/CommentInput";
 import useUser from "~/hooks/useUser";
 import { SEE_PHOTO_COMMENTS_QUERY } from "~/common/queries";
 import { COMMENT_FRAGMENT } from "~/common/fragments";
+import { takeVar } from "~/apollo";
 
 const Comments: React.FC = () => {
   const route = useRoute<CommentsScreenRouteProp>();
+  const take = useReactiveVar(takeVar);
   const { cache } = useApolloClient();
   const loggedInUser = useUser();
   const {
@@ -33,6 +35,7 @@ const Comments: React.FC = () => {
       variables: {
         id: route?.params?.photoId,
         offset: 0,
+        take,
       },
       skip: !route?.params?.photoId,
     }
@@ -51,6 +54,7 @@ const Comments: React.FC = () => {
       cache.evict({
         id: `Comment:${comment.id}`,
       });
+      cache.gc();
     });
   };
 
@@ -104,6 +108,7 @@ const Comments: React.FC = () => {
                 variables: {
                   id: route?.params?.photoId,
                   offset: data?.seePhotoComments?.length,
+                  take,
                 },
               }).then((result) => {
                 const length = result.data.seePhotoComments?.length;

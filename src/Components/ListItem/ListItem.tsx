@@ -1,22 +1,27 @@
 import React from "react";
-import {
-  Container,
-  AvatarContainer,
-  Avatar,
-  Username,
-  Link,
-  Following,
-} from "./styles";
+import * as CS from "./styles";
 import Shared from "@Components";
-import { seePhotoLikes_seePhotoLikes } from "types/__generated__/seePhotoLikes";
 import { LikesScreenNavigationProp } from "types/navigation/auth";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import { FOLLOWUSER_MUTATION } from "~/common/mutations";
+import useUser from "~/hooks/useUser";
+import { isChangedFollowVar } from "~/apollo";
+
+interface IUser {
+  __typename: "User";
+  id: number;
+  userName: string;
+  avatar: string | null;
+  isFollowing: boolean;
+  isMe: boolean;
+}
+
 interface IProps {
-  user: seePhotoLikes_seePhotoLikes;
+  user: IUser;
 }
 const ListItem: React.FC<IProps> = ({ user }) => {
+  const loggedInUser = useUser();
   const navigation = useNavigation<LikesScreenNavigationProp>();
   const [followUser, { loading }] = useMutation(FOLLOWUSER_MUTATION, {
     update: (cache, result) => {
@@ -27,13 +32,19 @@ const ListItem: React.FC<IProps> = ({ user }) => {
       } = result;
       if (ok) {
         cache.modify({
-          id: `User:${user.id}`,
+          id: `User:${user.userName}`,
           fields: {
-            isFollowing(prev) {
-              return !prev;
-            },
+            totalFollowers: (prev) => prev + 1,
+            isFollowing: (prev) => true,
           },
         });
+        cache.modify({
+          id: `User:${loggedInUser.data?.me?.userName}`,
+          fields: {
+            totalFollowing: (prev) => prev + 1,
+          },
+        });
+        isChangedFollowVar(true);
       }
     },
   });
@@ -45,25 +56,28 @@ const ListItem: React.FC<IProps> = ({ user }) => {
     });
 
   return (
-    <Container>
-      <Link onPress={() => navigation.navigate("Profile", { user })}>
-        <AvatarContainer>
-          <Avatar source={{ uri: user.avatar ?? undefined }} />
-        </AvatarContainer>
-        <Username>{user.userName}</Username>
-      </Link>
+    <CS.Container>
+      <CS.Link onPress={() => navigation.navigate("Profile", { user })}>
+        <CS.AvatarContainer>
+          <CS.Avatar source={{ uri: user.avatar ?? undefined }} />
+        </CS.AvatarContainer>
+        <CS.Username>{user.userName}</CS.Username>
+      </CS.Link>
       {!user.isMe ? (
         user.isFollowing ? (
-          <Following>Following</Following>
+          <CS.Following>Following</CS.Following>
         ) : (
-          <Shared.ButtonWithText
-            onPress={() => follow(user.userName)}
-            text="Follow"
-            loading={loading}
-          />
+          <CS.ButtonContainer>
+            <Shared.ButtonWithText
+              onPress={() => follow(user.userName)}
+              text="Follow"
+              loading={loading}
+              disabled={loading}
+            />
+          </CS.ButtonContainer>
         )
       ) : null}
-    </Container>
+    </CS.Container>
   );
 };
 

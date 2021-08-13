@@ -5,6 +5,7 @@ import useUser from "~/hooks/useUser";
 import { View } from "react-native";
 import { useMutation } from "@apollo/client";
 import { FOLLOWUSER_MUTATION, UNFOLLOWUSER_MUTATION } from "~/common/mutations";
+import { isChangedFollowVar } from "~/apollo";
 
 interface IProps {
   userName: string;
@@ -41,6 +42,7 @@ const ProfileActions: React.FC<IProps> = ({ userName, isMe, isFollowing }) => {
             totalFollowing: (prev) => prev + 1,
           },
         });
+        isChangedFollowVar(true);
       },
     }
   );
@@ -71,6 +73,8 @@ const ProfileActions: React.FC<IProps> = ({ userName, isMe, isFollowing }) => {
             totalFollowing: (prev) => prev - 1,
           },
         });
+        cache.evict({ id: "ROOT_QUERY", fieldName: "seeFollowing" });
+        isChangedFollowVar(true);
       },
     }
   );

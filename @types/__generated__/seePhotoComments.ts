@@ -32,5 +32,5 @@ export interface seePhotoComments {
 export interface seePhotoCommentsVariables {
   id: number;
   offset: number;
-  take?: number | null;
+  take: number;
 }

@@ -41,3 +41,7 @@ export const Following = styled.Text`
   color: ${(props) => props.theme.accent};
   margin-right: 5px;
 `;
+
+export const ButtonContainer = styled.View`
+  height: 100%;
+`;

@@ -23,7 +23,7 @@ export const ActivityContainer = styled.View`
   flex-direction: row;
   margin: 5px;
 `;
-export const Activity = styled.View`
+export const Activity = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;

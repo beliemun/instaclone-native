@@ -1,4 +1,6 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import { ProfileScreenNavigationProp } from "types/navigation/auth";
 import { seeProfile_seeProfile } from "types/__generated__/seeProfile";
 import * as CS from "./styles";
 
@@ -7,6 +9,7 @@ interface IProps {
 }
 
 const ProfileHeader: React.FC<IProps> = ({ user }) => {
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
   return user ? (
     <CS.Container>
       <CS.RowWrapper>
@@ -23,11 +26,19 @@ const ProfileHeader: React.FC<IProps> = ({ user }) => {
             <CS.NumberText>{user.totalPhotos}</CS.NumberText>
             <CS.InfoTitle>Posts</CS.InfoTitle>
           </CS.Activity>
-          <CS.Activity>
+          <CS.Activity
+            onPress={() =>
+              navigation.navigate("Followers", { userName: user.userName })
+            }
+          >
             <CS.NumberText>{user.totalFollowers}</CS.NumberText>
             <CS.InfoTitle>Followers</CS.InfoTitle>
           </CS.Activity>
-          <CS.Activity>
+          <CS.Activity
+            onPress={() =>
+              navigation.navigate("Following", { userName: user.userName })
+            }
+          >
             <CS.NumberText>{user.totalFollowing}</CS.NumberText>
             <CS.InfoTitle>Following</CS.InfoTitle>
           </CS.Activity>

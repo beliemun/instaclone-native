@@ -13,9 +13,6 @@ const useUser = () => {
     if (data?.me === null) {
       logUserOut();
     }
-    return () => {
-      data;
-    };
   }, [data]);
   return { data };
 };
