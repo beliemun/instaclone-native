@@ -4,6 +4,7 @@ import Feed from "@screens/auth/Feed";
 import Search from "@screens/auth/Search";
 import Notification from "@screens/auth/Notification";
 import Profile from "@screens/auth/Profile";
+import EditProfile from "@screens/auth/EditProfile";
 import Photo from "@screens/auth/Photo";
 import Likes from "@screens/auth/Likes";
 import Comments from "@screens/auth/Comments";
@@ -77,11 +78,13 @@ const SharedStack: React.FC<IProps> = ({ screenName }) => {
           elevation: 0, // for Android
         },
         headerBackTitleVisible: false, // 안드로디는 기본으로 꺼짐
-        headerRight: () => renderHeaderRight(screenName),
+        headerRight: () =>
+          screenName === "MyProfile" ? renderHeaderRight(screenName) : null,
       }}
     >
       {renderScreen(screenName)}
       <Stacks.Screen name="Profile" component={Profile} />
+      <Stacks.Screen name="EditProfile" component={EditProfile} />
       <Stacks.Screen name="Photo" component={Photo} />
       <Stacks.Screen name="Likes" component={Likes} />
       <Stacks.Screen name="Comments" component={Comments} />

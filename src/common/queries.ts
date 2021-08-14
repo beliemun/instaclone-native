@@ -39,8 +39,11 @@ export const LIKES_QUERY = gql`
 export const ME_QUERY = gql`
   query me {
     me {
+      firstName
+      lastName
       userName
       avatar
+      bio
     }
   }
 `;

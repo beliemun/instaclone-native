@@ -9,8 +9,11 @@
 
 export interface me_me {
   __typename: "User";
+  firstName: string;
+  lastName: string | null;
   userName: string;
   avatar: string | null;
+  bio: string | null;
 }
 
 export interface me {

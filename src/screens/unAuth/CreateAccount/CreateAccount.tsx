@@ -8,7 +8,6 @@ import {
   CreateAccountScreenRouteProp,
   CreateScreenNavationProp,
 } from "~/../@types/navigation/unAuth";
-import { View } from "react-native";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(

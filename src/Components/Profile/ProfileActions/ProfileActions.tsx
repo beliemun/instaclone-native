@@ -6,6 +6,8 @@ import { View } from "react-native";
 import { useMutation } from "@apollo/client";
 import { FOLLOWUSER_MUTATION, UNFOLLOWUSER_MUTATION } from "~/common/mutations";
 import { isChangedFollowVar } from "~/apollo";
+import { useNavigation } from "@react-navigation/native";
+import { ProfileScreenNavigationProp } from "types/navigation/auth";
 
 interface IProps {
   userName: string;
@@ -15,6 +17,7 @@ interface IProps {
 
 const ProfileActions: React.FC<IProps> = ({ userName, isMe, isFollowing }) => {
   const loggedInUser = useUser();
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   const [followUser, { loading: followLoading }] = useMutation(
     FOLLOWUSER_MUTATION,
@@ -82,7 +85,10 @@ const ProfileActions: React.FC<IProps> = ({ userName, isMe, isFollowing }) => {
   return (
     <CS.Container>
       {isMe ? (
-        <Shared.ButtonWithText text="Edit Profile" />
+        <Shared.ButtonWithText
+          text="Edit Profile"
+          onPress={() => navigation.navigate("EditProfile")}
+        />
       ) : (
         <>
           {isFollowing ? (
