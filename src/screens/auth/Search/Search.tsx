@@ -24,7 +24,7 @@ import {
 } from "react-native";
 import { darkTheme, lightTheme } from "~/common/theme";
 import { useState } from "react";
-import { SEARCH_PHOTOS } from "~/common/queries";
+import { SEARCH_PHOTOS_QUERY } from "~/common/queries";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 const TextInput = styled.TextInput``;
@@ -55,7 +55,7 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
   // skip를 이용해 실행을 막을 수 있지만 Query문 실행 자체를 막을 수 없다.
   // useLazyQuery는 startQueryFn를 호출하기 전까지 실행되지 않는다.
   const [startQueryFn, { loading, called, data }] = useLazyQuery<searchPhotos>(
-    SEARCH_PHOTOS,
+    SEARCH_PHOTOS_QUERY,
     {
       onCompleted: ({ searchPhotos }) => {
         if (searchPhotos?.length === 0) {
@@ -103,12 +103,6 @@ const Serach: React.FC<IProps> = ({ navigation, route }) => {
         />
       )}
     />
-  );
-
-  const SearchItem: React.FC<searchPhotos_searchPhotos> = ({ id, file }) => (
-    <TouchableOpacity onPress={() => navigation.navigate("Photo", { id })}>
-      <Image source={{ uri: file }} style={{ width: size, height: size }} />
-    </TouchableOpacity>
   );
 
   const renderResult = () => {

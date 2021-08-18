@@ -5,7 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import { FollowersScreenRouteProp } from "types/navigation/auth";
 import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
 import ListItem from "~/Components/ListItem";
-import { SEE_FOLLOWERS } from "~/common/queries";
+import { SEE_FOLLOWERS_QUERY } from "~/common/queries";
 import { seeFollowers } from "types/__generated__/seeFollowers";
 import { takeVar } from "~/apollo";
 
@@ -14,7 +14,7 @@ const Followers: React.FC = () => {
   const take = useReactiveVar(takeVar);
   const { cache } = useApolloClient();
   const { data, loading, refetch, fetchMore } = useQuery<seeFollowers>(
-    SEE_FOLLOWERS,
+    SEE_FOLLOWERS_QUERY,
     {
       variables: {
         userName: route?.params?.userName,
@@ -39,7 +39,6 @@ const Followers: React.FC = () => {
       cache.evict({
         id: `User:${user.userName}`,
       });
-      cache.gc();
     });
   };
 

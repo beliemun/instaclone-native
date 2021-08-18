@@ -6,29 +6,38 @@ import { seeFeed_seeFeed_user } from "types/__generated__/seeFeed";
 export type AuthTabParamList = {
   Feed: undefined;
   Search: undefined;
-  Upload: undefined;
+  Camera: undefined;
   Notification: undefined;
   MyProfile: undefined;
 };
 
 export type AuthStackParamList = {
-  Feed: undefined;
-  Search: undefined;
-  Notification: undefined;
-  MyProfile: undefined;
-  Profile: { user: seeFeed_seeFeed_user };
-  EditProfile: undefined;
-  Photo: { id: number };
-  Likes: { photoId: number };
+  // Top Level Stacks
+  Tabs: undefined;
   Comments: {
     photoId: number;
     user: seeFeed_seeFeed_user;
     caption: string | null;
   };
+  EditProfile: undefined;
+  Upload: undefined;
+  Message: undefined;
+
+  // Tab Screens
+  Feed: undefined;
+  Search: undefined;
+  Notification: undefined;
+  MyProfile: undefined;
+
+  // Dependent Screens
+  Profile: { user: seeFeed_seeFeed_user };
+  Photo: { id: number };
+  Likes: { photoId: number };
   Followers: { userName: string };
   Following: { userName: string };
 };
 
+// Tabs Navigation Props
 export type FeedScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<AuthTabParamList, "Feed">,
   StackNavigationProp<AuthStackParamList>
@@ -38,39 +47,28 @@ export type SearchScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<AuthStackParamList>
 >;
 export type UploadScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<AuthTabParamList, "Upload">,
+  BottomTabNavigationProp<AuthTabParamList, "Camera">,
   StackNavigationProp<AuthStackParamList>
 >;
 export type NotificationScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<AuthTabParamList, "Notification">,
   StackNavigationProp<AuthStackParamList>
 >;
-export type MyProfileScreenNavigationProp = CompositeNavigationProp<
-  BottomTabNavigationProp<AuthTabParamList, "MyProfile">,
-  StackNavigationProp<AuthStackParamList>
->;
+
+// Stacks Navigation Props
 export type ProfileScreenNavigationProp =
   StackNavigationProp<AuthStackParamList>;
-export type EditProfileScreenNavigationProp =
-  StackNavigationProp<AuthStackParamList>;
-export type PhotoScreenNavigationProp = StackNavigationProp<AuthStackParamList>;
 export type LikesScreenNavigationProp = StackNavigationProp<AuthStackParamList>;
 export type CommentsScreenNavigationProp =
   StackNavigationProp<AuthStackParamList>;
 
-export type FeedScreenRouteProp = RouteProp<AuthTabParamList, "Feed">;
+// Route Props
 export type SearchScreenRouteProp = RouteProp<AuthTabParamList, "Search">;
-export type UploadScreenRouteProp = RouteProp<AuthTabParamList, "Upload">;
 export type NotificationScreenRouteProp = RouteProp<
   AuthTabParamList,
   "Notification"
 >;
-export type MyProfileScreenRouteProp = RouteProp<AuthTabParamList, "MyProfile">;
 export type ProfileScreenRouteProp = RouteProp<AuthStackParamList, "Profile">;
-export type EditProfileScreenRouteProp = RouteProp<
-  AuthStackParamList,
-  "EditProfile"
->;
 export type PhotoScreenRouteProp = RouteProp<AuthStackParamList, "Photo">;
 export type LikesScreenRouteProp = RouteProp<AuthStackParamList, "Likes">;
 export type CommentsScreenRouteProp = RouteProp<AuthStackParamList, "Comments">;

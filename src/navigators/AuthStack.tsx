@@ -4,10 +4,8 @@ import Feed from "@screens/auth/Feed";
 import Search from "@screens/auth/Search";
 import Notification from "@screens/auth/Notification";
 import Profile from "@screens/auth/Profile";
-import EditProfile from "@screens/auth/EditProfile";
 import Photo from "@screens/auth/Photo";
 import Likes from "@screens/auth/Likes";
-import Comments from "@screens/auth/Comments";
 import Followers from "@screens/auth/Followers";
 import Following from "@screens/auth/Following";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -84,10 +82,8 @@ const SharedStack: React.FC<IProps> = ({ screenName }) => {
     >
       {renderScreen(screenName)}
       <Stacks.Screen name="Profile" component={Profile} />
-      <Stacks.Screen name="EditProfile" component={EditProfile} />
       <Stacks.Screen name="Photo" component={Photo} />
       <Stacks.Screen name="Likes" component={Likes} />
-      <Stacks.Screen name="Comments" component={Comments} />
       <Stacks.Screen name="Followers" component={Followers} />
       <Stacks.Screen name="Following" component={Following} />
     </Stacks.Navigator>

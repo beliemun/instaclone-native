@@ -29,7 +29,6 @@ const Gallery: React.FC<IProps> = ({ navigation, data, headerComponent }) => {
   const NUMCOLUMNS = 3;
   const { width } = useWindowDimensions();
   const size = width / NUMCOLUMNS;
-
   const SearchItem: React.FC<searchPhotos_searchPhotos> = ({ id, file }) => (
     <TouchableOpacity onPress={() => navigation.navigate("Photo", { id })}>
       <Image source={{ uri: file }} style={{ width: size, height: size }} />

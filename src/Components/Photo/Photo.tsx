@@ -1,20 +1,6 @@
 import React from "react";
 import { useWindowDimensions } from "react-native";
-import {
-  Container,
-  Header,
-  AvatarContainer,
-  Avatar,
-  Username,
-  File,
-  Actions,
-  Action,
-  Footer,
-  Likes,
-  Caption,
-  CommentCount,
-  Comment,
-} from "./styles";
+import * as CS from "./styles";
 import Shared from "@Components";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorScheme } from "react-native";
@@ -59,7 +45,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
       } = result;
       if (ok) {
         cache.modify({
-          id: `Photo:${id}`,
+          id: `FeedItem:${id}`,
           fields: {
             isLiked(prev) {
               return !prev;
@@ -74,23 +60,23 @@ const Photo: React.FC<IProps> = ({ photo }) => {
   });
 
   return (
-    <Container width={width}>
-      <Header
+    <CS.Container width={width}>
+      <CS.Header
         onPress={() =>
           navigation.navigate("Profile", {
             user,
           })
         }
       >
-        <AvatarContainer>
-          <Avatar source={{ uri: user?.avatar ?? undefined }} />
-        </AvatarContainer>
-        <Username>{user?.userName}</Username>
-      </Header>
-      <File source={{ uri: file }} width={width} height={width} />
-      <Footer>
-        <Actions>
-          <Action disabled={loading} onPress={() => toggleLikeMutation()}>
+        <CS.AvatarContainer>
+          <CS.Avatar source={{ uri: user?.avatar ?? undefined }} />
+        </CS.AvatarContainer>
+        <CS.Username>{user?.userName}</CS.Username>
+      </CS.Header>
+      <CS.File source={{ uri: file }} width={width} height={width} />
+      <CS.Footer>
+        <CS.Actions>
+          <CS.Action disabled={loading} onPress={() => toggleLikeMutation()}>
             <Ionicons
               name={isLiked ? "heart" : "heart-outline"}
               color={
@@ -102,8 +88,8 @@ const Photo: React.FC<IProps> = ({ photo }) => {
               }
               size={26}
             />
-          </Action>
-          <Action
+          </CS.Action>
+          <CS.Action
             onPress={() =>
               navigation.navigate("Comments", { photoId: id, user, caption })
             }
@@ -115,8 +101,8 @@ const Photo: React.FC<IProps> = ({ photo }) => {
               }
               size={26}
             />
-          </Action>
-          <Action>
+          </CS.Action>
+          <CS.Action>
             <Ionicons
               name="paper-plane-outline"
               color={
@@ -124,20 +110,20 @@ const Photo: React.FC<IProps> = ({ photo }) => {
               }
               size={26}
             />
-          </Action>
-        </Actions>
+          </CS.Action>
+        </CS.Actions>
         {likeCount !== 0 && (
           <Shared.Link
             onPress={() => navigation.navigate("Likes", { photoId: id })}
           >
-            <Likes>
+            <CS.Likes>
               {likeCount}
               {likeCount === 1 ? " like" : " likes"}
-            </Likes>
+            </CS.Likes>
           </Shared.Link>
         )}
         {caption && (
-          <Caption>
+          <CS.Caption>
             <Shared.Link
               onPress={() =>
                 navigation.navigate("Profile", {
@@ -145,10 +131,10 @@ const Photo: React.FC<IProps> = ({ photo }) => {
                 })
               }
             >
-              <Username>{user.userName}</Username>
+              <CS.Username>{user.userName}</CS.Username>
             </Shared.Link>
             {captionRender(caption)}
-          </Caption>
+          </CS.Caption>
         )}
         {(commentCount == 1 || commentCount == 2) && (
           <Shared.Link
@@ -156,10 +142,10 @@ const Photo: React.FC<IProps> = ({ photo }) => {
               navigation.navigate("Comments", { photoId: id, user, caption })
             }
           >
-            <CommentCount>
+            <CS.CommentCount>
               {commentCount}
               {commentCount === 1 ? " comment" : " comments"}
-            </CommentCount>
+            </CS.CommentCount>
           </Shared.Link>
         )}
         {commentCount > 2 && (
@@ -168,14 +154,14 @@ const Photo: React.FC<IProps> = ({ photo }) => {
               navigation.navigate("Comments", { photoId: id, user, caption })
             }
           >
-            <CommentCount>{`View all ${commentCount} comments`}</CommentCount>
+            <CS.CommentCount>{`View all ${commentCount} comments`}</CS.CommentCount>
           </Shared.Link>
         )}
         {comments?.length != 0 &&
           comments?.map((comment, index) => (
             <React.Fragment key={comment.id}>
               {index < 2 && (
-                <Comment key={comment.id}>
+                <CS.Comment key={comment.id}>
                   <Shared.Link
                     onPress={() =>
                       navigation.navigate("Profile", {
@@ -183,16 +169,16 @@ const Photo: React.FC<IProps> = ({ photo }) => {
                       })
                     }
                   >
-                    <Username>{comment.user.userName}</Username>
+                    <CS.Username>{comment.user.userName}</CS.Username>
                   </Shared.Link>
                   {captionRender(comment.text)}
-                </Comment>
+                </CS.Comment>
               )}
             </React.Fragment>
           ))}
-      </Footer>
-      <CommentInput photoId={id} refresh={() => null} type={"Photo"} />
-    </Container>
+      </CS.Footer>
+      <CommentInput photoId={id} />
+    </CS.Container>
   );
 };
 

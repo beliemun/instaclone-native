@@ -5,7 +5,7 @@ import { useRoute } from "@react-navigation/native";
 import { FollowingScreenRouteProp } from "types/navigation/auth";
 import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
 import ListItem from "~/Components/ListItem";
-import { SEE_FOLLOWING } from "~/common/queries";
+import { SEE_FOLLOWING_QUERY } from "~/common/queries";
 import { seeFollowing } from "types/__generated__/seeFollowing";
 import { takeVar } from "~/apollo";
 
@@ -14,7 +14,7 @@ const Following: React.FC = () => {
   const take = useReactiveVar(takeVar);
   const { cache } = useApolloClient();
   const { data, loading, refetch, fetchMore } = useQuery<seeFollowing>(
-    SEE_FOLLOWING,
+    SEE_FOLLOWING_QUERY,
     {
       variables: {
         userName: route?.params?.userName,
@@ -39,7 +39,6 @@ const Following: React.FC = () => {
       cache.evict({
         id: `User:${user.userName}`,
       });
-      cache.gc();
     });
   };
   return (

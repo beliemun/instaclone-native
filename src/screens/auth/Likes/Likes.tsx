@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Shared from "@Components";
 import { FlatList } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { LikesScreenRouteProp } from "types/navigation/auth";
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
 import { seePhotoLikes } from "types/__generated__/seePhotoLikes";
 import ListItem from "~/Components/ListItem";
 import { LIKES_QUERY } from "~/common/queries";
 import { takeVar } from "~/apollo";
 
 const Likes: React.FC = () => {
+  const { cache } = useApolloClient();
   const take = useReactiveVar(takeVar);
   const route = useRoute<LikesScreenRouteProp>();
+  const [refreshing, setRefreshing] = useState(false);
   const { data, loading, refetch, fetchMore } = useQuery<seePhotoLikes>(
     LIKES_QUERY,
     {
@@ -23,15 +25,23 @@ const Likes: React.FC = () => {
       skip: !route?.params?.photoId,
     }
   );
-  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    refresh();
+  }, []);
+
   const refresh = async () => {
-    if (loading) {
-      return;
-    }
+    if (loading) return;
     setRefreshing(true);
+    deleteCaches();
     await refetch();
     setRefreshing(false);
   };
+
+  const deleteCaches = () => {
+    cache.evict({ id: "ROOT_QUERY", fieldName: "seePhotoLikes" });
+  };
+
   return (
     <Shared.LoadingLayout loading={loading}>
       <FlatList

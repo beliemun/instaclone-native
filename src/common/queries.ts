@@ -80,7 +80,7 @@ export const SEE_PROFILE_QUERY = gql`
   }
 `;
 
-export const SEARCH_PHOTOS = gql`
+export const SEARCH_PHOTOS_QUERY = gql`
   query searchPhotos($keyword: String!) {
     searchPhotos(keyword: $keyword) {
       id
@@ -89,7 +89,7 @@ export const SEARCH_PHOTOS = gql`
   }
 `;
 
-export const SEE_FOLLOWERS = gql`
+export const SEE_FOLLOWERS_QUERY = gql`
   query seeFollowers($userName: String!, $offset: Int!, $take: Int!) {
     seeFollowers(userName: $userName, offset: $offset, take: $take) {
       ...UserFragment
@@ -98,7 +98,7 @@ export const SEE_FOLLOWERS = gql`
   ${USER_FRAGMENT}
 `;
 
-export const SEE_FOLLOWING = gql`
+export const SEE_FOLLOWING_QUERY = gql`
   query seeFollowing($userName: String!, $offset: Int!, $take: Int!) {
     seeFollowing(userName: $userName, offset: $offset, take: $take) {
       ...UserFragment

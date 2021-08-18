@@ -24,7 +24,6 @@ const Feed: React.FC = () => {
     }
     setRefreshing(true);
     cache.evict({ id: "ROOT_QUERY", fieldName: "seeFeed" });
-    cache.gc();
     await refetch();
     setRefreshing(false);
     isChangedFollowVar(false);

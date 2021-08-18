@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { BoldText } from "../Base";
 
-export const Container = styled.View<{ width: number }>`
+export const Container = styled.SafeAreaView<{ width: number }>`
   background-color: ${(props) => props.theme.windowColor};
   border: 1px solid ${(props) => props.theme.borderColorLight};
   border-left-width: 0px;

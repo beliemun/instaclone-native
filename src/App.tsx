@@ -4,21 +4,21 @@ import { Platform, StatusBar, useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import Auth from "./navigators/AuthTab";
+import Auth from "./navigators/Auth";
 import UnAuth from "./navigators/UnAuth";
 import { AppearanceProvider } from "react-native-appearance";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "@common/theme";
 import {
   ApolloProvider,
-  NormalizedCacheObject,
   useReactiveVar,
+  NormalizedCacheObject,
 } from "@apollo/client";
 import client, { isLoggedInVar, tokenVar, cache } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import registerRootComponent from "expo/build/launch/registerRootComponent";
 import { persistCache, AsyncStorageWrapper } from "apollo3-cache-persist";
 import { PersistentStorage, PersistedData } from "apollo3-cache-persist/types";
-import registerRootComponent from "expo/build/launch/registerRootComponent";
 
 const App = () => {
   const [loading, setLoading] = useState(true);

@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { MutableRefObject, useState } from "react";
 import { Container, Input, AvatarContainer, Avatar } from "./styles";
 import useUser from "~/hooks/useUser";
 import { useMutation } from "@apollo/client";
 import { COMMENT_FRAGMENT } from "~/common/fragments";
-import { useRoute } from "@react-navigation/native";
-import { CommentsScreenRouteProp } from "types/navigation/auth";
 import { CREATE_COMMENT_MUTATION } from "~/common/mutations";
+import {
+  SEE_FOLLOWING_QUERY,
+  SEE_PHOTO_COMMENTS_QUERY,
+} from "~/common/queries";
 import { CommentInputType } from "types/common";
 
 interface IProp {
   photoId: number;
-  refresh: () => Promise<void> | null;
-  type: CommentInputType;
+  isFetching?: MutableRefObject<boolean>;
 }
 
-const CommentInput: React.FC<IProp> = ({ photoId, refresh, type }) => {
+const CommentInput: React.FC<IProp> = ({ photoId, isFetching }) => {
   const user = useUser();
   const [text, setText] = useState("");
 
@@ -52,17 +53,21 @@ const CommentInput: React.FC<IProp> = ({ photoId, refresh, type }) => {
             },
           },
         });
-        if (type === "Comments") {
-          refresh();
-        }
+        cache.evict({ id: "ROOT_QUERY", fieldName: "seePhotoComments" });
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seePhotoComments: (prev) => {
+              return [newCache, ...prev];
+            },
+          },
+        });
       }
     },
   });
 
   const onSubmit = () => {
-    if (text == "" || loading) {
-      return;
-    }
+    if (text == "" || loading || isFetching?.current) return;
     createComment({ variables: { photoId, text } });
     setText("");
   };
