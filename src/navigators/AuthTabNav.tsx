@@ -7,7 +7,7 @@ import {
 } from "~/../@types/navigation/auth";
 import { darkTheme, lightTheme } from "@common/theme";
 import { Ionicons } from "@expo/vector-icons";
-import AuthStack from "./AuthStack";
+import AuthStack from "./AuthStackNav";
 import { useColorScheme } from "react-native";
 import useUser from "~/hooks/useUser";
 import { StackNavigationProp } from "@react-navigation/stack";

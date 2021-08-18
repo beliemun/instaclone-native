@@ -2,12 +2,12 @@ import React from "react";
 import { Container } from "./styles";
 import Shared from "@Components";
 
-const Upload: React.FC = () => {
+const TakePhoto: React.FC = () => {
   return (
     <Container>
-      <Shared.AccentMessage type="info" message="Upload Screen" />
+      <Shared.AccentMessage type="info" message="TakePhoto Screen" />
     </Container>
   );
 };
 
-export default Upload;
+export default TakePhoto;

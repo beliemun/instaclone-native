@@ -11,6 +11,11 @@ export type AuthTabParamList = {
   MyProfile: undefined;
 };
 
+export type UploadTabParamList = {
+  Select: undefined;
+  Take: undefined;
+};
+
 export type AuthStackParamList = {
   // Top Level Stacks
   Tabs: undefined;

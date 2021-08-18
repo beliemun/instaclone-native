@@ -4,8 +4,8 @@ import { Platform, StatusBar, useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
-import Auth from "./navigators/Auth";
-import UnAuth from "./navigators/UnAuth";
+import AuthNav from "./navigators/AuthNav";
+import UnAuthNav from "./navigators/UnAuthNav";
 import { AppearanceProvider } from "react-native-appearance";
 import { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "@common/theme";
@@ -73,7 +73,7 @@ const App = () => {
       <AppearanceProvider>
         <ThemeProvider theme={colorScheme === "light" ? lightTheme : darkTheme}>
           <StatusBar barStyle={getThemeStyle()} />
-          {isLoggedIn ? <Auth /> : <UnAuth />}
+          {isLoggedIn ? <AuthNav /> : <UnAuthNav />}
         </ThemeProvider>
       </AppearanceProvider>
     </ApolloProvider>
