@@ -12,10 +12,7 @@ const Stacks = createStackNavigator<AuthStackParamList>();
 
 const Auth: React.FC = () => (
   <NavigationContainer>
-    <Stacks.Navigator
-      mode="modal"
-      screenOptions={{ headerBackTitleVisible: false }}
-    >
+    <Stacks.Navigator mode="modal" headerMode="none">
       <Stacks.Screen
         name="Tabs"
         component={AuthTab}

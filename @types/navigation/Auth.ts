@@ -11,11 +11,6 @@ export type AuthTabParamList = {
   MyProfile: undefined;
 };
 
-export type UploadTabParamList = {
-  Select: undefined;
-  Take: undefined;
-};
-
 export type AuthStackParamList = {
   // Top Level Stacks
   Tabs: undefined;
@@ -42,6 +37,11 @@ export type AuthStackParamList = {
   Following: { userName: string };
 };
 
+export type UploadTabParamList = {
+  Select: undefined;
+  Take: undefined;
+};
+
 // Tabs Navigation Props
 export type FeedScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<AuthTabParamList, "Feed">,
@@ -59,13 +59,15 @@ export type NotificationScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<AuthTabParamList, "Notification">,
   StackNavigationProp<AuthStackParamList>
 >;
+export type MyProfileScreenNavigationProp = CompositeNavigationProp<
+  BottomTabNavigationProp<AuthTabParamList, "MyProfile">,
+  StackNavigationProp<AuthStackParamList>
+>;
 
 // Stacks Navigation Props
 export type ProfileScreenNavigationProp =
   StackNavigationProp<AuthStackParamList>;
 export type LikesScreenNavigationProp = StackNavigationProp<AuthStackParamList>;
-export type CommentsScreenNavigationProp =
-  StackNavigationProp<AuthStackParamList>;
 
 // Route Props
 export type SearchScreenRouteProp = RouteProp<AuthTabParamList, "Search">;

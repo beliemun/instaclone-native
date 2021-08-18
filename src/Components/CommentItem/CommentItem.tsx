@@ -9,14 +9,19 @@ import {
 import Shared from "@Components";
 import { seePhotoComments_seePhotoComments } from "types/__generated__/seePhotoComments";
 import { useNavigation } from "@react-navigation/core";
-import { CommentsScreenNavigationProp } from "types/navigation/auth";
 import captionRender from "~/common/captionRender";
+import {
+  FeedScreenNavigationProp,
+  MyProfileScreenNavigationProp,
+} from "types/navigation/auth";
 
 const CommentItem: React.FC<seePhotoComments_seePhotoComments> = ({
   user,
   text,
 }) => {
-  const navigation = useNavigation<CommentsScreenNavigationProp>();
+  const navigation = useNavigation<
+    FeedScreenNavigationProp | MyProfileScreenNavigationProp
+  >();
   const { userName, avatar } = user;
   return (
     <Container>

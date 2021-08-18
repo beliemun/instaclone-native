@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   useWindowDimensions,
+  View,
 } from "react-native";
 import { AuthStackParamList } from "types/navigation/auth";
 import {
@@ -25,10 +26,11 @@ interface IProps {
   headerComponent?: React.FC | null;
 }
 
+const NUMCOLUMNS = 3;
+
 const Gallery: React.FC<IProps> = ({ navigation, data, headerComponent }) => {
-  const NUMCOLUMNS = 3;
   const { width } = useWindowDimensions();
-  const size = width / NUMCOLUMNS;
+  const size = width / NUMCOLUMNS - 2;
   const SearchItem: React.FC<searchPhotos_searchPhotos> = ({ id, file }) => (
     <TouchableOpacity onPress={() => navigation.navigate("Photo", { id })}>
       <Image source={{ uri: file }} style={{ width: size, height: size }} />
@@ -38,10 +40,12 @@ const Gallery: React.FC<IProps> = ({ navigation, data, headerComponent }) => {
   return (
     <FlatList
       style={{ width: width }}
-      numColumns={NUMCOLUMNS}
       data={data}
       renderItem={(item) => <SearchItem {...item.item} />}
       keyExtractor={(item) => item.id.toString()}
+      numColumns={NUMCOLUMNS}
+      ItemSeparatorComponent={() => <View style={{ height: 3 }}></View>}
+      columnWrapperStyle={{ justifyContent: "space-between" }}
       ListHeaderComponent={headerComponent}
       ListHeaderComponentStyle={{ flex: 1 }}
     />
