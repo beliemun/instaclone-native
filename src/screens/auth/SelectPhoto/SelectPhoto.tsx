@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as CS from "./styles";
 import Shared from "@Components";
 import * as MediaLibrary from "expo-media-library";
 import { FlatList } from "react-native-gesture-handler";
 import { useWindowDimensions, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { UploadTabParamList } from "types/navigation/auth";
 
 const NUMCOLUMNS = 3;
 
 const SelectPhoto: React.FC = () => {
+  const navigation = useNavigation<StackNavigationProp<UploadTabParamList>>();
   const [ok, setOk] = useState(false);
   const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
   const [last, setLast] = useState("");
   const [chosenPhoto, setChosenPhoto] = useState("");
+  const isLoaded = useRef(false);
   const { width } = useWindowDimensions();
   const size = width / NUMCOLUMNS - 2;
 
@@ -29,7 +34,6 @@ const SelectPhoto: React.FC = () => {
     }
   };
   const getPhotos = async () => {
-    console.log("call");
     if (!ok) return;
     const { assets, endCursor } =
       last === ""
@@ -48,8 +52,23 @@ const SelectPhoto: React.FC = () => {
   }, [ok]);
 
   useEffect(() => {
-    setChosenPhoto(photos[0]?.uri);
+    if (!isLoaded.current && photos.length !== 0) {
+      setChosenPhoto(photos[0]?.uri);
+      isLoaded.current = true;
+    }
   }, [photos]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: HeaderRight,
+    });
+  }, []);
+
+  const HeaderRight = () => (
+    <CS.HeaderRight>
+      <CS.HeaderRightText>Next</CS.HeaderRightText>
+    </CS.HeaderRight>
+  );
 
   const choosePhoto = (uri: string) => {
     setChosenPhoto(uri);
@@ -58,9 +77,17 @@ const SelectPhoto: React.FC = () => {
   const renderItem = ({ item }: { item: any }) => {
     return (
       <CS.ImageContainer onPress={() => choosePhoto(item.uri)}>
-        <CS.Image source={{ uri: item.uri }} width={size} />
+        <CS.Image
+          source={{ uri: item.uri }}
+          width={size}
+          isSelected={item.uri === chosenPhoto}
+        />
         <CS.IconContainer>
-          <Ionicons name="checkmark-circle" color="white" size={20} />
+          <Ionicons
+            name="checkmark-circle"
+            color={item.uri === chosenPhoto ? "#32ff7e" : "transparent"}
+            size={20}
+          />
         </CS.IconContainer>
       </CS.ImageContainer>
     );

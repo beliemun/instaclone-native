@@ -20,13 +20,22 @@ export const Target = styled.Image`
   height: 100%;
 `;
 
-export const Image = styled.Image<{ width: number }>`
+export const Image = styled.Image<{ width: number; isSelected: boolean }>`
   width: ${(props) => props.width}px;
   height: ${(props) => props.width}px;
+  opacity: ${(props) => (props.isSelected ? 1 : 0.8)};
 `;
 
 export const IconContainer = styled.View`
   position: absolute;
   bottom: 5px;
   right: 5px;
+`;
+
+export const HeaderRight = styled.TouchableOpacity``;
+
+export const HeaderRightText = styled.Text`
+  color: ${(props) => props.theme.accent};
+  font-weight: bold;
+  padding: 5px;
 `;
