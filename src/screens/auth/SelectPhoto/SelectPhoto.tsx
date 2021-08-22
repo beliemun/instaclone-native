@@ -6,12 +6,15 @@ import { useWindowDimensions, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { UploadTabParamList } from "types/navigation/auth";
+import { AuthStackParamList, UploadTabParamList } from "types/navigation/auth";
 
 const NUMCOLUMNS = 3;
 
 const SelectPhoto: React.FC = () => {
-  const navigation = useNavigation<StackNavigationProp<UploadTabParamList>>();
+  const uploadNavigation =
+    useNavigation<StackNavigationProp<UploadTabParamList>>();
+  const rootNavigation =
+    useNavigation<StackNavigationProp<AuthStackParamList>>();
   const [ok, setOk] = useState(false);
   const [photos, setPhotos] = useState<MediaLibrary.Asset[]>([]);
   const [last, setLast] = useState("");
@@ -58,13 +61,13 @@ const SelectPhoto: React.FC = () => {
   }, [photos]);
 
   useEffect(() => {
-    navigation.setOptions({
+    uploadNavigation.setOptions({
       headerRight: HeaderRight,
     });
   }, []);
 
   const HeaderRight = () => (
-    <CS.HeaderRight>
+    <CS.HeaderRight onPress={() => rootNavigation.navigate("UploadPhoto")}>
       <CS.HeaderRightText>Next</CS.HeaderRightText>
     </CS.HeaderRight>
   );

@@ -20,8 +20,9 @@ export type AuthStackParamList = {
     caption: string | null;
   };
   EditProfile: undefined;
-  Upload: undefined;
+  UploadNav: undefined;
   Message: undefined;
+  UploadPhoto: undefined;
 
   // Tab Screens
   Feed: undefined;

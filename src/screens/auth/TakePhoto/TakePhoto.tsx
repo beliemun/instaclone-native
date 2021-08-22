@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
 import Slider from "@react-native-community/slider";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthStackParamList } from "types/navigation/auth";
 import { Alert } from "react-native";
@@ -92,6 +92,9 @@ const TakePhoto: React.FC = () => {
   };
 
   const onCameraReady = () => setCameraReady(true);
+
+  // [중요]특정 화면을 보고 있는지 알고 싶을 때 사용한다.
+  // const isFocused = useIsFocused();
 
   const goToUpload = async (save: boolean) => {
     if (save) {
