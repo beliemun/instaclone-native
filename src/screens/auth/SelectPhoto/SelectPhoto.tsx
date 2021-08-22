@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as CS from "./styles";
-import Shared from "@Components";
 import * as MediaLibrary from "expo-media-library";
 import { FlatList } from "react-native-gesture-handler";
 import { useWindowDimensions, View } from "react-native";
@@ -21,7 +20,7 @@ const SelectPhoto: React.FC = () => {
   const { width } = useWindowDimensions();
   const size = width / NUMCOLUMNS - 2;
 
-  const getPermissions = async () => {
+  const getMediaLibraryPermissions = async () => {
     const { granted, canAskAgain } =
       await MediaLibrary.requestPermissionsAsync();
     if (granted !== false && canAskAgain) {
@@ -47,7 +46,7 @@ const SelectPhoto: React.FC = () => {
   };
 
   useEffect(() => {
-    getPermissions();
+    getMediaLibraryPermissions();
     getPhotos();
   }, [ok]);
 

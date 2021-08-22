@@ -12,13 +12,17 @@ const Stacks = createStackNavigator<AuthStackParamList>();
 
 const Auth: React.FC = () => (
   <NavigationContainer>
-    <Stacks.Navigator mode="modal" headerMode="none">
+    <Stacks.Navigator mode="modal">
       <Stacks.Screen
         name="Tabs"
         component={AuthTab}
         options={{ headerShown: false }}
       />
-      <Stacks.Screen name="Upload" component={UploadTabNav} />
+      <Stacks.Screen
+        name="Upload"
+        component={UploadTabNav}
+        options={{ headerShown: false }}
+      />
       <Stacks.Screen name="Comments" component={Comments} />
       <Stacks.Screen name="EditProfile" component={EditProfile} />
       <Stacks.Screen name="Message" component={Message} />
