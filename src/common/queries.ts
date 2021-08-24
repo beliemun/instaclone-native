@@ -106,3 +106,34 @@ export const SEE_FOLLOWING_QUERY = gql`
   }
   ${USER_FRAGMENT}
 `;
+
+export const SEE_ROOMS_QUERY = gql`
+  query seeRooms {
+    seeRooms {
+      id
+      unreadTotal
+      lastMessage {
+        text
+      }
+      users {
+        avatar
+        userName
+      }
+    }
+  }
+`;
+
+export const SEE_ROOM_QUERY = gql`
+  query seeRoom($id: Int!) {
+    seeRoom(id: $id) {
+      messages {
+        id
+        text
+        user {
+          avatar
+          userName
+        }
+      }
+    }
+  }
+`;

@@ -2,6 +2,7 @@ import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp, CompositeNavigationProp } from "@react-navigation/native";
 import { seeFeed_seeFeed_user } from "types/__generated__/seeFeed";
+import { seeRooms_seeRooms_users } from "types/__generated__/seeRooms";
 
 export type AuthTabParamList = {
   Feed: undefined;
@@ -47,7 +48,7 @@ export type UploadTabParamList = {
 
 export type MessageStackParamList = {
   Rooms: undefined;
-  Room: undefined;
+  Room: { id: number; target: seeRooms_seeRooms_users | null | undefined };
 };
 
 // Tabs Navigation Props
