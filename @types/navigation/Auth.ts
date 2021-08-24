@@ -20,9 +20,11 @@ export type AuthStackParamList = {
     caption: string | null;
   };
   EditProfile: undefined;
-  UploadNav: undefined;
-  Message: undefined;
-  UploadPhoto: undefined;
+  Upload: undefined;
+  Messages: undefined;
+  UploadPhoto: {
+    file: string;
+  };
 
   // Tab Screens
   Feed: undefined;
@@ -41,6 +43,11 @@ export type AuthStackParamList = {
 export type UploadTabParamList = {
   Select: undefined;
   Take: undefined;
+};
+
+export type MessageStackParamList = {
+  Rooms: undefined;
+  Room: undefined;
 };
 
 // Tabs Navigation Props

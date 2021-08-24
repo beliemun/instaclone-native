@@ -102,15 +102,6 @@ const Photo: React.FC<IProps> = ({ photo }) => {
               size={26}
             />
           </CS.Action>
-          <CS.Action>
-            <Ionicons
-              name="paper-plane-outline"
-              color={
-                colorScheme === "light" ? lightTheme.color : darkTheme.color
-              }
-              size={26}
-            />
-          </CS.Action>
         </CS.Actions>
         {likeCount !== 0 && (
           <Shared.Link

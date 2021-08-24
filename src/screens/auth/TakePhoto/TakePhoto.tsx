@@ -48,6 +48,7 @@ const TakePhoto: React.FC = () => {
   };
 
   const changeCameraType = () => {
+    setZoom(0);
     if (cameraType === Camera.Constants.Type.back) {
       setCameraType(Camera.Constants.Type.front);
     } else if (cameraType === Camera.Constants.Type.front) {
@@ -55,14 +56,22 @@ const TakePhoto: React.FC = () => {
     }
   };
 
+  interface IImagePorps {
+    cancelled: boolean;
+    width: number;
+    height: number;
+    type: string;
+    uri: string;
+  }
+
   const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
+    const result = (await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-    });
-    console.log(result);
+    })) as IImagePorps;
+    navigation.navigate("UploadPhoto", { file: result.uri });
   };
 
   const onValueChange = (e: number) => {
@@ -99,9 +108,8 @@ const TakePhoto: React.FC = () => {
   const goToUpload = async (save: boolean) => {
     if (save) {
       await MediaLibrary.saveToLibraryAsync(takenPhoto);
-    } else {
-      console.log("Will upload", takenPhoto);
     }
+    navigation.navigate("UploadPhoto", { file: takenPhoto });
   };
 
   const onUpload = () => {
@@ -167,6 +175,7 @@ const TakePhoto: React.FC = () => {
                 minimumTrackTintColor="#FFFFFF"
                 maximumTrackTintColor="rgba(255,255,255,0.2)"
                 onValueChange={onValueChange}
+                value={zoom}
               />
             </CS.SliderContianer>
             <CS.Buttons justifyContent={"space-evenly"}>

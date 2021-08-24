@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { PHOTO_FRAGMENT } from "./fragments";
 
 export const TOGGLE_LIKE_MUTATION = gql`
   mutation toggleLike($id: Int!) {
@@ -35,4 +36,13 @@ export const CREATE_COMMENT_MUTATION = gql`
       id
     }
   }
+`;
+
+export const UPLOAD_PHOTO_MUTATION = gql`
+  mutation uploadPhoto($file: Upload!, $caption: String) {
+    uploadPhoto(file: $file, caption: $caption) {
+      ...PhotoFragment
+    }
+  }
+  ${PHOTO_FRAGMENT}
 `;

@@ -91,7 +91,7 @@ const AuthTab: React.FC = () => {
           return {
             tabPress: (e) => {
               e.preventDefault();
-              navigation.navigate("UploadNav");
+              navigation.navigate("Upload");
             },
           };
         }}

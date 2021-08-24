@@ -5,10 +5,11 @@ import AuthTab from "./AuthTabNav";
 import UploadTabNav from "./UploadTabNav";
 import Comments from "~/screens/auth/Comments";
 import EditProfile from "~/screens/auth/EditProfile";
-import Message from "~/screens/auth/Message";
+import Rooms from "~/screens/auth/Rooms";
 import { NavigationContainer } from "@react-navigation/native";
 import UploadPhoto from "~/screens/auth/UploadPhoto";
 import { Ionicons } from "@expo/vector-icons";
+import Messages from "./MessageNav";
 
 const Stacks = createStackNavigator<AuthStackParamList>();
 
@@ -21,18 +22,22 @@ const Auth: React.FC = () => (
         options={{ headerShown: false }}
       />
       <Stacks.Screen
-        name="UploadNav"
+        name="Upload"
         component={UploadTabNav}
         options={{ headerShown: false }}
       />
       <Stacks.Screen name="Comments" component={Comments} />
       <Stacks.Screen name="EditProfile" component={EditProfile} />
-      <Stacks.Screen name="Message" component={Message} />
+      <Stacks.Screen
+        name="Messages"
+        component={Messages}
+        options={{ headerShown: false }}
+      />
       <Stacks.Screen
         name="UploadPhoto"
         component={UploadPhoto}
         options={{
-          title: "Upload Photo",
+          title: "Write a caption",
           headerBackTitleVisible: false,
           headerBackImage: ({ tintColor }) => (
             <Ionicons name={"close"} color={tintColor} size={28} />

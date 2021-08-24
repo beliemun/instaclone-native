@@ -4,6 +4,8 @@ import {
   InMemoryCache,
   makeVar,
 } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
+import { onError } from "@apollo/client/link/error";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
 import { offsetLimitPagination } from "@apollo/client/utilities";
@@ -30,6 +32,10 @@ const httpLink = createHttpLink({
   uri: "http://941508efa7ba.ngrok.io/graphql",
 });
 
+const uploadHttpLink = createUploadLink({
+  uri: "http://941508efa7ba.ngrok.io/graphql",
+});
+
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
@@ -37,6 +43,10 @@ const authLink = setContext((_, { headers }) => {
       token: tokenVar(),
     },
   };
+});
+
+const onErrorLink = onError((error) => {
+  console.log(error);
 });
 
 // App.tsx에서 persistCache 기능을 사용하기 위해 외부로 위치.
@@ -76,7 +86,7 @@ export const cache = new InMemoryCache({
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(onErrorLink).concat(uploadHttpLink),
   cache,
 });
 

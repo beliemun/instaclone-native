@@ -64,10 +64,14 @@ const SelectPhoto: React.FC = () => {
     uploadNavigation.setOptions({
       headerRight: HeaderRight,
     });
-  }, []);
+  }, [chosenPhoto]);
 
   const HeaderRight = () => (
-    <CS.HeaderRight onPress={() => rootNavigation.navigate("UploadPhoto")}>
+    <CS.HeaderRight
+      onPress={() =>
+        rootNavigation.navigate("UploadPhoto", { file: chosenPhoto })
+      }
+    >
       <CS.HeaderRightText>Next</CS.HeaderRightText>
     </CS.HeaderRight>
   );

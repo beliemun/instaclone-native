@@ -8,16 +8,23 @@ import Photo from "@screens/auth/Photo";
 import Likes from "@screens/auth/Likes";
 import Followers from "@screens/auth/Followers";
 import Following from "@screens/auth/Following";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from "@react-navigation/stack";
 import { darkTheme, lightTheme } from "@common/theme";
-import { Image, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { AuthStackParamList } from "~/../@types/navigation/auth";
 import { useColorScheme } from "react-native";
 import { logUserOut } from "~/apollo";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Stacks = createStackNavigator<AuthStackParamList>();
 
 const renderScreen = (screenName: string) => {
+  const colorScheme = useColorScheme();
+  const navigation = useNavigation<StackNavigationProp<AuthStackParamList>>();
   switch (screenName) {
     case "Feed":
       return (
@@ -33,6 +40,18 @@ const renderScreen = (screenName: string) => {
                   source={require("../assets/logo.png")}
                 />
               </Shared.CenterView>
+            ),
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate("Messages")}>
+                <Ionicons
+                  name="paper-plane-outline"
+                  color={
+                    colorScheme === "light" ? lightTheme.color : darkTheme.color
+                  }
+                  size={26}
+                  style={{ marginRight: 10 }}
+                />
+              </TouchableOpacity>
             ),
           }}
         />
