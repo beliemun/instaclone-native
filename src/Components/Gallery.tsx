@@ -41,8 +41,8 @@ const Gallery: React.FC<IProps> = ({ navigation, data, headerComponent }) => {
     <FlatList
       style={{ width: width }}
       data={data}
-      renderItem={(item) => <SearchItem {...item.item} />}
-      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <SearchItem {...item} />}
+      keyExtractor={({ id }) => id.toString()}
       numColumns={NUMCOLUMNS}
       ItemSeparatorComponent={() => <View style={{ height: 3 }}></View>}
       columnWrapperStyle={{ justifyContent: "space-between" }}

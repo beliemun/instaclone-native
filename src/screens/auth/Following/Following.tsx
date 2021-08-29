@@ -46,8 +46,8 @@ const Following: React.FC = () => {
       <FlatList
         style={{ width: "100%" }}
         data={data?.seeFollowing}
-        renderItem={(item) => <ListItem user={item.item} />}
-        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item: user }) => <ListItem user={user} />}
+        keyExtractor={({ id }) => id.toString()}
         ItemSeparatorComponent={() => <Shared.ItemSeparator height={0} />}
         refreshing={refreshing}
         onRefresh={refresh}

@@ -88,8 +88,8 @@ const Comments: React.FC = () => {
           <FlatList
             style={{ width: "100%" }}
             data={data?.seePhotoComments}
-            renderItem={(item) => <CommentItem {...item.item} />}
-            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <CommentItem {...item} />}
+            keyExtractor={({ id }) => id.toString()}
             ListHeaderComponent={
               <CommentItem
                 __typename="Comment"

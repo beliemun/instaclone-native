@@ -116,6 +116,7 @@ export const SEE_ROOMS_QUERY = gql`
         text
       }
       users {
+        id
         avatar
         userName
       }
@@ -123,16 +124,21 @@ export const SEE_ROOMS_QUERY = gql`
   }
 `;
 
+// [중요] 캐시를 해야하는 위치에는 아폴로가 인식하기 위해서 반드시 id가 있어야한다.
+// id 값을 사용하지 않아도 아폴로 캐시를 위해 넣어놓는 습관을 들이는 것이 좋다.
 export const SEE_ROOM_QUERY = gql`
   query seeRoom($id: Int!) {
     seeRoom(id: $id) {
+      id
       messages {
         id
         text
         user {
+          id
           avatar
           userName
         }
+        read
       }
     }
   }

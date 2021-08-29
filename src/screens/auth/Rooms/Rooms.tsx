@@ -1,5 +1,4 @@
 import React from "react";
-import * as CS from "./styles";
 import Shared from "@Components";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -11,7 +10,6 @@ import { SEE_ROOMS_QUERY } from "~/common/queries";
 import { seeRooms } from "types/__generated__/seeRooms";
 import { FlatList } from "react-native-gesture-handler";
 import RoomItem from "~/Components/RoomItem";
-import { View } from "react-native";
 
 const Rooms: React.FC = () => {
   const navigation =
@@ -30,16 +28,17 @@ const Rooms: React.FC = () => {
 
   return (
     <Shared.LoadingLayout loading={loading}>
-      <CS.Container>
-        {data?.seeRooms ? (
-          <FlatList
-            data={data?.seeRooms}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={(item) => <RoomItem item={item.item} />}
-            ItemSeparatorComponent={() => <View style={{ height: 3 }}></View>}
-          />
-        ) : null}
-      </CS.Container>
+      {data?.seeRooms ? (
+        <FlatList
+          data={data?.seeRooms}
+          renderItem={({ item: room }) => <RoomItem room={room} />}
+          keyExtractor={({ id }) => id.toString()}
+          ItemSeparatorComponent={() => <Shared.ItemSeparator height={1} />}
+          style={{ width: "100%" }}
+        />
+      ) : (
+        <></>
+      )}
     </Shared.LoadingLayout>
   );
 };

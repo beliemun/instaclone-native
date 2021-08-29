@@ -45,7 +45,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
       } = result;
       if (ok) {
         cache.modify({
-          id: `FeedItem:${id}`,
+          id: `Photo:${id}`,
           fields: {
             isLiked(prev) {
               return !prev;

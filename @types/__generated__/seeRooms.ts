@@ -14,6 +14,7 @@ export interface seeRooms_seeRooms_lastMessage {
 
 export interface seeRooms_seeRooms_users {
   __typename: "User";
+  id: number;
   avatar: string | null;
   userName: string;
 }

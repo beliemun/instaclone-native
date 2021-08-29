@@ -46,8 +46,8 @@ const Feed: React.FC = () => {
             {data?.seeFeed && (
               <FlatList
                 data={data.seeFeed}
-                renderItem={(item) => <Photo photo={item.item} />}
-                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => <Photo photo={item} />}
+                keyExtractor={({ id }) => id.toString()}
                 showsVerticalScrollIndicator={false}
                 ItemSeparatorComponent={() => (
                   <Shared.ItemSeparator height={30} />

@@ -3,12 +3,17 @@ import {
   createHttpLink,
   InMemoryCache,
   makeVar,
+  split,
 } from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import { onError } from "@apollo/client/link/error";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setContext } from "@apollo/client/link/context";
-import { offsetLimitPagination } from "@apollo/client/utilities";
+import {
+  getMainDefinition,
+  offsetLimitPagination,
+} from "@apollo/client/utilities";
+import { WebSocketLink } from "@apollo/client/link/ws";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar("");
@@ -28,27 +33,6 @@ export const logUserOut = async () => {
   await client.resetStore();
 };
 
-const httpLink = createHttpLink({
-  uri: "http://941508efa7ba.ngrok.io/graphql",
-});
-
-const uploadHttpLink = createUploadLink({
-  uri: "http://941508efa7ba.ngrok.io/graphql",
-});
-
-const authLink = setContext((_, { headers }) => {
-  return {
-    headers: {
-      ...headers,
-      token: tokenVar(),
-    },
-  };
-});
-
-const onErrorLink = onError((error) => {
-  console.log(error);
-});
-
 // App.tsx에서 persistCache 기능을 사용하기 위해 외부로 위치.
 // persistCache는 오프라인 상태에서도 cache로 읽어올 수 있는 데이터로 화면을 미리 구성할 수 있게 해준다.
 export const cache = new InMemoryCache({
@@ -63,6 +47,7 @@ export const cache = new InMemoryCache({
         seePhotoComments: offsetLimitPagination(["id"]),
         seeFollowers: offsetLimitPagination(["userName"]),
         seeFollowing: offsetLimitPagination(["userName"]),
+        seeRooms: offsetLimitPagination(),
         // 위 함수는 아래 코드를 간편하게 사용할 수 있도록 구현된 함수
         // seePhotoComments: {
         //   keyArgs: ["id"],
@@ -85,8 +70,46 @@ export const cache = new InMemoryCache({
   },
 });
 
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      token: tokenVar(),
+    },
+  };
+});
+const onErrorLink = onError((error) => {
+  console.log(error);
+});
+const uploadHttpLink = createUploadLink({
+  uri: "http://941508efa7ba.ngrok.io/graphql",
+});
+
+const wsLink = new WebSocketLink({
+  uri: "ws://941508efa7ba.ngrok.io/graphql",
+  options: {
+    reconnect: true,
+    connectionParams: () => ({
+      token: tokenVar(),
+    }),
+  },
+});
+const httpLinks = authLink.concat(onErrorLink).concat(uploadHttpLink);
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === "OperationDefinition" &&
+      definition.operation === "subscription"
+    );
+  },
+  wsLink,
+  httpLinks
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(onErrorLink).concat(uploadHttpLink),
+  link: splitLink,
   cache,
 });
 
