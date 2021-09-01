@@ -56,3 +56,12 @@ export const SEND_MESSAGE_MUTATION = gql`
     }
   }
 `;
+
+export const READ_MESSAGES = gql`
+  mutation readMessages($roomId: Int!) {
+    readMessages(roomId: $roomId) {
+      ok
+      error
+    }
+  }
+`;

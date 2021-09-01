@@ -64,7 +64,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
       <CS.Header
         onPress={() =>
           navigation.navigate("Profile", {
-            user,
+            userName: user.userName,
           })
         }
       >
@@ -118,7 +118,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
             <Shared.Link
               onPress={() =>
                 navigation.navigate("Profile", {
-                  user,
+                  userName: user.userName,
                 })
               }
             >
@@ -156,7 +156,7 @@ const Photo: React.FC<IProps> = ({ photo }) => {
                   <Shared.Link
                     onPress={() =>
                       navigation.navigate("Profile", {
-                        user: comment.user,
+                        userName: comment.user.userName,
                       })
                     }
                   >

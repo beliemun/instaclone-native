@@ -1,14 +1,14 @@
 import styled from "styled-components/native";
 import { BoldText } from "../Base";
 
-export const Container = styled.TouchableOpacity<{ isMine: boolean }>`
+export const Container = styled.View<{ isMine: boolean }>`
   flex-direction: ${(props) => (props.isMine ? "row-reverse" : "row")};
   justify-content: space-between;
   background-color: ${(props) => props.theme.windowColor};
   padding: 10px;
 `;
 
-export const AvatarContainer = styled.View<{ isMine: boolean }>`
+export const AvatarContainer = styled.TouchableOpacity<{ isMine: boolean }>`
   width: 40px;
   height: 40px;
   border-radius: 20px;

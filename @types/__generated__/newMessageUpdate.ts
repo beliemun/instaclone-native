@@ -4,28 +4,28 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL subscription operation: roomUpdates
+// GraphQL subscription operation: newMessageUpdate
 // ====================================================
 
-export interface roomUpdates_roomUpdates_user {
+export interface newMessageUpdate_newMessageUpdate_user {
   __typename: "User";
   id: number;
   avatar: string | null;
   userName: string;
 }
 
-export interface roomUpdates_roomUpdates {
+export interface newMessageUpdate_newMessageUpdate {
   __typename: "Message";
   id: number;
   text: string;
-  user: roomUpdates_roomUpdates_user;
+  user: newMessageUpdate_newMessageUpdate_user;
   read: boolean;
 }
 
-export interface roomUpdates {
-  roomUpdates: roomUpdates_roomUpdates | null;
+export interface newMessageUpdate {
+  newMessageUpdate: newMessageUpdate_newMessageUpdate | null;
 }
 
-export interface roomUpdatesVariables {
+export interface newMessageUpdateVariables {
   id: number;
 }

@@ -8,75 +8,28 @@ import { MessageStackParamList } from "types/navigation/auth";
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import MessageItem from "~/Components/MessageItem";
 import { SEE_ROOM_QUERY } from "~/common/queries";
-import { SEND_MESSAGE_MUTATION } from "~/common/mutations";
-import { ROOM_UPDATES } from "~/common/subscription";
-import { roomUpdates } from "types/__generated__/roomUpdates";
-import useUser from "~/hooks/useUser";
+import { READ_MESSAGES, SEND_MESSAGE_MUTATION } from "~/common/mutations";
+import { NEW_MESSAGE_UPDATE } from "~/common/subscription";
 
 const Room: React.FC = () => {
-  const loggedInUser = useUser();
   const flatListRef = useRef<FlatList<any>>(null);
-  const { cache } = useApolloClient();
   const navigation =
     useNavigation<StackNavigationProp<MessageStackParamList>>();
   const {
     params: { id, target },
   } = useRoute<RouteProp<MessageStackParamList, "Room">>();
-  const {
-    data,
-    loading: seeRoomLoading,
-    subscribeToMore,
-  } = useQuery(SEE_ROOM_QUERY, {
+  const { data, loading, subscribeToMore } = useQuery(SEE_ROOM_QUERY, {
     variables: {
       id,
     },
   });
   const [text, setText] = useState("");
-  const [sendMessageMutation, { loading: sendMessageLoading }] = useMutation(
-    SEND_MESSAGE_MUTATION,
-    {
-      // update: (cache, result) => {
-      //   const {
-      //     data: {
-      //       sendMessage: { ok, id },
-      //     },
-      //   } = result;
-      //   if (!ok || !loggedInUser.data) return;
-      //   const messageObj = {
-      //     __typename: "Message",
-      //     id,
-      //     text,
-      //     user: {
-      //       userName: loggedInUser.data?.me?.userName,
-      //       avatar: loggedInUser.data?.me?.avatar,
-      //     },
-      //     read: true,
-      //   };
-      //   // 캐시에 올라갈 데이터 형태로 만듬
-      //   const messageFragment = cache.writeFragment({
-      //     fragment: gql`
-      //       fragment NewMessage on Message {
-      //         id
-      //         text
-      //         user {
-      //           id
-      //           avatar
-      //           userName
-      //         }
-      //         read
-      //       }
-      //     `,
-      //     data: messageObj,
-      //   });
-      //   cache.modify({
-      //     id: `Room:${id}`,
-      //     fields: {
-      //       messages: (prev) => [...prev, messageFragment],
-      //     },
-      //   });
-      // },
-    }
+  const [sendMessageMutation, { loading: sendingMessage }] = useMutation(
+    SEND_MESSAGE_MUTATION
   );
+  const [readMessagesMutation] = useMutation(READ_MESSAGES);
+  const { cache } = useApolloClient();
+  const [subscribing, setSubcribing] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -86,14 +39,20 @@ const Room: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (data?.seeRoom) {
+    if (!subscribing) {
+      setSubcribing(true);
+      readMessagesMutation({
+        variables: {
+          roomId: id,
+        },
+      });
       subscribeToMore({
-        document: ROOM_UPDATES,
+        document: NEW_MESSAGE_UPDATE,
         variables: {
           id,
         },
         updateQuery: (prev, { subscriptionData: { data } }) => {
-          const { roomUpdates: message } = data as roomUpdates;
+          const { newMessageUpdate: message } = data;
           const incomingMessage = cache.writeFragment({
             fragment: gql`
               fragment NewMessage on Message {
@@ -113,13 +72,6 @@ const Room: React.FC = () => {
             id: `Room:${id}`,
             fields: {
               messages: (prev: any) => {
-                const existingMessage = prev.find(
-                  (aMessage: any) => aMessage.__ref === incomingMessage?.__ref
-                );
-
-                if (existingMessage) {
-                  return prev;
-                }
                 return [...prev, incomingMessage];
               },
             },
@@ -128,10 +80,10 @@ const Room: React.FC = () => {
         },
       });
     }
-  }, [data]);
+  }, [data?.seeRoom]);
 
   const onSubmit = () => {
-    if (sendMessageLoading) return;
+    if (sendingMessage) return;
     sendMessageMutation({
       variables: {
         text,
@@ -150,7 +102,7 @@ const Room: React.FC = () => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 60 : -250}
       style={{ flex: 1 }}
     >
-      <Shared.LoadingLayout loading={seeRoomLoading}>
+      <Shared.LoadingLayout loading={loading}>
         <CS.Container>
           <FlatList
             inverted

@@ -5,6 +5,7 @@ import { seeRooms_seeRooms } from "types/__generated__/seeRooms";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { MessageStackParamList } from "types/navigation/auth";
+import { Text } from "react-native";
 
 interface IProps {
   room: seeRooms_seeRooms;
@@ -26,17 +27,16 @@ const RoomItem: React.FC<IProps> = ({ room }) => {
       </CS.AvatarContainer>
       <CS.Content>
         <CS.Username>{target?.userName}</CS.Username>
+
         <CS.MessageContainter>
-          {unreadTotal > 0 ? (
-            <CS.UnreadDot>
-              <CS.UnreadText>
-                {unreadTotal > 9 ? "9+" : unreadTotal}
-              </CS.UnreadText>
-            </CS.UnreadDot>
-          ) : null}
-          <CS.LastMessage unreadTotal={unreadTotal}>
-            {lastMessage?.text}
-          </CS.LastMessage>
+          {unreadTotal > 0 && <CS.UnreadText>{unreadTotal}</CS.UnreadText>}
+          {lastMessage && (
+            <CS.LastMessage unreadTotal={unreadTotal}>
+              {lastMessage.text.length > 26
+                ? lastMessage.text.slice(0, 26) + "..."
+                : lastMessage.text}
+            </CS.LastMessage>
+          )}
         </CS.MessageContainter>
       </CS.Content>
     </CS.Container>

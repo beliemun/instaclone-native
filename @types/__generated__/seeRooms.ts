@@ -15,8 +15,10 @@ export interface seeRooms_seeRooms_lastMessage {
 export interface seeRooms_seeRooms_users {
   __typename: "User";
   id: number;
-  avatar: string | null;
   userName: string;
+  avatar: string | null;
+  isFollowing: boolean;
+  isMe: boolean;
 }
 
 export interface seeRooms_seeRooms {
@@ -28,5 +30,5 @@ export interface seeRooms_seeRooms {
 }
 
 export interface seeRooms {
-  seeRooms: (seeRooms_seeRooms | null)[] | null;
+  seeRooms: seeRooms_seeRooms[] | null;
 }

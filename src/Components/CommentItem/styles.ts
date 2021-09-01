@@ -11,7 +11,7 @@ export const Container = styled.View`
   padding: 10px;
 `;
 
-export const AvatarContainer = styled.View`
+export const AvatarContainer = styled.TouchableOpacity`
   width: 24px;
   height: 24px;
   border-radius: 12px;

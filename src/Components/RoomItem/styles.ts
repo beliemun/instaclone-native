@@ -35,6 +35,8 @@ export const Username = styled(BoldText)`
 `;
 
 export const MessageContainter = styled.View`
+  flex: 1;
+  width: 100%;
   flex-direction: row;
 `;
 
@@ -45,20 +47,17 @@ export const LastMessage = styled.Text<{ unreadTotal: number }>`
   margin-right: 5px;
 `;
 
-export const UnreadDot = styled.View`
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.accent};
-  margin-right: 5px;
-`;
-
 export const UnreadText = styled.Text`
   color: white;
-  font-size: 11px;
-  font-weight: bold;
+  text-align: center;
+  min-width: 16px;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 8px;
+  font-weight: 900;
+  background-color: ${(props) => props.theme.accent};
+  overflow: hidden;
+  margin-right: 4px;
 `;
 
 export const ButtonContainer = styled.View`

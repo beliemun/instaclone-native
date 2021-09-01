@@ -18,9 +18,7 @@ interface IProps {
 const Profile: React.FC<IProps> = ({ navigation, route }) => {
   const { name } = route;
   const userName =
-    name === "Profile"
-      ? route.params.user.userName
-      : useUser().data?.me?.userName;
+    name === "Profile" ? route.params.userName : useUser().data?.me?.userName;
   const { data, loading } = useQuery<seeProfile>(SEE_PROFILE_QUERY, {
     variables: { userName },
   });

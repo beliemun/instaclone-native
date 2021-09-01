@@ -57,7 +57,11 @@ const ListItem: React.FC<IProps> = ({ user }) => {
 
   return (
     <CS.Container>
-      <CS.Link onPress={() => navigation.navigate("Profile", { user })}>
+      <CS.Link
+        onPress={() =>
+          navigation.navigate("Profile", { userName: user.userName })
+        }
+      >
         <CS.AvatarContainer>
           <CS.Avatar source={{ uri: user.avatar ?? undefined }} />
         </CS.AvatarContainer>

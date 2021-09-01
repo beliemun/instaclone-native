@@ -5,7 +5,6 @@ import AuthTab from "./AuthTabNav";
 import UploadTabNav from "./UploadTabNav";
 import Comments from "~/screens/auth/Comments";
 import EditProfile from "~/screens/auth/EditProfile";
-import Rooms from "~/screens/auth/Rooms";
 import { NavigationContainer } from "@react-navigation/native";
 import UploadPhoto from "~/screens/auth/UploadPhoto";
 import { Ionicons } from "@expo/vector-icons";
@@ -26,8 +25,16 @@ const Auth: React.FC = () => (
         component={UploadTabNav}
         options={{ headerShown: false }}
       />
-      <Stacks.Screen name="Comments" component={Comments} />
-      <Stacks.Screen name="EditProfile" component={EditProfile} />
+      <Stacks.Screen
+        name="Comments"
+        component={Comments}
+        options={{ headerBackTitleVisible: false }}
+      />
+      <Stacks.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{ headerBackTitleVisible: false }}
+      />
       <Stacks.Screen
         name="Messages"
         component={Messages}

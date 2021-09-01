@@ -1,7 +1,9 @@
 import React from "react";
 import * as CS from "./styles";
 import { seeRoom_seeRoom_messages } from "types/__generated__/seeRoom";
-import { Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { AuthStackParamList } from "types/navigation/auth";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 interface IProps {
   message: seeRoom_seeRoom_messages;
@@ -9,6 +11,7 @@ interface IProps {
 }
 
 const MessageItem: React.FC<IProps> = ({ message, isMine }) => {
+  const navigatoin = useNavigation<StackNavigationProp<AuthStackParamList>>();
   const {
     text,
     user: { avatar, userName },
@@ -16,7 +19,10 @@ const MessageItem: React.FC<IProps> = ({ message, isMine }) => {
 
   return (
     <CS.Container isMine={isMine}>
-      <CS.AvatarContainer isMine={isMine}>
+      <CS.AvatarContainer
+        isMine={isMine}
+        onPress={() => navigatoin.navigate("Profile", { userName })}
+      >
         <CS.Avatar source={{ uri: avatar ?? undefined }} />
       </CS.AvatarContainer>
       <CS.FlexContainer isMine={isMine}>

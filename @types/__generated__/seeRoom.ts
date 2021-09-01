@@ -10,8 +10,10 @@
 export interface seeRoom_seeRoom_messages_user {
   __typename: "User";
   id: number;
-  avatar: string | null;
   userName: string;
+  avatar: string | null;
+  isFollowing: boolean;
+  isMe: boolean;
 }
 
 export interface seeRoom_seeRoom_messages {
@@ -26,6 +28,7 @@ export interface seeRoom_seeRoom {
   __typename: "Room";
   id: number;
   messages: (seeRoom_seeRoom_messages | null)[] | null;
+  unreadTotal: number;
 }
 
 export interface seeRoom {

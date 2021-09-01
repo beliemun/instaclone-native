@@ -116,12 +116,11 @@ export const SEE_ROOMS_QUERY = gql`
         text
       }
       users {
-        id
-        avatar
-        userName
+        ...UserFragment
       }
     }
   }
+  ${USER_FRAGMENT}
 `;
 
 // [중요] 캐시를 해야하는 위치에는 아폴로가 인식하기 위해서 반드시 id가 있어야한다.
@@ -134,12 +133,12 @@ export const SEE_ROOM_QUERY = gql`
         id
         text
         user {
-          id
-          avatar
-          userName
+          ...UserFragment
         }
         read
       }
+      unreadTotal
     }
   }
+  ${USER_FRAGMENT}
 `;

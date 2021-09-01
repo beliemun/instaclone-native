@@ -34,7 +34,7 @@ export type AuthStackParamList = {
   MyProfile: undefined;
 
   // Dependent Screens
-  Profile: { user: seeFeed_seeFeed_user };
+  Profile: { userName: string };
   Photo: { id: number };
   Likes: { photoId: number };
   Followers: { userName: string };
