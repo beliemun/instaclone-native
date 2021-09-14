@@ -63,3 +63,9 @@ export const UnreadText = styled.Text`
 export const ButtonContainer = styled.View`
   height: 100%;
 `;
+
+export const UpdatedAtText = styled.Text`
+  font-size: 12px;
+  color: ${(props) => props.theme.borderColorDark};
+  /* background-color: red; */
+`;

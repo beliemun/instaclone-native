@@ -48,6 +48,7 @@ export const cache = new InMemoryCache({
         seeFollowers: offsetLimitPagination(["userName"]),
         seeFollowing: offsetLimitPagination(["userName"]),
         seeRooms: offsetLimitPagination(),
+        // seeRoom: offsetLimitPagination(["id"]),
         // 위 함수는 아래 코드를 간편하게 사용할 수 있도록 구현된 함수
         // seePhotoComments: {
         //   keyArgs: ["id"],

@@ -5,14 +5,14 @@ import { seeRooms_seeRooms } from "types/__generated__/seeRooms";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { MessageStackParamList } from "types/navigation/auth";
-import { Text } from "react-native";
+import { getMomentFromNow } from "~/common/moment";
 
 interface IProps {
   room: seeRooms_seeRooms;
 }
 
 const RoomItem: React.FC<IProps> = ({ room }) => {
-  const { id, lastMessage, unreadTotal, users } = room;
+  const { id, lastMessage, unreadTotal, users, updatedAt } = room;
   const navigation =
     useNavigation<StackNavigationProp<MessageStackParamList>>();
   const loggedInUser = useUser();
@@ -32,13 +32,14 @@ const RoomItem: React.FC<IProps> = ({ room }) => {
           {unreadTotal > 0 && <CS.UnreadText>{unreadTotal}</CS.UnreadText>}
           {lastMessage && (
             <CS.LastMessage unreadTotal={unreadTotal}>
-              {lastMessage.text.length > 26
-                ? lastMessage.text.slice(0, 26) + "..."
+              {lastMessage.text.length > 30
+                ? lastMessage.text.slice(0, 30) + "..."
                 : lastMessage.text}
             </CS.LastMessage>
           )}
         </CS.MessageContainter>
       </CS.Content>
+      <CS.UpdatedAtText>{getMomentFromNow(Number(updatedAt))}</CS.UpdatedAtText>
     </CS.Container>
   );
 };

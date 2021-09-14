@@ -22,6 +22,7 @@ export interface readMessageUpdate_readMessageUpdate_messages {
   text: string;
   user: readMessageUpdate_readMessageUpdate_messages_user;
   read: boolean;
+  createdAt: string;
 }
 
 export interface readMessageUpdate_readMessageUpdate {
@@ -29,6 +30,7 @@ export interface readMessageUpdate_readMessageUpdate {
   id: number;
   messages: (readMessageUpdate_readMessageUpdate_messages | null)[] | null;
   unreadTotal: number;
+  createdAt: string;
 }
 
 export interface readMessageUpdate {

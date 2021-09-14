@@ -7,13 +7,15 @@ import { seeFeed } from "types/__generated__/seeFeed";
 import Photo from "~/Components/Photo";
 import { FEED_QUERY } from "~/common/queries";
 import { useEffect } from "react";
-import { isChangedFollowVar } from "~/apollo";
+import { isChangedFollowVar, takeVar } from "~/apollo";
 
 const Feed: React.FC = () => {
   const { cache } = useApolloClient();
+  const take = useReactiveVar(takeVar);
   const { data, loading, refetch, fetchMore } = useQuery<seeFeed>(FEED_QUERY, {
     variables: {
       offset: 0,
+      take,
     },
   });
   const [refreshing, setRefreshing] = useState(false);

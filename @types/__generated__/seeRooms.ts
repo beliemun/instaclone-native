@@ -27,6 +27,7 @@ export interface seeRooms_seeRooms {
   unreadTotal: number;
   lastMessage: seeRooms_seeRooms_lastMessage | null;
   users: (seeRooms_seeRooms_users | null)[] | null;
+  updatedAt: string;
 }
 
 export interface seeRooms {

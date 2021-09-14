@@ -38,11 +38,7 @@ const Profile: React.FC<IProps> = ({ navigation, route }) => {
               data.seeProfile ? (
                 <CS.Container>
                   <Shared.ProfileHeader user={data.seeProfile} />
-                  <Shared.ProfileActions
-                    userName={data.seeProfile.userName}
-                    isMe={data.seeProfile.isMe}
-                    isFollowing={data.seeProfile.isFollowing}
-                  />
+                  <Shared.ProfileActions user={data.seeProfile} />
                 </CS.Container>
               ) : null
             }

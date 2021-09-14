@@ -59,7 +59,7 @@ export const ReadText = styled.Text`
   padding: 4px;
 `;
 
-export const TimeText = styled.Text<{ isMine: boolean }>`
+export const CreatedAtText = styled.Text<{ isMine: boolean }>`
   color: ${(props) => props.theme.borderColorDark};
   align-self: ${(props) => (props.isMine ? "flex-end" : "flex-start")};
   font-size: 12px;

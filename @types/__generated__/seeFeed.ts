@@ -54,4 +54,5 @@ export interface seeFeed {
 
 export interface seeFeedVariables {
   offset: number;
+  take: number;
 }

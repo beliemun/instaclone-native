@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RouteProp, CompositeNavigationProp } from "@react-navigation/native";
 import { seeFeed_seeFeed_user } from "types/__generated__/seeFeed";
 import { seeRooms_seeRooms_users } from "types/__generated__/seeRooms";
+import { seeProfile_seeProfile } from "types/__generated__/seeProfile";
 
 export type AuthTabParamList = {
   Feed: undefined;
@@ -22,7 +23,7 @@ export type AuthStackParamList = {
   };
   EditProfile: undefined;
   Upload: undefined;
-  Messages: undefined;
+  Messages: { id?: number; target?: seeProfile_seeProfile };
   UploadPhoto: {
     file: string;
   };
@@ -48,7 +49,10 @@ export type UploadTabParamList = {
 
 export type MessageStackParamList = {
   Rooms: undefined;
-  Room: { id: number; target: seeRooms_seeRooms_users | null | undefined };
+  Room: {
+    id: number;
+    target: seeRooms_seeRooms_users | seeProfile_seeProfile | null | undefined;
+  };
 };
 
 // Tabs Navigation Props
