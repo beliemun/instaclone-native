@@ -21,7 +21,7 @@
     "@types/styled-components": "^5.1.10",
     "@types/styled-components-react-native": "^5.1.1",
     "apollo-upload-client": "^16.0.0",
-    "apollo3-cache-persist": "^0.10.0",
+    "apollo3-cache-persist": "^0.12.1",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.0.3",
     "expo-asset": "~8.3.1",

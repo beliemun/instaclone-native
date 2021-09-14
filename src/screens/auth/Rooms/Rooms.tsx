@@ -1,20 +1,11 @@
 import React, { useRef, useState } from "react";
 import Shared from "@Components";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  AuthStackParamList,
-  MessageStackParamList,
-} from "types/navigation/auth";
+import { MessageStackParamList } from "types/navigation/auth";
 import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  ApolloQueryResult,
-  gql,
-  useApolloClient,
-  useQuery,
-  useReactiveVar,
-} from "@apollo/client";
+import { gql, useApolloClient, useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_ROOMS_QUERY } from "~/common/queries";
 import { FlatList } from "react-native-gesture-handler";
 import RoomItem from "~/Components/RoomItem";
@@ -22,7 +13,6 @@ import { NEW_MESSAGE_UPDATE } from "~/common/subscription";
 import { seeRoom_seeRoom } from "types/__generated__/seeRoom";
 import { takeVar } from "~/apollo";
 import { seeProfile_seeProfile } from "types/__generated__/seeProfile";
-import { seeRooms, seeRooms_seeRooms } from "types/__generated__/seeRooms";
 
 interface IProps {
   id?: number;
@@ -38,7 +28,6 @@ const Rooms: React.FC<IProps> = ({ id, target }) => {
   const { cache } = useApolloClient();
   const [subscribing, setSubcribing] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const isFetching = useRef(false);
 
   useEffect(() => {
     if (id && target) {

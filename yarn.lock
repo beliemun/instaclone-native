@@ -2233,10 +2233,10 @@ apollo-upload-client@^16.0.0:
   dependencies:
     extract-files "^11.0.0"
 
-apollo3-cache-persist@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.npmjs.org/apollo3-cache-persist/-/apollo3-cache-persist-0.10.0.tgz"
-  integrity sha512-3W558cKQ9OymUaLMD3Mv8FuUmIDu/GP6aJA+5iLH6fw5MxG4dwF09fFz8NBHn/qfa/zrxv8AtDzKehZUPm107A==
+apollo3-cache-persist@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/apollo3-cache-persist/-/apollo3-cache-persist-0.12.1.tgz#6641e398cb3285dbc8c6cbdd9ecea3e25bff79c7"
+  integrity sha512-bYh/OzhzR70URRRf0OkzkpTLB7+fwx1Ftiw8/MWW8NhEgF+K9u3FO786DSUcE6X2NqSObYKF0+CpM9K8vrJNxw==
 
 argparse@^1.0.7:
   version "1.0.10"

@@ -18,7 +18,6 @@ import client, { isLoggedInVar, tokenVar, cache } from "./apollo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import registerRootComponent from "expo/build/launch/registerRootComponent";
 import { persistCache, AsyncStorageWrapper } from "apollo3-cache-persist";
-import { PersistentStorage, PersistedData } from "apollo3-cache-persist/types";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -42,14 +41,10 @@ const App = () => {
   const preload = async () => {
     await preloadToken();
     // persistCache는 AppLoading이 되기전 세팅해줘야 한다.
-    // Query, Mutation을 할때 Schema가 변경되면 충돌이 되어 아무것도 표시가 안되는 현상 방지하기 위해서 serialize:false 사용해야 함.
-    // await persistCache({
-    //   cache,
-    //   storage: new AsyncStorageWrapper(AsyncStorage) as PersistentStorage<
-    //     PersistedData<NormalizedCacheObject>
-    //   >,
-    //   serialize: false,
-    // });
+    await persistCache({
+      cache,
+      storage: new AsyncStorageWrapper(AsyncStorage),
+    });
     return preloadAssets();
   };
   const onFinish = () => setLoading(false);

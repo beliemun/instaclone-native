@@ -33,6 +33,7 @@ const Feed: React.FC = () => {
 
   useEffect(() => {
     // follow 혹은 unfollow시 미리 feed를 갱신한다.
+    // [중요] 이부분을 개선해야 함. 이 코드로 인해 persist cache로 Feed가 빈배열로 덮어씌워짐.
     refresh();
   }, [isChangedFollow]);
 

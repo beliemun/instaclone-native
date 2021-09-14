@@ -48,6 +48,8 @@ export const cache = new InMemoryCache({
         seeFollowers: offsetLimitPagination(["userName"]),
         seeFollowing: offsetLimitPagination(["userName"]),
         seeRooms: offsetLimitPagination(),
+        // [중요] 인피니티 스크롤을 하는 페이지는 위처럼 offsetLimitPagination 설정을 해야하고,
+        // Room 처럼 웹소켓으로 물릴 경우에는 지정하지 않는다.
         // seeRoom: offsetLimitPagination(["id"]),
         // 위 함수는 아래 코드를 간편하게 사용할 수 있도록 구현된 함수
         // seePhotoComments: {
