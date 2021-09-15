@@ -85,11 +85,11 @@ const onErrorLink = onError((error) => {
   console.log(error);
 });
 const uploadHttpLink = createUploadLink({
-  uri: "http://d7f2-61-75-22-201.ngrok.io/graphql",
+  uri: "http://fa9b-61-75-22-204.ngrok.io/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://d7f2-61-75-22-201.ngrok.io/graphql",
+  uri: "ws://fa9b-61-75-22-204.ngrok.io/graphql",
   options: {
     reconnect: true,
     connectionParams: () => ({
