@@ -85,11 +85,17 @@ const onErrorLink = onError((error) => {
   console.log(error);
 });
 const uploadHttpLink = createUploadLink({
-  uri: "http://fa9b-61-75-22-204.ngrok.io/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://beliemun-instaclone-backend.herokuapp.com/graphql"
+      : "http://2aa1-61-75-22-204.ngrok.io/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://fa9b-61-75-22-204.ngrok.io/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "ws://beliemun-instaclone-backend.herokuapp.com/graphql"
+      : "ws://2aa1-61-75-22-204.ngrok.io/graphql",
   options: {
     reconnect: true,
     connectionParams: () => ({
